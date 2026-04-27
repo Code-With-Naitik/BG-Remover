@@ -7,7 +7,7 @@ import { Helmet } from 'react-helmet-async';
 const PLANS = [
   {
     name: 'Free',
-    price: '$0',
+    price: '₹0',
     period: 'forever',
     desc: 'Perfect for occasional personal use.',
     badge: null,
@@ -29,12 +29,12 @@ const PLANS = [
   },
   {
     name: 'Pro',
-    price: '$9',
+    price: '₹750',
     period: 'per month',
     desc: 'For creators, marketers, and professionals.',
     badge: 'Most Popular',
     cta: 'Upgrade to Pro',
-    ctaTo: '/pricing',
+    ctaTo: '/checkout',
     ctaClass: 'btn-gradient',
     highlight: true,
     features: [

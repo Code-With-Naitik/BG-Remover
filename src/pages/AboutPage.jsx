@@ -122,7 +122,7 @@ const AboutPage = () => (
     </section>
 
     {/* Team Section */}
-    <section style={{ background: 'var(--bg-secondary)', padding: '6rem 0', borderTop: '1px solid var(--border-color)' }}>
+    {/* <section style={{ background: 'var(--bg-secondary)', padding: '6rem 0', borderTop: '1px solid var(--border-color)' }}>
       <div className="container">
         <h2 style={{ textAlign: 'center', fontSize: '2.5rem', marginBottom: '4rem' }}>Meet the Makers</h2>
         <div className="grid-3" style={{ gap: '2rem' }}>
@@ -146,7 +146,7 @@ const AboutPage = () => (
           ))}
         </div>
       </div>
-    </section>
+    </section> */}
   </>
 );
 

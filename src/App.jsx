@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from './context/ThemeContext';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
+import ScrollToTop from './components/layout/ScrollToTop';
 
 // Pages
 import HomePage from './pages/HomePage';
@@ -15,10 +16,13 @@ import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
 import PrivacyPage from './pages/PrivacyPage';
 import TermsPage from './pages/TermsPage';
+// import CheckoutPage from './pages/CheckoutPage';
+import ComingSoon from './components/layout/ComingSoon';
 
 function App() {
   return (
     <ThemeProvider>
+      <ScrollToTop />
       <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
         <Navbar />
         <main style={{ flex: 1 }}>
@@ -28,7 +32,7 @@ function App() {
             <Route path="/pricing" element={<PricingPage />} />
             <Route path="/blog" element={<BlogListPage />} />
             <Route path="/blog/:slug" element={<BlogPostPage />} />
-            
+
             {/* SEO Landing Pages */}
             <Route path="/remove-background-online" element={<SeoLandingPage title="Remove Background Online" keyword="remove background online" />} />
             <Route path="/free-background-remover" element={<SeoLandingPage title="Free Background Remover" keyword="remove backgrounds for free" />} />
@@ -40,11 +44,8 @@ function App() {
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/privacy-policy" element={<PrivacyPage />} />
             <Route path="/terms" element={<TermsPage />} />
-            <Route path="*" element={
-              <div className="container" style={{ padding: '4rem 1.5rem', textAlign: 'center' }}>
-                <h2>Page Coming Soon</h2>
-              </div>
-            } />
+            {/* <Route path="/checkout" element={<CheckoutPage />} /> */}
+            <Route path="*" element={<ComingSoon />} />
           </Routes>
         </main>
         <Footer />

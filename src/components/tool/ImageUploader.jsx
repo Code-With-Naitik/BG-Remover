@@ -108,7 +108,6 @@ const ImageUploader = ({ onUpload, isProcessing }) => {
               <button
                 type="button"
                 className="btn btn-gradient btn-lg"
-                onClick={e => e.stopPropagation()}
               >
                 <UploadCloud size={20} /> Choose Image
               </button>

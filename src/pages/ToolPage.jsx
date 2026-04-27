@@ -11,7 +11,7 @@ import { Helmet } from 'react-helmet-async';
 import { Sparkles, Clock, Shield } from 'lucide-react';
 
 const ToolPage = () => {
-  const { isProcessing, originalImage, processedImage, processImage, reset } = useImageProcessor();
+  const { isProcessing, originalImage, originalFiles, processedImage, processImage, reset } = useImageProcessor();
 
   return (
     <>
@@ -102,7 +102,14 @@ const ToolPage = () => {
                 </div>
 
                 {/* Download Panel */}
-                {processedImage && <DownloadPanel processedImage={processedImage} onReset={reset} />}
+                {processedImage && (
+                  <DownloadPanel 
+                    processedImage={processedImage} 
+                    originalFiles={originalFiles}
+                    processImage={processImage}
+                    onReset={reset} 
+                  />
+                )}
               </div>
             )}
 

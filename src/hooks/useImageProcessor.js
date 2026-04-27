@@ -6,11 +6,13 @@ export const useImageProcessor = () => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [originalImage, setOriginalImage] = useState(null);
   const [processedImage, setProcessedImage] = useState(null);
+  const [originalFiles, setOriginalFiles] = useState([]);
   const [error, setError] = useState(null);
 
-  const processImage = useCallback(async (files) => {
+  const processImage = useCallback(async (files, size = 'auto') => {
     const fileList = Array.isArray(files) ? files : [files];
     if (fileList.length === 0) return;
+    setOriginalFiles(fileList);
 
     // Set preview immediately
     const localUrl = URL.createObjectURL(fileList[0]);
@@ -21,6 +23,7 @@ export const useImageProcessor = () => {
     setProcessedImage(null);
 
     const formData = new FormData();
+    formData.append('size', size);
     fileList.forEach(file => {
       formData.append('image_files', file);
     });
@@ -117,6 +120,7 @@ export const useImageProcessor = () => {
   return {
     isProcessing,
     originalImage,
+    originalFiles,
     processedImage,
     error,
     processImage,

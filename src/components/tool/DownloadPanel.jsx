@@ -1,16 +1,43 @@
-import React from 'react';
 import { Download, Crown, Share2, RotateCcw } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
+import { useHDCredits } from '../../hooks/useHDCredits';
 
-const DownloadPanel = ({ processedImage, onReset }) => {
+const DownloadPanel = ({ processedImage, originalFiles, processImage, onReset }) => {
+  const navigate = useNavigate();
+  const { credits, useCredit } = useHDCredits();
+
   const handleDownloadFree = () => {
     const link = document.createElement('a');
     link.href = processedImage;
-    link.download = `bgremover-${Date.now()}.png`;
+    link.download = `bgremover-std-${Date.now()}.png`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
     toast.success('Image downloaded!');
+  };
+
+  const handleDownloadHD = async () => {
+    if (credits <= 0) {
+      toast('Weekly HD credits exhausted! Redirecting to Pro plans...', { icon: '👑' });
+      setTimeout(() => navigate('/checkout'), 2000);
+      return;
+    }
+
+    if (confirm(`Use 1 HD credit? You have ${credits} remaining this week.`)) {
+      try {
+        // Trigger re-process with 'full' size
+        await processImage(originalFiles, 'full');
+        // The processImage hook will update processedImage once done
+        // We can't easily auto-trigger the download here because it's async,
+        // but the UI will update and the user can click 'Download HD' again or it will happen.
+        // Actually, let's just use the credit and let the process start.
+        useCredit();
+        toast.success('HD processing started!');
+      } catch (e) {
+        toast.error('Failed to start HD processing.');
+      }
+    }
   };
 
   const handleShare = async () => {
@@ -87,10 +114,12 @@ const DownloadPanel = ({ processedImage, onReset }) => {
           </div>
           <div>
             <p style={{ fontWeight: 700, marginBottom: '0.25rem' }}>HD Quality</p>
-            <p style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)' }}>Best for print & commercial. Up to 25 MP.</p>
+            <p style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)' }}>
+              Best for print & commercial. {credits} credits left.
+            </p>
           </div>
           <button
-            onClick={() => toast('Upgrade to Pro for HD downloads!', { icon: '👑' })}
+            onClick={handleDownloadHD}
             className="btn btn-gradient"
             style={{ width: '100%' }}
           >
