@@ -3,7 +3,7 @@
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "https://bg-remover-server.vercel.app/api/$1"
+      "destination": "https://server-rouge-one-58.vercel.app/api/$1"
     },
     {
       "source": "/(.*)",
