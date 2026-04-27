@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 import {
   UploadCloud, Zap, Shield, Star, CheckCircle,
   ArrowRight, Sparkles, Image, Download, Users
@@ -31,13 +32,6 @@ const FEATURES = [
   },
 ];
 
-const STATS = [
-  { value: '10M+', label: 'Images Processed' },
-  { value: '500K+', label: 'Happy Users' },
-  { value: '99.9%', label: 'Uptime SLA' },
-  { value: '<3s', label: 'Avg. Processing' },
-];
-
 const STEPS = [
   { num: '01', title: 'Upload Your Image', desc: 'Drag & drop or click to browse. Supports JPG, PNG, and WEBP up to 10 MB.' },
   { num: '02', title: 'AI Removes Background', desc: 'Our AI model analyzes your image and precisely removes the background in seconds.' },
@@ -45,17 +39,55 @@ const STEPS = [
 ];
 
 const HomePage = () => {
+  const [gallery, setGallery] = useState([]);
+  const [activeGallery, setActiveGallery] = useState(0);
+  const [stats, setStats] = useState({
+    totalRemovals: '10M+',
+    totalHappyUsers: '500K+',
+    totalGallery: '50+'
+  });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [galleryRes, statsRes] = await Promise.all([
+          axios.get('/api/gallery'),
+          axios.get('/api/admin/public-stats')
+        ]);
+        setGallery(galleryRes.data.data);
+        if (statsRes.data.success) {
+          const s = statsRes.data.data;
+          setStats({
+            totalRemovals: s.totalRemovals > 1000 ? (s.totalRemovals / 1000).toFixed(1) + 'k+' : s.totalRemovals,
+            totalHappyUsers: s.totalHappyUsers > 1000 ? (s.totalHappyUsers / 1000).toFixed(1) + 'k+' : s.totalHappyUsers,
+            totalGallery: s.totalGallery
+          });
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const displayStats = [
+    { value: stats.totalRemovals, label: 'Images Processed' },
+    { value: stats.totalHappyUsers, label: 'Happy Users' },
+    { value: '99.9%', label: 'Uptime SLA' },
+    { value: stats.totalGallery, label: 'Showcase Items' },
+  ];
+
   return (
     <>
       <Helmet>
-        <title>BGRemover Pro — Free AI Background Remover Online</title>
+        <title>Snaplix AI — Free AI Background Remover Online</title>
         <meta name="description" content="Remove image backgrounds instantly with our free AI-powered tool. Perfect for e-commerce, marketing, and social media. Get transparent PNGs in seconds — no sign-up needed." />
-        <meta property="og:title" content="BGRemover Pro — Free AI Background Remover" />
+        <meta property="og:title" content="Snaplix AI — Free AI Background Remover" />
         <meta property="og:description" content="Remove backgrounds from images instantly using AI. Free, fast, and pixel-perfect." />
         <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",
           "@type": "WebApplication",
-          "name": "BGRemover Pro",
+          "name": "Snaplix AI",
           "description": "AI-powered image background remover",
           "applicationCategory": "DesignApplication",
           "offers": { "@type": "Offer", "price": "0" }
@@ -148,11 +180,64 @@ const HomePage = () => {
         </div>
       </section>
 
+      {/* ─── SHOWCASE GALLERY ─── */}
+      {gallery.length > 0 && (
+        <section className="section" style={{ background: 'var(--bg-secondary)', borderTop: '1px solid var(--border-color)' }}>
+          <div className="container">
+            <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+              <p className="section-label">AI Showcase</p>
+              <h2 className="section-title">Stunning Results, Every Time</h2>
+              <p className="section-desc" style={{ margin: '0 auto' }}>
+                See how Snaplix AI handles complex edges, hair, and transparent objects.
+              </p>
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 350px', gap: '3rem', alignItems: 'center' }}>
+              <div className="card" style={{ padding: '1rem', background: '#000', borderRadius: 'var(--radius-xl)', overflow: 'hidden', height: '500px', position: 'relative' }}>
+                <div style={{ position: 'absolute', top: '1rem', left: '1rem', zIndex: 10, background: 'rgba(0,0,0,0.6)', padding: '0.4rem 1rem', borderRadius: '0.5rem', color: '#fff', fontSize: '0.75rem', fontWeight: 700, backdropFilter: 'blur(10px)' }}>
+                  RESULT PREVIEW
+                </div>
+                <img 
+                  src={gallery[activeGallery].afterImage} 
+                  alt="After" 
+                  style={{ width: '100%', height: '100%', objectFit: 'contain', background: 'url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAMUlEQVQ4T2NkYGAQYcAP3uIn7YzZ2SX48D1S3Y7P0WAnS98OOfgY6S5A6fWvYfA6AzSbwY08D07MAAAAAElFTkSuQmCC)' }} 
+                />
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                {gallery.map((item, idx) => (
+                  <div 
+                    key={item._id} 
+                    onClick={() => setActiveGallery(idx)}
+                    style={{ 
+                      display: 'flex', 
+                      gap: '1rem', 
+                      padding: '1rem', 
+                      borderRadius: '1rem', 
+                      background: activeGallery === idx ? 'var(--accent-light)' : 'transparent',
+                      border: activeGallery === idx ? '1px solid var(--accent)' : '1px solid transparent',
+                      cursor: 'pointer',
+                      transition: 'all 0.3s'
+                    }}
+                  >
+                    <img src={item.beforeImage} style={{ width: '60px', height: '60px', borderRadius: '0.5rem', objectFit: 'cover' }} />
+                    <div style={{ overflow: 'hidden' }}>
+                      <p style={{ fontWeight: 700, margin: 0, color: 'var(--text-primary)' }}>{item.title}</p>
+                      <p style={{ fontSize: '0.8125rem', color: 'var(--text-muted)', margin: '0.25rem 0 0 0' }}>{item.category}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* ─── STATS BAR ─── */}
       <section style={{ background: 'var(--bg-secondary)', borderTop: '1px solid var(--border-color)', borderBottom: '1px solid var(--border-color)', padding: '2rem 0' }}>
         <div className="container">
           <div className="grid-4" style={{ textAlign: 'center' }}>
-            {STATS.map(({ value, label }) => (
+            {displayStats.map(({ value, label }) => (
               <div key={label}>
                 <p style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 800, fontSize: '1.875rem', background: 'var(--accent-gradient)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>{value}</p>
                 <p style={{ fontSize: '0.875rem', color: 'var(--text-muted)', marginTop: '0.25rem', fontWeight: 500 }}>{label}</p>

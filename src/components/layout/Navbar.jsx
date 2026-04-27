@@ -82,12 +82,12 @@ const Navbar = () => {
               style={{
                 fontFamily: "'Plus Jakarta Sans', sans-serif",
                 fontWeight: 800,
-                fontSize: '1.1875rem',
-                letterSpacing: '-0.03em',
+                fontSize: '1.25rem',
+                letterSpacing: '-0.04em',
                 color: 'var(--text-primary)',
               }}
             >
-              BGRemover <span className="gradient-text">Pro</span>
+              Snaplix <span className="gradient-text">AI</span>
             </span>
           </Link>
 

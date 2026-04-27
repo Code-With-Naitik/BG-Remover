@@ -83,11 +83,11 @@ const Footer = () => {
                 style={{
                   fontFamily: "'Plus Jakarta Sans', sans-serif",
                   fontWeight: 800,
-                  fontSize: '1.0625rem',
+                  fontSize: '1.125rem',
                   color: 'var(--text-primary)',
                 }}
               >
-                BGRemover Pro
+                Snaplix <span className="gradient-text">AI</span>
               </span>
             </Link>
             <p style={{ color: 'var(--text-secondary)', fontSize: '0.9375rem', lineHeight: 1.7, marginBottom: '1.5rem', maxWidth: '280px' }}>
@@ -173,7 +173,7 @@ const Footer = () => {
           }}
         >
           <p style={{ color: 'var(--text-muted)', fontSize: '0.875rem' }}>
-            © {new Date().getFullYear()} BGRemover Pro. All rights reserved.
+            © {new Date().getFullYear()} Snaplix AI. All rights reserved.
           </p>
           <div style={{ display: 'flex', gap: '1.5rem' }}>
             <span className="badge badge-success" style={{ fontSize: '0.75rem' }}>
@@ -186,14 +186,21 @@ const Footer = () => {
 
       {/* Responsive fix */}
       <style>{`
-        @media (max-width: 768px) {
-          footer .container > div:first-child {
+        @media (max-width: 991px) {
+          footer .grid-4 {
             grid-template-columns: 1fr 1fr !important;
+            gap: 3rem 2rem !important;
           }
         }
-        @media (max-width: 480px) {
-          footer .container > div:first-child {
+        @media (max-width: 576px) {
+          footer .grid-4 {
             grid-template-columns: 1fr !important;
+            gap: 2.5rem !important;
+          }
+          footer .grid-4 > div:first-child {
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 2rem;
+            margin-bottom: 0.5rem;
           }
         }
       `}</style>
