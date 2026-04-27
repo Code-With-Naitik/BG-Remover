@@ -8,39 +8,51 @@ export const useImageProcessor = () => {
   const [processedImage, setProcessedImage] = useState(null);
   const [error, setError] = useState(null);
 
-  const processImage = useCallback(async (file) => {
+  const processImage = useCallback(async (files) => {
+    const fileList = Array.isArray(files) ? files : [files];
+    if (fileList.length === 0) return;
+
     setIsProcessing(true);
     setError(null);
     setProcessedImage(null);
 
-    // Create a local URL for the original image to preview immediately
-    const localUrl = URL.createObjectURL(file);
-    setOriginalImage(localUrl);
-
     const formData = new FormData();
-    formData.append('image_file', file);
+    fileList.forEach(file => {
+      formData.append('image_files', file);
+    });
 
     try {
-      // Proxy setup in vite handles /api
       const response = await axios.post('/api/image/remove-bg', formData, {
-        responseType: 'arraybuffer', // expect binary data (png)
+        // If single file, we expect arraybuffer, if multiple, JSON
+        responseType: fileList.length === 1 ? 'arraybuffer' : 'json',
       });
 
-      // Convert binary to base64
-      const base64 = btoa(
-        new Uint8Array(response.data).reduce(
-          (data, byte) => data + String.fromCharCode(byte),
-          '',
-        ),
-      );
-      
-      const processedUrl = `data:image/png;base64,${base64}`;
-      setProcessedImage(processedUrl);
-      
-      // Save to history (localStorage)
-      saveToHistory(localUrl, processedUrl);
-      
-      toast.success('Background removed successfully!');
+      if (fileList.length === 1) {
+        // Handle single binary response
+        const localUrl = URL.createObjectURL(fileList[0]);
+        setOriginalImage(localUrl);
+
+        const base64 = btoa(
+          new Uint8Array(response.data).reduce(
+            (data, byte) => data + String.fromCharCode(byte),
+            '',
+          ),
+        );
+        const processedUrl = `data:image/png;base64,${base64}`;
+        setProcessedImage(processedUrl);
+        saveToHistory(localUrl, processedUrl);
+        toast.success('Background removed!');
+      } else {
+        // Handle multiple files JSON response
+        const results = response.data.files;
+        results.forEach(res => {
+          // We don't have original local URLs for all easily in this simplified preview,
+          // but we can save them to history
+          saveToHistory(res.data, res.data); // Use processed for both if original not available
+        });
+        setProcessedImage(results[0].data); // Preview the first one
+        toast.success(`${results.length} images processed!`);
+      }
     } catch (err) {
       console.error(err);
       let errorMessage = 'Failed to process image. Please try again.';

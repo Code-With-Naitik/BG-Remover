@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Trash2, Download } from 'lucide-react';
+import { Trash2, Download, Trash, Package } from 'lucide-react';
 
 const HistoryPanel = () => {
   const [history, setHistory] = useState([]);
@@ -32,29 +32,62 @@ const HistoryPanel = () => {
       const updatedHistory = history.filter(item => item.id !== id);
       setHistory(updatedHistory);
       localStorage.setItem('bgremover_history', JSON.stringify(updatedHistory));
-      // Dispatch event to sync other tabs if needed
       window.dispatchEvent(new Event('history_updated'));
     } catch (e) {
       console.error('Failed to remove item', e);
     }
   };
 
-  const handleDownload = (processedUrl) => {
+  const clearHistory = () => {
+    if (window.confirm('Clear all processed images from history?')) {
+      setHistory([]);
+      localStorage.removeItem('bgremover_history');
+      window.dispatchEvent(new Event('history_updated'));
+    }
+  };
+
+  const handleDownload = (processedUrl, id) => {
     const link = document.createElement('a');
     link.href = processedUrl;
-    link.download = `bgremover-${Date.now()}.png`;
+    link.download = `bgremover-${id || Date.now()}.png`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+  };
+
+  const downloadAll = () => {
+    history.forEach((item, index) => {
+      setTimeout(() => {
+        handleDownload(item.processed, item.id);
+      }, index * 300); // Stagger downloads to prevent browser blocking
+    });
   };
 
   if (history.length === 0) return null;
 
   return (
     <div style={{ marginTop: '4rem', padding: '2rem', background: 'var(--bg-secondary)', borderRadius: 'var(--radius-xl)', border: '1px solid var(--border-color)' }}>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
-        <h3 style={{ fontSize: '1.25rem', fontWeight: 700 }}>Recent Processed Images</h3>
-        <span className="badge badge-accent">{history.length} / 5 Saved</span>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
+        <div>
+          <h3 style={{ fontSize: '1.25rem', fontWeight: 700 }}>Recent Processed Images</h3>
+          <p style={{ fontSize: '0.8125rem', color: 'var(--text-muted)' }}>Saved locally in your browser</p>
+        </div>
+        <div style={{ display: 'flex', gap: '0.75rem' }}>
+          <button 
+            onClick={downloadAll}
+            className="btn btn-sm btn-outline"
+            style={{ display: 'flex', alignItems: 'center', gap: '0.375rem' }}
+          >
+            <Package size={14} /> Download All
+          </button>
+          <button 
+            onClick={clearHistory}
+            className="btn btn-sm btn-outline"
+            style={{ display: 'flex', alignItems: 'center', gap: '0.375rem', color: 'var(--danger)', borderColor: 'rgba(239,68,68,0.2)' }}
+          >
+            <Trash size={14} /> Clear
+          </button>
+        </div>
       </div>
       
       <div style={{ 

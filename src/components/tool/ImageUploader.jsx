@@ -21,7 +21,7 @@ const ImageUploader = ({ onUpload, isProcessing }) => {
         else setRejectedMsg('Could not upload that file. Please try another.');
         return;
       }
-      if (accepted.length > 0) onUpload(accepted[0]);
+      if (accepted.length > 0) onUpload(accepted);
     },
     [onUpload],
   );
@@ -30,7 +30,7 @@ const ImageUploader = ({ onUpload, isProcessing }) => {
     onDrop,
     accept: { 'image/jpeg': [], 'image/png': [], 'image/webp': [] },
     maxSize: 10 * 1024 * 1024,
-    multiple: false,
+    multiple: true,
     disabled: isProcessing,
   });
 
