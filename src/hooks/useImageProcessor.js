@@ -23,53 +23,54 @@ export const useImageProcessor = () => {
 
     try {
       const response = await axios.post('/api/image/remove-bg', formData, {
-        // If single file, we expect arraybuffer, if multiple, JSON
-        responseType: fileList.length === 1 ? 'arraybuffer' : 'json',
+        responseType: 'blob',
       });
 
-      if (fileList.length === 1) {
-        // Handle single binary response
+      // If it's a JSON response (batch processing or error)
+      if (response.data.type === 'application/json') {
+        const text = await response.data.text();
+        const result = JSON.parse(text);
+
+        if (!result.success) {
+          throw new Error(result.error || 'Processing failed');
+        }
+
+        // Multiple files result
+        const results = result.files;
+        results.forEach(res => {
+          saveToHistory(res.data, res.data);
+        });
+        setProcessedImage(results[0].data);
+        toast.success(`${results.length} images processed!`);
+      } else {
+        // Single file result (Image Blob)
         const localUrl = URL.createObjectURL(fileList[0]);
         setOriginalImage(localUrl);
 
-        const base64 = btoa(
-          new Uint8Array(response.data).reduce(
-            (data, byte) => data + String.fromCharCode(byte),
-            '',
-          ),
-        );
-        const processedUrl = `data:image/png;base64,${base64}`;
+        const processedUrl = URL.createObjectURL(response.data);
         setProcessedImage(processedUrl);
-        saveToHistory(localUrl, processedUrl);
+
+        // Convert blob to base64 for persistent history
+        const reader = new FileReader();
+        reader.readAsDataURL(response.data);
+        reader.onloadend = () => {
+          saveToHistory(localUrl, reader.result);
+        };
+        
         toast.success('Background removed!');
-      } else {
-        // Handle multiple files JSON response
-        const results = response.data.files;
-        results.forEach(res => {
-          // We don't have original local URLs for all easily in this simplified preview,
-          // but we can save them to history
-          saveToHistory(res.data, res.data); // Use processed for both if original not available
-        });
-        setProcessedImage(results[0].data); // Preview the first one
-        toast.success(`${results.length} images processed!`);
       }
     } catch (err) {
       console.error(err);
       let errorMessage = 'Failed to process image. Please try again.';
       
-      if (err.response) {
-        if (err.response.status === 429) {
-          errorMessage = 'Daily free limit reached. Please upgrade to Pro.';
-        } else if (err.response.data) {
-          // Attempt to parse arraybuffer error response to string
-          try {
-            const decodedError = new TextDecoder().decode(err.response.data);
-            const errorJson = JSON.parse(decodedError);
-            if (errorJson.error) errorMessage = errorJson.error;
-          } catch (e) {
-            // ignore JSON parse error
-          }
-        }
+      if (err.response && err.response.data instanceof Blob) {
+        try {
+          const text = await err.response.data.text();
+          const errorJson = JSON.parse(text);
+          if (errorJson.error) errorMessage = errorJson.error;
+        } catch (e) { /* ignore */ }
+      } else if (err.message) {
+        errorMessage = err.message;
       }
       
       setError(errorMessage);
