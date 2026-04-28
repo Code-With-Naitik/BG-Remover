@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Mail, Lock, User, ArrowRight, Loader2, Sparkles, CheckCircle } from 'lucide-react';
+import { Mail, Lock, User, ArrowRight, Loader2, Sparkles, ShieldCheck, CheckCircle2 } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { Helmet } from 'react-helmet-async';
 
@@ -28,144 +28,279 @@ const SignupPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsSubmitting(true);
+    if (!formData.name || !formData.email || !formData.password) {
+      return toast.error('Please fill in all fields');
+    }
+    if (formData.password.length < 6) {
+      return toast.error('Password must be at least 6 characters');
+    }
 
+    setIsSubmitting(true);
     try {
       await signup(formData.name, formData.email, formData.password);
-      toast.success('Account created successfully!');
+      toast.success('Welcome to Snaplix AI!');
     } catch (err) {
-      toast.error(err.response?.data?.message || 'Failed to sign up');
+      toast.error(err.response?.data?.message || 'Failed to create account. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-[#fcfcfd] flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative overflow-hidden">
+    <div className="auth-container">
       <Helmet>
-        <title>Sign Up — BGRemover Pro</title>
+        <title>Create Account — Snaplix AI</title>
       </Helmet>
 
-      {/* Decorative Orbs */}
-      <div className="absolute top-0 right-0 w-full h-full overflow-hidden pointer-events-none opacity-20">
-        <div className="absolute top-[10%] right-[-5%] w-[45%] h-[45%] bg-indigo-200 rounded-full blur-[120px]"></div>
-        <div className="absolute -bottom-[5%] left-[5%] w-[35%] h-[35%] bg-violet-200 rounded-full blur-[90px]"></div>
+      {/* Dynamic Background Elements */}
+      <div className="auth-bg">
+        <div className="blob blob-1"></div>
+        <div className="blob blob-2"></div>
+        <div className="blob blob-3"></div>
       </div>
 
-      <div className="sm:mx-auto sm:w-full sm:max-w-md relative z-10">
-        <div className="flex justify-center">
-          <div className="w-16 h-16 bg-white rounded-3xl shadow-xl flex items-center justify-center border border-slate-100 mb-8 transform hover:-rotate-12 transition-transform">
-            <Sparkles className="text-indigo-600" size={32} />
-          </div>
-        </div>
-        <h2 className="text-center text-4xl font-black text-slate-900 tracking-tight mb-2">Create Account</h2>
-        <p className="text-center text-slate-500 font-medium mb-8">
-          Get started with 5 free credits instantly.
-        </p>
-      </div>
-
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md relative z-10">
-        <div className="bg-white py-10 px-6 shadow-[0_32px_64px_-12px_rgba(0,0,0,0.06)] border border-slate-100 sm:rounded-[2.5rem] sm:px-12">
-          <form className="space-y-6" onSubmit={handleSubmit}>
-            <div>
-              <label htmlFor="name" className="block text-xs font-black text-slate-400 uppercase tracking-widest mb-3">
-                Full Name
-              </label>
-              <div className="relative group">
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                  <User className="text-slate-400 group-focus-within:text-indigo-600 transition-colors" size={20} />
+      <div className="auth-content">
+        <div className="auth-card-wrapper animate-slide-up">
+          <div className="auth-card-glass">
+            <div className="auth-header">
+              <Link to="/" className="auth-logo-link">
+                <div className="auth-logo-icon">
+                  <Sparkles size={24} className="text-white" />
                 </div>
-                <input
-                  id="name"
-                  name="name"
-                  type="text"
-                  required
-                  value={formData.name}
-                  onChange={handleChange}
-                  className="block w-full pl-12 pr-4 py-4 bg-slate-50 border border-slate-100 rounded-2xl text-slate-900 font-bold focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 focus:bg-white transition-all sm:text-sm"
-                  placeholder="John Doe"
-                />
-              </div>
+              </Link>
+              <h1 className="auth-title">Get Started</h1>
+              <p className="auth-subtitle">Create your account to unlock full AI power</p>
             </div>
 
-            <div>
-              <label htmlFor="email" className="block text-xs font-black text-slate-400 uppercase tracking-widest mb-3">
-                Email Address
-              </label>
-              <div className="relative group">
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                  <Mail className="text-slate-400 group-focus-within:text-indigo-600 transition-colors" size={20} />
+            <form className="auth-form" onSubmit={handleSubmit}>
+              <div className="input-stack">
+                <div className="input-wrapper top">
+                  <div className="input-icon">
+                    <User size={18} />
+                  </div>
+                  <input
+                    type="text"
+                    name="name"
+                    required
+                    value={formData.name}
+                    onChange={handleChange}
+                    className="auth-input"
+                    placeholder="Full Name"
+                  />
                 </div>
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  required
-                  value={formData.email}
-                  onChange={handleChange}
-                  className="block w-full pl-12 pr-4 py-4 bg-slate-50 border border-slate-100 rounded-2xl text-slate-900 font-bold focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 focus:bg-white transition-all sm:text-sm"
-                  placeholder="name@company.com"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label htmlFor="password" className="block text-xs font-black text-slate-400 uppercase tracking-widest mb-3">
-                Password
-              </label>
-              <div className="relative group">
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                  <Lock className="text-slate-400 group-focus-within:text-indigo-600 transition-colors" size={20} />
+                <div className="input-wrapper middle">
+                  <div className="input-icon">
+                    <Mail size={18} />
+                  </div>
+                  <input
+                    type="email"
+                    name="email"
+                    required
+                    value={formData.email}
+                    onChange={handleChange}
+                    className="auth-input"
+                    placeholder="Email Address"
+                  />
                 </div>
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  required
-                  value={formData.password}
-                  onChange={handleChange}
-                  className="block w-full pl-12 pr-4 py-4 bg-slate-50 border border-slate-100 rounded-2xl text-slate-900 font-bold focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 focus:bg-white transition-all sm:text-sm"
-                  placeholder="Min. 6 characters"
-                />
+                <div className="input-wrapper bottom">
+                  <div className="input-icon">
+                    <Lock size={18} />
+                  </div>
+                  <input
+                    type="password"
+                    name="password"
+                    required
+                    value={formData.password}
+                    onChange={handleChange}
+                    className="auth-input"
+                    placeholder="Create Password"
+                  />
+                </div>
               </div>
-            </div>
 
-            <div className="space-y-3">
-               <div className="flex items-center gap-2 text-xs font-bold text-slate-500">
-                  <CheckCircle size={14} className="text-emerald-500" /> 5 Free Daily Credits
-               </div>
-               <div className="flex items-center gap-2 text-xs font-bold text-slate-500">
-                  <CheckCircle size={14} className="text-emerald-500" /> High-Resolution Exports
-               </div>
-            </div>
+              <div className="benefits-list">
+                <div className="benefit-item">
+                  <CheckCircle2 size={14} className="text-emerald-500" />
+                  <span>5 Free Daily Credits</span>
+                </div>
+                <div className="benefit-item">
+                  <CheckCircle2 size={14} className="text-emerald-500" />
+                  <span>High-Resolution Exports</span>
+                </div>
+              </div>
 
-            <div>
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full flex justify-center items-center gap-3 py-4 px-6 border border-transparent rounded-2xl shadow-xl shadow-indigo-100 text-sm font-black text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all disabled:opacity-50 disabled:cursor-not-allowed transform hover:-translate-y-0.5 active:translate-y-0"
+                className="btn btn-gradient w-full py-4 rounded-xl flex items-center justify-center gap-2 group"
               >
                 {isSubmitting ? (
                   <Loader2 className="animate-spin" size={20} />
                 ) : (
                   <>
-                    Create Account <ArrowRight size={18} />
+                    Create Free Account
+                    <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                   </>
                 )}
               </button>
-            </div>
-          </form>
+            </form>
 
-          <div className="mt-10 pt-10 border-t border-slate-50">
-            <p className="text-center text-sm font-bold text-slate-500">
-              Already have an account?{' '}
-              <Link to="/login" className="font-black text-indigo-600 hover:text-indigo-500 transition-colors underline decoration-2 underline-offset-4">
-                Sign in instead
-              </Link>
-            </p>
+            <div className="auth-footer">
+              <p>
+                Already have an account? <Link to="/login">Sign in here</Link>
+              </p>
+            </div>
+            
+            <div className="auth-trust">
+              <div className="flex items-center justify-center gap-2 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                <ShieldCheck size={12} className="text-emerald-500" />
+                <span>Secure 256-bit SSL Encryption</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+
+      <style>{`
+        .auth-container {
+          height: 100vh;
+          width: 100vw;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          position: relative;
+          overflow: hidden;
+          padding: 1rem;
+        }
+
+        .auth-bg {
+          position: absolute;
+          inset: 0;
+          z-index: 0;
+          overflow: hidden;
+          background: var(--bg-primary);
+        }
+
+        .blob {
+          position: absolute;
+          border-radius: 50%;
+          filter: blur(80px);
+          opacity: 0.15;
+          animation: float 20s infinite alternate ease-in-out;
+        }
+
+        .blob-1 { width: 500px; height: 500px; background: var(--accent); top: -100px; left: -100px; }
+        .blob-2 { width: 400px; height: 400px; background: #a855f7; bottom: -50px; right: -50px; animation-delay: -5s; }
+        .blob-3 { width: 300px; height: 300px; background: #ec4899; top: 10%; right: 20%; animation-delay: -10s; }
+
+        .auth-content {
+          width: 100%;
+          max-width: 420px;
+          position: relative;
+          z-index: 10;
+        }
+
+        .auth-card-glass {
+          background: var(--glass-bg);
+          backdrop-filter: blur(24px) saturate(180%);
+          -webkit-backdrop-filter: blur(24px) saturate(180%);
+          border: 1px solid var(--glass-border);
+          border-radius: 2rem;
+          padding: 2.5rem 2rem;
+          box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+          max-height: 98vh;
+          overflow-y: auto;
+          scrollbar-width: none;
+        }
+
+        .auth-card-glass::-webkit-scrollbar { display: none; }
+
+        .auth-header { text-align: center; margin-bottom: 2rem; }
+
+        .auth-logo-link { display: inline-block; transition: transform 0.3s ease; }
+        .auth-logo-link:hover { transform: scale(1.1) rotate(5deg); }
+
+        .auth-logo-icon {
+          width: 48px; height: 48px;
+          background: var(--accent-gradient);
+          border-radius: 1rem;
+          display: flex; items-center; justify-content: center;
+          margin: 0 auto 1.25rem;
+          box-shadow: 0 10px 20px rgba(99, 102, 241, 0.25);
+        }
+
+        .auth-title {
+          font-size: 1.75rem; font-weight: 900;
+          color: var(--text-primary);
+          letter-spacing: -0.04em; margin-bottom: 0.5rem;
+        }
+
+        .auth-subtitle {
+          color: var(--text-secondary);
+          font-size: 0.875rem; font-weight: 500;
+        }
+
+        .input-stack {
+          background: var(--bg-secondary);
+          border: 1px solid var(--border-color);
+          border-radius: 1rem;
+          overflow: hidden;
+          margin-bottom: 1.25rem;
+        }
+
+        .input-wrapper {
+          position: relative;
+          transition: background 0.2s;
+        }
+
+        .input-wrapper.top, .input-wrapper.middle { border-bottom: 1px solid var(--border-color); }
+        .input-wrapper:focus-within { background: var(--bg-card); z-index: 1; }
+
+        .input-icon {
+          position: absolute; left: 1rem; top: 50%;
+          transform: translateY(-50%);
+          color: var(--text-muted); transition: color 0.2s;
+          pointer-events: none;
+        }
+
+        .auth-input {
+          width: 100%; padding: 1rem 1rem 1rem 3.25rem;
+          background: transparent; border: none;
+          color: var(--text-primary); font-size: 0.9375rem;
+          font-weight: 600; outline: none;
+        }
+
+        .input-wrapper:focus-within .input-icon { color: var(--accent); }
+
+        .benefits-list {
+          margin: 0 0 1.5rem 0.25rem;
+          display: flex; flex-direction: column; gap: 0.625rem;
+        }
+
+        .benefit-item {
+          display: flex; align-items: center; gap: 0.625rem;
+          font-size: 0.8125rem; font-weight: 600; color: var(--text-secondary);
+        }
+
+        .auth-footer {
+          text-align: center; font-size: 0.875rem;
+          font-weight: 600; color: var(--text-secondary);
+          margin: 1.5rem 0;
+        }
+
+        .auth-footer a { color: var(--accent); font-weight: 800; text-decoration: none; }
+
+        .auth-trust {
+          padding-top: 1.25rem;
+          border-top: 1px solid var(--border-color);
+        }
+
+        @keyframes float {
+          0% { transform: translate(0, 0) scale(1); }
+          50% { transform: translate(-20px, 20px) scale(1.1); }
+          100% { transform: translate(20px, -20px) scale(0.9); }
+        }
+      `}</style>
     </div>
   );
 };

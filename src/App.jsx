@@ -47,6 +47,8 @@ const LoadingScreen = () => (
 function App() {
   const location = useLocation();
   const isAdminRoute = location.pathname.startsWith('/admin');
+  const isAuthRoute = location.pathname === '/login' || location.pathname === '/signup';
+  const isDashboardRoute = location.pathname === '/dashboard';
 
   return (
     <AuthProvider>
@@ -54,7 +56,7 @@ function App() {
         <ScrollToTop />
         <Toaster position="top-right" />
         <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-          {!isAdminRoute && <Navbar />}
+          {!isAdminRoute && !isAuthRoute && !isDashboardRoute && <Navbar />}
           <main style={{ flex: 1 }}>
             <Suspense fallback={<LoadingScreen />}>
               <Routes>
@@ -101,7 +103,7 @@ function App() {
               </Routes>
             </Suspense>
           </main>
-          {!isAdminRoute && <Footer />}
+          {!isAdminRoute && !isAuthRoute && !isDashboardRoute && <Footer />}
         </div>
       </ThemeProvider>
     </AuthProvider>

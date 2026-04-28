@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, Crown, Zap, CheckCircle, Sparkles, ArrowRight, ChevronDown } from 'lucide-react';
+import { X, Crown, Zap, CheckCircle, Sparkles, ArrowRight, ChevronDown, ShieldCheck, Star } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 
@@ -13,16 +13,13 @@ const PLANS = [
     badge: null,
     cta: 'Get Started',
     ctaTo: '/tool',
-    ctaClass: 'bg-white border-2 border-slate-200 text-slate-900 hover:border-slate-300 hover:bg-slate-50',
     highlight: false,
+    color: 'slate',
     features: [
-      { label: '5 free images daily', included: true },
-      { label: 'Standard resolution (0.25 MP)', included: true },
-      { label: 'Transparent PNG downloads', included: true },
-      { label: 'Personal use license', included: true },
-      { label: 'Email support', included: false },
-      { label: 'Commercial use rights', included: false },
-      { label: 'High-resolution (25 MP)', included: false },
+      '5 free images daily',
+      'Standard resolution (0.25 MP)',
+      'Transparent PNG downloads',
+      'Personal use license',
     ],
   },
   {
@@ -33,17 +30,16 @@ const PLANS = [
     desc: 'Full power for professional creators and teams.',
     badge: 'Popular Choice',
     cta: 'Unlock Pro Access',
-    ctaTo: '/checkout?plan=monthly',
-    ctaClass: 'bg-indigo-600 text-white hover:bg-indigo-700 shadow-xl shadow-indigo-100',
+    ctaTo: '/signup',
     highlight: true,
+    color: 'indigo',
     features: [
-      { label: 'Unlimited removals', included: true },
-      { label: 'HD quality (up to 25 MP)', included: true },
-      { label: 'Commercial license', included: true },
-      { label: 'Priority processing', included: true },
-      { label: 'No ads or watermarks', included: true },
-      { label: 'API access (100 credits)', included: true },
-      { label: '24/7 Priority support', included: true },
+      'Unlimited removals',
+      'HD quality (up to 25 MP)',
+      'Commercial license',
+      'Priority processing',
+      'No ads or watermarks',
+      'API access (100 credits)',
     ],
   },
   {
@@ -54,17 +50,16 @@ const PLANS = [
     desc: 'The ultimate investment for power users.',
     badge: 'Best Value',
     cta: 'Get Lifetime Access',
-    ctaTo: '/checkout?plan=lifetime',
-    ctaClass: 'bg-slate-900 text-white hover:bg-black',
+    ctaTo: '/signup',
     highlight: false,
+    color: 'purple',
     features: [
-      { label: 'Everything in Pro', included: true },
-      { label: 'One-time payment', included: true },
-      { label: 'VIP feature access', included: true },
-      { label: 'White-labeling (coming soon)', included: true },
-      { label: 'Custom API limits', included: true },
-      { label: 'Dedicated account manager', included: true },
-      { label: 'Future-proof access', included: true },
+      'Everything in Pro',
+      'One-time payment',
+      'VIP feature access',
+      'White-labeling (soon)',
+      'Custom API limits',
+      'Dedicated manager',
     ],
   },
 ];
@@ -74,232 +69,434 @@ const FAQ = [
   { q: 'What is included in the Pro plan?', a: 'The Pro plan gives you unlimited high-definition removals, a commercial license, priority processing, and API access.' },
   { q: 'Do you offer a refund policy?', a: 'Yes, if you are not satisfied with our Pro features, contact us within 7 days for a full refund evaluation.' },
   { q: 'Can I cancel my subscription anytime?', a: 'Absolutely. You can cancel your monthly subscription at any time from your dashboard. No hidden fees.' },
-  { q: 'Is my data secure?', a: 'We prioritize privacy. All images are processed securely and deleted from our servers immediately after processing.' },
 ];
 
 const PricingPage = () => {
-  const schemaFAQ = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: FAQ.map(({ q, a }) => ({
-      '@type': 'Question',
-      name: q,
-      acceptedAnswer: { '@type': 'Answer', text: a },
-    })),
-  };
-
   return (
-    <div className="bg-[#fcfcfd] min-h-screen font-sans selection:bg-indigo-100 selection:text-indigo-700">
-      <style>{`
-        @keyframes mesh-1 { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(5%, 5%) scale(1.05); } }
-        @keyframes mesh-2 { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(-5%, 8%) scale(1.1); } }
-        @keyframes mesh-3 { 0%, 100% { transform: translate(8%, -5%) scale(1.08); } 50% { transform: translate(0, 0) scale(1); } }
-        .mesh-orb { filter: blur(120px); opacity: 0.12; position: absolute; border-radius: 50%; pointer-events: none; transition: opacity 0.5s ease; }
-        .pricing-card-shadow { box-shadow: 0 0 0 1px rgba(0,0,0,0.03), 0 2px 4px rgba(0,0,0,0.02), 0 12px 24px rgba(0,0,0,0.04); }
-        .pricing-card-shadow-active { box-shadow: 0 0 0 1px rgba(79,70,229,0.1), 0 20px 40px -12px rgba(79,70,229,0.15); }
-      `}</style>
-
+    <div className="pricing-page">
       <Helmet>
-        <title>Pricing Plans — BGRemover Pro</title>
+        <title>Pricing Plans — Snaplix AI</title>
         <meta name="description" content="Affordable and transparent pricing for professional AI background removal." />
-        <script type="application/ld+json">{JSON.stringify(schemaFAQ)}</script>
       </Helmet>
 
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-24 md:pt-48 md:pb-36 overflow-hidden bg-white">
-        <div className="absolute inset-0 z-0 pointer-events-none">
-          <div className="mesh-orb bg-indigo-500 w-[800px] h-[800px] -top-96 -left-48 animate-[mesh-1_20s_infinite_ease-in-out]"></div>
-          <div className="mesh-orb bg-violet-400 w-[600px] h-[600px] top-96 -right-48 animate-[mesh-2_25s_infinite_ease-in-out]"></div>
-        </div>
+      {/* Decorative Background */}
+      <div className="pricing-bg">
+        <div className="blob blob-1"></div>
+        <div className="blob blob-2"></div>
+        <div className="blob blob-3"></div>
+      </div>
 
-        <div className="container mx-auto px-4 relative z-10 text-center">
-          <div className="inline-flex items-center gap-2.5 px-4 py-2 mb-10 rounded-full bg-slate-50 border border-slate-200/60 shadow-sm">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
-            </span>
-            <span className="text-[11px] font-bold text-slate-600 uppercase tracking-widest">Pricing Built for Creators</span>
+      <div className="pricing-content">
+        {/* Header */}
+        <header className="pricing-header animate-fade-in">
+          <div className="header-badge">
+            <Star size={14} className="text-amber-500 fill-current" />
+            <span>Pricing built for creators</span>
           </div>
-          <h1 className="text-6xl md:text-[92px] font-black text-slate-900 mb-10 tracking-[-0.05em] leading-[0.85] max-w-5xl mx-auto">
-            Choose the <span className="text-indigo-600 relative inline-block">
-              Perfect
-              <svg className="absolute -bottom-2 left-0 w-full h-2 text-indigo-100" viewBox="0 0 100 10" preserveAspectRatio="none">
-                <path d="M0 5 Q25 0 50 5 T100 5" fill="none" stroke="currentColor" strokeWidth="4" />
-              </svg>
-            </span> Plan
-          </h1>
-          <p className="text-xl md:text-2xl text-slate-500 max-w-2xl mx-auto leading-relaxed font-medium tracking-tight">
-            Transparent, simple, and designed to scale with your ambitions. No hidden fees, ever.
-          </p>
-        </div>
-      </section>
+          <h1>Choose the <span className="gradient-text">Perfect</span> Plan</h1>
+          <p>Transparent, simple, and designed to scale with your ambitions. No hidden fees, ever.</p>
+        </header>
 
-      {/* Pricing Cards */}
-      <section className="py-24 relative z-20">
-        <div className="container mx-auto px-4 max-w-7xl">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 items-stretch">
-            {PLANS.map(plan => (
-              <div
-                key={plan.id}
-                className={`group relative flex flex-col p-12 rounded-[3.5rem] bg-white transition-all duration-700 ${
-                  plan.highlight 
-                    ? 'pricing-card-shadow-active scale-[1.03] z-10' 
-                    : 'pricing-card-shadow border border-slate-100/50 hover:scale-[1.01] hover:border-slate-200'
-                }`}
-              >
-                {plan.badge && (
-                  <div className="absolute -top-6 left-12 px-6 py-2.5 bg-indigo-600 text-white text-[10px] font-black rounded-full flex items-center gap-2 shadow-2xl shadow-indigo-200 tracking-widest uppercase">
-                    <Crown size={12} className="fill-current" /> {plan.badge}
-                  </div>
-                )}
+        {/* Plans Grid */}
+        <div className="plans-grid">
+          {PLANS.map((plan) => (
+            <div 
+              key={plan.id} 
+              className={`plan-card ${plan.highlight ? 'highlighted' : ''} color-${plan.color}`}
+            >
+              {plan.badge && (
+                <div className="plan-badge">
+                  <span>{plan.badge}</span>
+                </div>
+              )}
 
-                <div className="mb-12">
-                  <div className="flex items-center justify-between mb-8">
-                    <h3 className="text-[12px] font-black uppercase tracking-[0.3em] text-slate-400">{plan.name}</h3>
-                    {plan.id === 'lifetime' && <Sparkles size={20} className="text-yellow-400 animate-pulse" />}
+              <div className="plan-main">
+                <div className="plan-info">
+                  <h3>{plan.name}</h3>
+                  <div className="plan-price">
+                    <span className="currency">{plan.price.charAt(0)}</span>
+                    <span className="amount">{plan.price.slice(1)}</span>
+                    <span className="period">/{plan.period}</span>
                   </div>
-                  <div className="flex items-baseline gap-2 mb-6">
-                    <span className="text-7xl font-black text-slate-900 tracking-[-0.06em] leading-none">{plan.price}</span>
-                    <span className="text-slate-400 text-xs font-bold uppercase tracking-widest">/ {plan.period}</span>
-                  </div>
-                  <p className="text-slate-500 text-sm leading-relaxed font-semibold min-h-[48px] pr-4">{plan.desc}</p>
+                  <p className="plan-desc">{plan.desc}</p>
                 </div>
 
-                <Link
-                  to={plan.ctaTo}
-                  className={`flex items-center justify-center gap-3 w-full py-6 px-10 rounded-3xl font-black text-xs tracking-[0.2em] uppercase transition-all duration-500 transform group-hover:translate-y-[-2px] group-hover:shadow-lg active:translate-y-0 ${plan.ctaClass}`}
-                >
-                  {plan.highlight && <Zap size={16} className="fill-current text-yellow-400" />}
-                  {plan.cta}
-                </Link>
+                <div className="plan-cta">
+                  <Link to={plan.ctaTo} className="btn-cta">
+                    {plan.cta}
+                    <ArrowRight size={18} />
+                  </Link>
+                </div>
 
-                <div className="mt-16 pt-16 border-t border-slate-100 space-y-6 flex-grow">
-                  <p className="text-[10px] font-black uppercase tracking-[0.25em] text-slate-300 mb-6">Included Features</p>
-                  {plan.features.map(({ label, included }) => (
-                    <div key={label} className="flex items-start gap-4 transition-opacity duration-300">
-                      <div className={`mt-0.5 flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center ${included ? 'bg-indigo-50 text-indigo-600 shadow-sm' : 'bg-slate-50 text-slate-300'}`}>
-                        {included ? <CheckCircle size={16} strokeWidth={2.5} /> : <X size={16} strokeWidth={2.5} />}
-                      </div>
-                      <span className={`text-[15px] font-bold tracking-tight ${included ? 'text-slate-700' : 'text-slate-400/80 line-through decoration-slate-200'}`}>
-                        {label}
-                      </span>
-                    </div>
-                  ))}
+                <div className="plan-features">
+                  <span className="features-label">What's included:</span>
+                  <ul className="features-list">
+                    {plan.features.map((feature, i) => (
+                      <li key={i}>
+                        <CheckCircle size={18} className="check-icon" />
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
-      </section>
 
-      {/* Comparison Table */}
-      <section className="py-40 bg-white">
-        <div className="container mx-auto px-4 max-w-5xl">
-          <div className="text-center mb-24">
-            <h2 className="text-5xl font-black text-slate-900 mb-8 tracking-[-0.03em]">The Full Breakdown</h2>
-            <p className="text-xl text-slate-500 font-medium max-w-2xl mx-auto">Compare our plans side-by-side and choose the one that fits your workflow.</p>
+        {/* Comparison Section */}
+        <section className="comparison-section glass-card animate-slide-up">
+          <div className="comparison-header">
+            <ShieldCheck size={32} className="text-accent" />
+            <h2>Trusted by 10,000+ Professionals</h2>
+            <p>Our infrastructure is built for reliability and security.</p>
           </div>
           
-          <div className="rounded-[3rem] border border-slate-100/80 overflow-hidden shadow-2xl shadow-slate-100/50 bg-[#fdfdfd]">
-            <table className="w-full text-left border-collapse">
-              <thead>
-                <tr className="bg-white border-b border-slate-100">
-                  <th className="py-10 px-10 text-[11px] font-black uppercase tracking-[0.25em] text-slate-300 w-1/3">Core Features</th>
-                  <th className="py-10 px-10 text-sm font-black text-slate-900 uppercase tracking-widest text-center">Starter</th>
-                  <th className="py-10 px-10 text-sm font-black text-indigo-600 uppercase tracking-widest text-center bg-indigo-50/20">Pro Access</th>
-                  <th className="py-10 px-10 text-sm font-black text-slate-900 uppercase tracking-widest text-center">Lifetime</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-50">
-                {[
-                  { f: 'Daily Images', free: '5 Images', pro: 'Unlimited', life: 'Unlimited' },
-                  { f: 'Max Resolution', free: '0.25 MP', pro: '25 MP (HD)', life: '25 MP (HD)' },
-                  { f: 'Commercial Use', free: <X className="text-slate-300 mx-auto" size={18} />, pro: <CheckCircle className="text-emerald-500 mx-auto" size={18} />, life: <CheckCircle className="text-emerald-500 mx-auto" size={18} /> },
-                  { f: 'Processing Priority', free: 'Standard', pro: 'High', life: 'Ultra VIP' },
-                  { f: 'API Credits', free: '-', pro: '100 / mo', life: '500 / mo' },
-                  { f: 'White-Labeling', free: <X className="text-slate-300 mx-auto" size={18} />, pro: <X className="text-slate-300 mx-auto" size={18} />, life: 'Available' },
-                  { f: 'Support Level', free: 'Self-help', pro: '24/7 Priority', life: 'Direct Concierge' },
-                ].map((row, i) => (
-                  <tr key={i} className="group transition-all hover:bg-slate-50/50">
-                    <td className="py-8 px-10 text-[15px] font-bold text-slate-700">{row.f}</td>
-                    <td className="py-8 px-10 text-sm font-medium text-slate-500 text-center">{row.free}</td>
-                    <td className="py-8 px-10 text-sm font-black text-indigo-600 text-center bg-indigo-50/10 group-hover:bg-indigo-50/20">{row.pro}</td>
-                    <td className="py-8 px-10 text-sm font-bold text-slate-900 text-center">{row.life}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
-      {/* Enterprise CTA */}
-      <section className="py-32">
-        <div className="container mx-auto px-4 max-w-6xl">
-          <div className="relative overflow-hidden p-16 md:p-28 rounded-[5rem] bg-[#0c0e14] text-white">
-            <div className="absolute inset-0 pointer-events-none">
-               <div className="absolute top-[-20%] right-[-10%] w-[80%] h-[120%] bg-indigo-500/10 blur-[140px] rounded-full"></div>
-               <div className="absolute bottom-[-10%] left-[-5%] w-[40%] h-[60%] bg-violet-500/10 blur-[100px] rounded-full"></div>
+          <div className="comparison-features">
+            <div className="comp-item">
+              <h4>99.9% Uptime</h4>
+              <p>Reliable processing whenever you need it.</p>
             </div>
-
-            <div className="relative z-10 grid lg:grid-cols-2 gap-20 items-center">
-              <div>
-                <div className="inline-flex items-center gap-2 px-4 py-1.5 mb-10 rounded-full bg-white/5 border border-white/10 text-indigo-400 text-[10px] font-black tracking-widest uppercase">
-                  Enterprise Solutions
-                </div>
-                <h3 className="text-5xl md:text-[80px] font-black mb-10 tracking-[-0.05em] leading-[0.85]">Scaling <br/><span className="text-indigo-400 italic">Fast?</span></h3>
-                <p className="text-xl text-slate-400 leading-relaxed font-medium mb-12 max-w-md">
-                  Get high-volume API access, custom SLAs, and white-label tools for your entire team.
-                </p>
-                <Link to="/contact" className="group inline-flex items-center gap-3 px-12 py-6 bg-white text-slate-900 font-black rounded-[2.5rem] hover:bg-indigo-50 transition-all uppercase tracking-[0.2em] text-[12px] shadow-2xl shadow-white/5">
-                  Talk to Sales <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
-                </Link>
-              </div>
-              <div className="grid grid-cols-2 gap-8">
-                {[
-                  { l: 'API Requests', v: '10M+' },
-                  { l: 'Server Uptime', v: '99.99%' },
-                  { l: 'Setup Fee', v: '$0' },
-                  { l: 'Integration', v: 'Custom' },
-                ].map(stat => (
-                  <div key={stat.l} className="p-10 rounded-[3rem] bg-white/[0.03] border border-white/5 backdrop-blur-xl hover:bg-white/[0.06] transition-all hover:translate-y-[-5px]">
-                    <p className="text-4xl font-black mb-2 tracking-tight">{stat.v}</p>
-                    <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.25em]">{stat.l}</p>
-                  </div>
-                ))}
-              </div>
+            <div className="comp-divider"></div>
+            <div className="comp-item">
+              <h4>SSL Secure</h4>
+              <p>Your images and data are fully encrypted.</p>
+            </div>
+            <div className="comp-divider"></div>
+            <div className="comp-item">
+              <h4>Global API</h4>
+              <p>Fast responses from our edge network.</p>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* FAQ */}
-      <section className="py-40 bg-white">
-        <div className="container mx-auto px-4 max-w-4xl">
-          <div className="text-center mb-24">
-            <h2 className="text-5xl font-black text-slate-900 mb-6 tracking-tight">Common Questions</h2>
-            <p className="text-xl text-slate-500 font-medium italic">Everything you need to know about our plans.</p>
-          </div>
-          <div className="space-y-8">
-            {FAQ.map(({ q, a }) => (
-              <details
-                key={q}
-                className="group border border-slate-100 rounded-[3rem] bg-[#fbfbfb] transition-all duration-500 open:bg-white open:shadow-[0_24px_48px_-12px_rgba(0,0,0,0.06)]"
-              >
-                <summary className="flex items-center justify-between p-10 cursor-pointer list-none font-black text-slate-800 text-xl leading-snug tracking-tight">
-                  {q}
-                  <div className="w-12 h-12 rounded-full bg-white border border-slate-100 flex items-center justify-center text-indigo-600 transition-all duration-500 group-open:rotate-180 group-open:bg-indigo-600 group-open:text-white shadow-sm">
-                    <ChevronDown size={24} />
-                  </div>
-                </summary>
-                <div className="px-10 pb-10 text-slate-500 text-lg leading-relaxed font-medium">
-                  {a}
-                </div>
-              </details>
+        {/* FAQ Section */}
+        <section className="faq-section">
+          <h2>Frequently Asked Questions</h2>
+          <div className="faq-grid">
+            {FAQ.map((item, i) => (
+              <div key={i} className="faq-item glass-card">
+                <h4>{item.q}</h4>
+                <p>{item.a}</p>
+              </div>
             ))}
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
+
+      <style>{`
+        .pricing-page {
+          min-height: 100vh;
+          background: var(--bg-primary);
+          color: var(--text-primary);
+          position: relative;
+          overflow-x: hidden;
+          padding: 8rem 2rem 4rem;
+        }
+
+        .pricing-bg {
+          position: fixed;
+          inset: 0;
+          z-index: 0;
+          pointer-events: none;
+        }
+
+        .blob {
+          position: absolute;
+          border-radius: 50%;
+          filter: blur(100px);
+          opacity: 0.1;
+        }
+
+        .blob-1 { width: 600px; height: 600px; background: var(--accent); top: -100px; right: -200px; }
+        .blob-2 { width: 500px; height: 500px; background: #a855f7; bottom: -100px; left: -200px; }
+        .blob-3 { width: 300px; height: 300px; background: #ec4899; top: 40%; left: 20%; }
+
+        .pricing-content {
+          max-width: 1200px;
+          margin: 0 auto;
+          position: relative;
+          z-index: 10;
+        }
+
+        .pricing-header {
+          text-align: center;
+          margin-bottom: 5rem;
+        }
+
+        .header-badge {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+          background: var(--bg-secondary);
+          border: 1px solid var(--border-color);
+          padding: 0.5rem 1rem;
+          border-radius: 100px;
+          font-size: 0.75rem;
+          font-weight: 800;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          margin-bottom: 1.5rem;
+          color: var(--text-secondary);
+        }
+
+        .pricing-header h1 {
+          font-size: 4rem;
+          font-weight: 900;
+          letter-spacing: -0.04em;
+          margin-bottom: 1rem;
+          line-height: 1.1;
+        }
+
+        .pricing-header p {
+          font-size: 1.125rem;
+          color: var(--text-secondary);
+          max-width: 600px;
+          margin: 0 auto;
+          line-height: 1.6;
+          font-weight: 500;
+        }
+
+        .plans-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 2rem;
+          margin-bottom: 8rem;
+        }
+
+        .plan-card {
+          background: var(--glass-bg);
+          backdrop-filter: blur(20px);
+          border: 1px solid var(--glass-border);
+          border-radius: 2.5rem;
+          padding: 3rem 2.5rem;
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .plan-card:hover {
+          transform: translateY(-10px);
+          box-shadow: 0 30px 60px -12px rgba(0,0,0,0.1);
+          border-color: var(--accent);
+        }
+
+        .plan-card.highlighted {
+          background: var(--bg-card);
+          border-color: var(--accent);
+          box-shadow: 0 20px 40px -12px rgba(99, 102, 241, 0.15);
+          transform: scale(1.05);
+          z-index: 5;
+        }
+
+        .plan-card.highlighted:hover {
+          transform: scale(1.08) translateY(-10px);
+        }
+
+        .plan-badge {
+          position: absolute;
+          top: -14px;
+          left: 50%;
+          transform: translateX(-50%);
+          background: var(--accent-gradient);
+          color: white;
+          padding: 0.4rem 1.25rem;
+          border-radius: 100px;
+          font-size: 0.75rem;
+          font-weight: 900;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+          white-space: nowrap;
+        }
+
+        .plan-info h3 {
+          font-size: 1.25rem;
+          font-weight: 800;
+          color: var(--text-primary);
+          margin-bottom: 1.5rem;
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
+        }
+
+        .plan-price {
+          display: flex;
+          align-items: baseline;
+          gap: 0.25rem;
+          margin-bottom: 1rem;
+        }
+
+        .plan-price .currency { font-size: 1.5rem; font-weight: 800; color: var(--text-muted); }
+        .plan-price .amount { font-size: 3.5rem; font-weight: 900; color: var(--text-primary); letter-spacing: -0.05em; }
+        .plan-price .period { font-size: 1rem; font-weight: 700; color: var(--text-muted); }
+
+        .plan-desc {
+          font-size: 0.9375rem;
+          color: var(--text-secondary);
+          line-height: 1.5;
+          margin-bottom: 2rem;
+          font-weight: 500;
+        }
+
+        .plan-cta {
+          margin-bottom: 2.5rem;
+        }
+
+        .btn-cta {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.75rem;
+          width: 100%;
+          padding: 1.25rem;
+          background: var(--bg-tertiary);
+          border: 1px solid var(--border-color);
+          border-radius: 1.25rem;
+          color: var(--text-primary);
+          font-weight: 800;
+          text-decoration: none;
+          transition: all 0.3s;
+        }
+
+        .highlighted .btn-cta {
+          background: var(--accent-gradient);
+          color: white;
+          border: none;
+          box-shadow: 0 10px 20px rgba(99, 102, 241, 0.2);
+        }
+
+        .btn-cta:hover {
+          background: var(--border-color);
+          transform: translateY(-2px);
+        }
+
+        .highlighted .btn-cta:hover {
+          background: var(--accent-gradient);
+          opacity: 0.9;
+          box-shadow: 0 15px 30px rgba(99, 102, 241, 0.3);
+        }
+
+        .features-label {
+          display: block;
+          font-size: 0.75rem;
+          font-weight: 800;
+          color: var(--text-muted);
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
+          margin-bottom: 1.25rem;
+        }
+
+        .features-list {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
+        }
+
+        .features-list li {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          font-size: 0.9375rem;
+          font-weight: 600;
+          color: var(--text-secondary);
+        }
+
+        .check-icon {
+          color: var(--emerald);
+          flex-shrink: 0;
+        }
+
+        /* Comparison Section */
+        .comparison-section {
+          text-align: center;
+          padding: 4rem;
+          margin-bottom: 8rem;
+          border-radius: 3rem;
+        }
+
+        .comparison-header h2 {
+          font-size: 2rem;
+          font-weight: 900;
+          margin: 1rem 0 0.5rem;
+        }
+
+        .comparison-header p {
+          color: var(--text-secondary);
+          font-weight: 500;
+          margin-bottom: 3rem;
+        }
+
+        .comparison-features {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 2rem;
+        }
+
+        .comp-item h4 {
+          font-size: 1.25rem;
+          font-weight: 800;
+          margin-bottom: 0.25rem;
+        }
+
+        .comp-item p {
+          font-size: 0.875rem;
+          color: var(--text-muted);
+          font-weight: 600;
+        }
+
+        .comp-divider {
+          width: 1px;
+          height: 60px;
+          background: var(--border-color);
+        }
+
+        /* FAQ */
+        .faq-section h2 {
+          text-align: center;
+          font-size: 2.5rem;
+          font-weight: 900;
+          margin-bottom: 4rem;
+        }
+
+        .faq-grid {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 1.5rem;
+        }
+
+        .faq-item {
+          padding: 2rem;
+          border-radius: 2rem;
+        }
+
+        .faq-item h4 {
+          font-size: 1.125rem;
+          font-weight: 800;
+          margin-bottom: 1rem;
+        }
+
+        .faq-item p {
+          font-size: 0.9375rem;
+          color: var(--text-secondary);
+          line-height: 1.6;
+          font-weight: 500;
+        }
+
+        @media (max-width: 1024px) {
+          .plans-grid { grid-template-columns: 1fr; max-width: 500px; margin: 0 auto 5rem; }
+          .plan-card.highlighted { transform: none; }
+          .plan-card.highlighted:hover { transform: translateY(-10px); }
+          .faq-grid { grid-template-columns: 1fr; }
+          .comparison-features { flex-direction: column; gap: 2rem; }
+          .comp-divider { width: 50%; height: 1px; }
+          .pricing-header h1 { font-size: 3rem; }
+        }
+      `}</style>
     </div>
   );
 };

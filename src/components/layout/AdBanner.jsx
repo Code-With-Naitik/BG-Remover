@@ -1,6 +1,11 @@
 import React from 'react';
 
+// Set this to true when you want to see the placeholders or after you've added your ad scripts
+const SHOW_AD_PLACEHOLDERS = false;
+
 const AdBanner = ({ type = 'horizontal' }) => {
+  if (!SHOW_AD_PLACEHOLDERS) return null;
+
   const configs = {
     header: { width: '100%', height: '90px', label: 'Header Ad — 728×90' },
     horizontal: { width: '100%', height: '90px', label: 'Leaderboard Ad — 728×90' },

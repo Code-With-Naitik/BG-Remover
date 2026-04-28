@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Mail, Lock, ArrowRight, Loader2, Sparkles } from 'lucide-react';
+import { Mail, Lock, ArrowRight, Loader2, Sparkles, Eye, EyeOff, ShieldCheck } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { Helmet } from 'react-helmet-async';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const { login, user } = useAuth();
@@ -24,136 +25,291 @@ const LoginPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!email || !password) return toast.error('Please fill in all fields');
+    
     setIsSubmitting(true);
-
     try {
       await login(email, password);
       toast.success('Welcome back!');
     } catch (err) {
-      toast.error(err.response?.data?.message || 'Failed to login');
+      toast.error(err.response?.data?.message || 'Invalid credentials. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-[#fcfcfd] flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative overflow-hidden">
+    <div className="login-container">
       <Helmet>
-        <title>Login — BGRemover Pro</title>
+        <title>Sign In — Snaplix AI</title>
       </Helmet>
 
-      {/* Decorative Orbs */}
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none opacity-20">
-        <div className="absolute -top-[10%] -left-[10%] w-[40%] h-[40%] bg-indigo-200 rounded-full blur-[100px] animate-pulse"></div>
-        <div className="absolute bottom-[10%] right-[10%] w-[30%] h-[30%] bg-violet-200 rounded-full blur-[80px]"></div>
+      {/* Dynamic Background Elements */}
+      <div className="auth-bg">
+        <div className="blob blob-1"></div>
+        <div className="blob blob-2"></div>
+        <div className="blob blob-3"></div>
       </div>
 
-      <div className="sm:mx-auto sm:w-full sm:max-w-md relative z-10">
-        <div className="flex justify-center">
-          <div className="w-16 h-16 bg-white rounded-3xl shadow-xl flex items-center justify-center border border-slate-100 mb-8 transform hover:rotate-12 transition-transform">
-            <Sparkles className="text-indigo-600" size={32} />
-          </div>
-        </div>
-        <h2 className="text-center text-4xl font-black text-slate-900 tracking-tight mb-2">Welcome Back</h2>
-        <p className="text-center text-slate-500 font-medium mb-8">
-          Sign in to access your dashboard and credits.
-        </p>
-      </div>
-
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md relative z-10">
-        <div className="bg-white py-10 px-6 shadow-[0_32px_64px_-12px_rgba(0,0,0,0.06)] border border-slate-100 sm:rounded-[2.5rem] sm:px-12">
-          <form className="space-y-6" onSubmit={handleSubmit}>
-            <div>
-              <label htmlFor="email" className="block text-xs font-black text-slate-400 uppercase tracking-widest mb-3">
-                Email Address
-              </label>
-              <div className="relative group">
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                  <Mail className="text-slate-400 group-focus-within:text-indigo-600 transition-colors" size={20} />
+      <div className="auth-content">
+        <div className="auth-card-wrapper animate-slide-up">
+          <div className="auth-card-glass">
+            <div className="auth-header">
+              <Link to="/" className="auth-logo-link">
+                <div className="auth-logo-icon">
+                  <Sparkles size={24} className="text-white" />
                 </div>
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="block w-full pl-12 pr-4 py-4 bg-slate-50 border border-slate-100 rounded-2xl text-slate-900 font-bold focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 focus:bg-white transition-all sm:text-sm"
-                  placeholder="name@company.com"
-                />
-              </div>
+              </Link>
+              <h1 className="auth-title">Welcome Back</h1>
+              <p className="auth-subtitle">Continue your creative journey with Snaplix AI</p>
             </div>
 
-            <div>
-              <label htmlFor="password" className="block text-xs font-black text-slate-400 uppercase tracking-widest mb-3">
-                Password
-              </label>
-              <div className="relative group">
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                  <Lock className="text-slate-400 group-focus-within:text-indigo-600 transition-colors" size={20} />
+            <form className="auth-form" onSubmit={handleSubmit}>
+              <div className="input-stack">
+                <div className="input-wrapper top">
+                  <div className="input-icon">
+                    <Mail size={18} />
+                  </div>
+                  <input
+                    type="email"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="auth-input"
+                    placeholder="Email Address"
+                  />
                 </div>
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  autoComplete="current-password"
-                  required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="block w-full pl-12 pr-4 py-4 bg-slate-50 border border-slate-100 rounded-2xl text-slate-900 font-bold focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 focus:bg-white transition-all sm:text-sm"
-                  placeholder="••••••••"
-                />
+                <div className="input-wrapper bottom">
+                  <div className="input-icon">
+                    <Lock size={18} />
+                  </div>
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    required
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="auth-input"
+                    placeholder="Password"
+                  />
+                  <button 
+                    type="button" 
+                    className="password-toggle-btn"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                  </button>
+                </div>
               </div>
-            </div>
 
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <input
-                  id="remember-me"
-                  name="remember-me"
-                  type="checkbox"
-                  className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-slate-300 rounded"
-                />
-                <label htmlFor="remember-me" className="ml-2 block text-sm font-bold text-slate-500">
-                  Remember me
+              <div className="auth-options">
+                <label className="checkbox-container">
+                  <input type="checkbox" />
+                  <span className="checkmark"></span>
+                  <span className="checkbox-label">Stay signed in</span>
                 </label>
+                <Link to="/forgot-password" class="forgot-link">
+                  Forgot Password?
+                </Link>
               </div>
 
-              <div className="text-sm">
-                <a href="#" className="font-black text-indigo-600 hover:text-indigo-500 transition-colors">
-                  Forgot password?
-                </a>
-              </div>
-            </div>
-
-            <div>
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full flex justify-center items-center gap-3 py-4 px-6 border border-transparent rounded-2xl shadow-xl shadow-indigo-100 text-sm font-black text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all disabled:opacity-50 disabled:cursor-not-allowed transform hover:-translate-y-0.5 active:translate-y-0"
+                className="btn btn-gradient w-full py-4 rounded-xl flex items-center justify-center gap-2 group"
               >
                 {isSubmitting ? (
                   <Loader2 className="animate-spin" size={20} />
                 ) : (
                   <>
-                    Sign In <ArrowRight size={18} />
+                    Sign In
+                    <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                   </>
                 )}
               </button>
-            </div>
-          </form>
+            </form>
 
-          <div className="mt-10 pt-10 border-t border-slate-50">
-            <p className="text-center text-sm font-bold text-slate-500">
-              New to BGRemover?{' '}
-              <Link to="/signup" className="font-black text-indigo-600 hover:text-indigo-500 transition-colors underline decoration-2 underline-offset-4">
-                Create an account
-              </Link>
-            </p>
+            <div className="auth-footer">
+              <p>
+                Don't have an account? <Link to="/signup">Create one for free</Link>
+              </p>
+            </div>
+            
+            <div className="auth-trust">
+              <div className="flex items-center justify-center gap-2 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                <ShieldCheck size={12} className="text-emerald-500" />
+                <span>Secure 256-bit SSL Encryption</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+
+      <style>{`
+        .login-container {
+          height: 100vh;
+          width: 100vw;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          position: relative;
+          overflow: hidden;
+          padding: 1rem;
+        }
+
+        .auth-bg {
+          position: absolute;
+          inset: 0;
+          z-index: 0;
+          overflow: hidden;
+          background: var(--bg-primary);
+        }
+
+        .blob {
+          position: absolute;
+          border-radius: 50%;
+          filter: blur(80px);
+          opacity: 0.15;
+          animation: float 20s infinite alternate ease-in-out;
+        }
+
+        .blob-1 { width: 500px; height: 500px; background: var(--accent); top: -100px; right: -100px; }
+        .blob-2 { width: 400px; height: 400px; background: #a855f7; bottom: -50px; left: -50px; animation-delay: -5s; }
+        .blob-3 { width: 300px; height: 300px; background: #ec4899; top: 40%; left: 20%; animation-delay: -10s; }
+
+        .auth-content {
+          width: 100%;
+          max-width: 420px;
+          position: relative;
+          z-index: 10;
+        }
+
+        .auth-card-glass {
+          background: var(--glass-bg);
+          backdrop-filter: blur(24px) saturate(180%);
+          -webkit-backdrop-filter: blur(24px) saturate(180%);
+          border: 1px solid var(--glass-border);
+          border-radius: 2rem;
+          padding: 2.5rem 2rem;
+          box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+          max-height: 98vh;
+          overflow-y: auto;
+          scrollbar-width: none;
+        }
+
+        .auth-card-glass::-webkit-scrollbar { display: none; }
+
+        .auth-header { text-align: center; margin-bottom: 2rem; }
+
+        .auth-logo-link { display: inline-block; transition: transform 0.3s ease; }
+        .auth-logo-link:hover { transform: scale(1.1) rotate(5deg); }
+
+        .auth-logo-icon {
+          width: 48px; height: 48px;
+          background: var(--accent-gradient);
+          border-radius: 1rem;
+          display: flex; items-center; justify-content: center;
+          margin: 0 auto 1.25rem;
+          box-shadow: 0 10px 20px rgba(99, 102, 241, 0.25);
+        }
+
+        .auth-title {
+          font-size: 1.75rem; font-weight: 900;
+          color: var(--text-primary);
+          letter-spacing: -0.04em; margin-bottom: 0.5rem;
+        }
+
+        .auth-subtitle {
+          color: var(--text-secondary);
+          font-size: 0.875rem; font-weight: 500;
+        }
+
+        .input-stack {
+          background: var(--bg-secondary);
+          border: 1px solid var(--border-color);
+          border-radius: 1rem;
+          overflow: hidden;
+          margin-bottom: 1rem;
+        }
+
+        .input-wrapper {
+          position: relative;
+          transition: background 0.2s;
+        }
+
+        .input-wrapper.top { border-bottom: 1px solid var(--border-color); }
+        .input-wrapper:focus-within { background: var(--bg-card); z-index: 1; }
+
+        .input-icon {
+          position: absolute; left: 1rem; top: 50%;
+          transform: translateY(-50%);
+          color: var(--text-muted); transition: color 0.2s;
+          pointer-events: none;
+        }
+
+        .auth-input {
+          width: 100%; padding: 1rem 1rem 1rem 3.25rem;
+          background: transparent; border: none;
+          color: var(--text-primary); font-size: 0.9375rem;
+          font-weight: 600; outline: none;
+        }
+
+        .input-wrapper:focus-within .input-icon { color: var(--accent); }
+
+        .password-toggle-btn {
+          position: absolute; right: 1rem; top: 50%;
+          transform: translateY(-50%);
+          color: var(--text-muted); background: none;
+          border: none; cursor: pointer; padding: 0.25rem;
+        }
+
+        .auth-options {
+          display: flex; align-items: center; justify-content: space-between;
+          margin-bottom: 1.5rem; padding: 0 0.25rem;
+        }
+
+        .forgot-link {
+          font-size: 0.75rem; font-weight: 700;
+          color: var(--accent); text-decoration: none;
+        }
+
+        .checkbox-container {
+          display: flex; align-items: center; cursor: pointer;
+          font-size: 0.8125rem; color: var(--text-secondary); font-weight: 600;
+        }
+
+        .checkbox-container input { position: absolute; opacity: 0; }
+        .checkmark {
+          height: 16px; width: 16px; background: var(--bg-tertiary);
+          border-radius: 4px; margin-right: 0.5rem; position: relative;
+        }
+
+        .checkbox-container input:checked ~ .checkmark { background: var(--accent); }
+        .checkmark:after {
+          content: ""; position: absolute; display: none;
+          left: 5px; top: 2px; width: 4px; height: 8px;
+          border: solid white; border-width: 0 2px 2px 0; transform: rotate(45deg);
+        }
+        .checkbox-container input:checked ~ .checkmark:after { display: block; }
+
+        .auth-footer {
+          text-align: center; font-size: 0.875rem;
+          font-weight: 600; color: var(--text-secondary);
+          margin: 1.5rem 0;
+        }
+
+        .auth-footer a { color: var(--accent); font-weight: 800; text-decoration: none; }
+
+        .auth-trust {
+          padding-top: 1.25rem;
+          border-top: 1px solid var(--border-color);
+        }
+
+        @keyframes float {
+          0% { transform: translate(0, 0) scale(1); }
+          50% { transform: translate(-20px, 20px) scale(1.1); }
+          100% { transform: translate(20px, -20px) scale(0.9); }
+        }
+      `}</style>
     </div>
   );
 };

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useTheme } from '../../context/ThemeContext';
 import { useAuth } from '../../context/AuthContext';
-import { Sun, Moon, Menu, X, Sparkles, User, LogOut, LayoutDashboard, Zap } from 'lucide-react';
+import { Sun, Moon, Menu, X, Sparkles, User, LogOut, LayoutDashboard, Zap, ChevronDown, Settings } from 'lucide-react';
 
 const NAV_LINKS = [
   { to: '/tool', label: 'Remove BG' },
@@ -151,25 +151,54 @@ const Navbar = () => {
               <div className="relative">
                 <button
                   onClick={() => setIsProfileOpen(!isProfileOpen)}
-                  className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-50 border border-slate-200 hover:bg-slate-100 transition-all"
+                  className="profile-trigger group"
                 >
-                  <div className="w-6 h-6 rounded-full bg-indigo-600 text-white flex items-center justify-center text-[10px] font-bold">
-                    {user.name.charAt(0)}
+                  <div className="avatar-circle">
+                    {user.name.charAt(0).toUpperCase()}
                   </div>
-                  <span className="text-xs font-bold text-slate-700 hide-mobile">{user.credits} Credits</span>
+                  <div className="trigger-info hide-mobile">
+                    <span className="credits-count">{user.credits} Credits</span>
+                    <ChevronDown size={14} className={`trigger-arrow ${isProfileOpen ? 'rotate-180' : ''}`} />
+                  </div>
                 </button>
 
                 {isProfileOpen && (
-                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-2xl shadow-xl border border-slate-100 py-2 z-[110]">
-                    <Link to="/dashboard" className="flex items-center gap-3 px-4 py-2.5 text-sm font-bold text-slate-600 hover:bg-slate-50 transition-all">
-                      <LayoutDashboard size={16} /> Dashboard
-                    </Link>
-                    <Link to="/pricing" className="flex items-center gap-3 px-4 py-2.5 text-sm font-bold text-slate-600 hover:bg-slate-50 transition-all text-indigo-600">
-                      <Zap size={16} /> Get Credits
-                    </Link>
-                    <div className="h-px bg-slate-50 my-1"></div>
-                    <button onClick={handleLogout} className="flex items-center gap-3 w-full px-4 py-2.5 text-sm font-bold text-red-500 hover:bg-red-50 transition-all text-left">
-                      <LogOut size={16} /> Logout
+                  <div className="profile-dropdown glass animate-fade-in">
+                    <div className="dropdown-header">
+                      <p className="user-name-display">{user.name}</p>
+                      <p className="user-email-display">{user.email}</p>
+                    </div>
+                    
+                    <div className="dropdown-divider"></div>
+
+                    <div className="dropdown-links">
+                      <Link to="/dashboard" className="dropdown-item">
+                        <div className="item-icon bg-indigo-50 text-indigo-600">
+                          <LayoutDashboard size={16} />
+                        </div>
+                        <span>Dashboard</span>
+                      </Link>
+                      <Link to="/pricing" className="dropdown-item">
+                        <div className="item-icon bg-amber-50 text-amber-500">
+                          <Zap size={16} className="fill-current" />
+                        </div>
+                        <span>Get Credits</span>
+                      </Link>
+                      <Link to="/settings" className="dropdown-item">
+                        <div className="item-icon bg-slate-50 text-slate-500">
+                          <Settings size={16} />
+                        </div>
+                        <span>Settings</span>
+                      </Link>
+                    </div>
+
+                    <div className="dropdown-divider"></div>
+
+                    <button onClick={handleLogout} className="dropdown-item logout-item">
+                      <div className="item-icon bg-red-50 text-red-500">
+                        <LogOut size={16} />
+                      </div>
+                      <span>Sign Out</span>
                     </button>
                   </div>
                 )}
@@ -285,6 +314,145 @@ const Navbar = () => {
       <style>{`
         @media (max-width: 768px) {
           .mobile-toggle { display: flex !important; }
+        }
+
+        .profile-trigger {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          padding: 0.375rem;
+          padding-right: 0.75rem;
+          background: var(--bg-secondary);
+          border: 1px solid var(--border-color);
+          border-radius: 100px;
+          cursor: pointer;
+          transition: all 0.2s;
+        }
+
+        .profile-trigger:hover {
+          background: var(--bg-tertiary);
+          border-color: var(--accent);
+          transform: translateY(-1px);
+        }
+
+        .avatar-circle {
+          width: 32px;
+          height: 32px;
+          border-radius: 50%;
+          background: var(--accent-gradient);
+          color: white;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: 800;
+          font-size: 0.75rem;
+          box-shadow: 0 4px 8px rgba(99,102,241,0.2);
+        }
+
+        .trigger-info {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+        }
+
+        .credits-count {
+          font-size: 0.8125rem;
+          font-weight: 800;
+          color: var(--text-primary);
+        }
+
+        .trigger-arrow {
+          color: var(--text-muted);
+          transition: transform 0.3s ease;
+        }
+
+        .profile-dropdown {
+          position: absolute;
+          top: calc(100% + 0.75rem);
+          right: 0;
+          width: 240px;
+          background: var(--glass-bg);
+          backdrop-filter: blur(24px) saturate(180%);
+          border: 1px solid var(--glass-border);
+          border-radius: 1.5rem;
+          padding: 0.75rem;
+          box-shadow: 0 20px 40px -12px rgba(0,0,0,0.12);
+          z-index: 110;
+        }
+
+        .dropdown-header {
+          padding: 0.75rem 1rem;
+        }
+
+        .user-name-display {
+          font-size: 0.875rem;
+          font-weight: 800;
+          color: var(--text-primary);
+          margin-bottom: 0.125rem;
+        }
+
+        .user-email-display {
+          font-size: 0.75rem;
+          font-weight: 600;
+          color: var(--text-muted);
+        }
+
+        .dropdown-divider {
+          height: 1px;
+          background: var(--border-color);
+          margin: 0.5rem 0.75rem;
+        }
+
+        .dropdown-links {
+          display: flex;
+          flex-direction: column;
+          gap: 0.25rem;
+        }
+
+        .dropdown-item {
+          display: flex;
+          align-items: center;
+          gap: 0.875rem;
+          padding: 0.625rem 0.75rem;
+          border-radius: 12px;
+          text-decoration: none;
+          color: var(--text-secondary);
+          font-size: 0.875rem;
+          font-weight: 700;
+          transition: all 0.2s;
+          background: transparent;
+          border: none;
+          width: 100%;
+          cursor: pointer;
+        }
+
+        .dropdown-item:hover {
+          background: var(--bg-secondary);
+          color: var(--text-primary);
+          transform: translateX(4px);
+        }
+
+        .item-icon {
+          width: 32px;
+          height: 32px;
+          border-radius: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .logout-item:hover {
+          background: var(--red-light);
+          color: var(--red);
+        }
+
+        @keyframes fade-in {
+          from { opacity: 0; transform: translateY(10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fade-in {
+          animation: fade-in 0.2s ease-out forwards;
         }
       `}</style>
     </>
