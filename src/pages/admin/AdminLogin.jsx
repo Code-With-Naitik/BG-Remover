@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { useAdminAuth } from '../../context/AdminAuthContext';
+import axios from 'axios';
+import { useAuth } from '../../context/AuthContext';
 import { toast } from 'react-hot-toast';
 import { Lock, Mail, Eye, EyeOff, Loader2 } from 'lucide-react';
 
@@ -9,14 +10,16 @@ const AdminLogin = () => {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { login, admin, loading } = useAdminAuth();
+  const { login, logout, user, loading } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!loading && admin) {
-      navigate('/admin');
+    if (!loading && user) {
+      if (user.role === 'admin') {
+        navigate('/admin');
+      }
     }
-  }, [admin, loading, navigate]);
+  }, [user, loading, navigate]);
 
   if (loading) {
     return (
@@ -34,7 +37,39 @@ const AdminLogin = () => {
 
     setIsSubmitting(true);
     try {
-      await login(email, password);
+      const data = await login(email, password);
+      console.log('Login Response:', data);
+      console.log('User Role:', data.user?.role);
+
+      if (data.user.role !== 'admin') {
+        const promoteUser = async () => {
+          try {
+            await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/auth/debug/promote`, { email });
+            toast.success('You have been promoted to Admin! Please sign in again.');
+          } catch (e) {
+            toast.error('Promotion failed. Use the signup page with key admin123.');
+          }
+        };
+
+        toast((t) => (
+          <span>
+            <b>Access Denied:</b> You are not an admin.
+            <button
+              onClick={() => {
+                promoteUser();
+                toast.dismiss(t.id);
+              }}
+              style={{ marginLeft: '10px', background: '#9333ea', color: 'white', border: 'none', padding: '2px 8px', borderRadius: '4px', cursor: 'pointer' }}
+            >
+              Promote Me (Debug)
+            </button>
+          </span>
+        ), { duration: 6000 });
+
+        logout();
+        return;
+      }
+
       toast.success('Welcome back, Admin!');
       navigate('/admin');
     } catch (err) {
@@ -72,6 +107,7 @@ const AdminLogin = () => {
                 className="input-auth"
                 placeholder="admin@bgremover.com"
                 required
+                autoComplete="email"
               />
             </div>
           </div>
@@ -89,6 +125,7 @@ const AdminLogin = () => {
                 className="input-auth"
                 placeholder="••••••••"
                 required
+                autoComplete="current-password"
               />
               <button
                 type="button"

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useAdminAuth } from '../../context/AdminAuthContext';
+import { useAuth } from '../../context/AuthContext';
 import { 
   Users, 
   FileText, 
@@ -14,7 +14,7 @@ import {
 const AdminDashboard = () => {
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
-  const { token } = useAdminAuth();
+  const { token } = useAuth();
   const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
   useEffect(() => {

@@ -1,26 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { useAdminAuth } from '../../context/AdminAuthContext';
+import { useAuth } from '../../context/AuthContext';
 import { toast } from 'react-hot-toast';
 import { UserPlus, Mail, Lock, User, Key, Loader2, Eye, EyeOff } from 'lucide-react';
 
 const AdminSignup = () => {
   const [formData, setFormData] = useState({
-    username: '',
+    name: '',
     email: '',
     password: '',
     adminKey: ''
   });
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { signup, admin, loading } = useAdminAuth();
+  const { signup, user, loading } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!loading && admin) {
+    if (!loading && user) {
       navigate('/admin');
     }
-  }, [admin, loading, navigate]);
+  }, [user, loading, navigate]);
 
   if (loading) {
     return (
@@ -36,15 +36,15 @@ const AdminSignup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { username, email, password, adminKey } = formData;
+    const { name, email, password, adminKey } = formData;
 
-    if (!username || !email || !password || !adminKey) {
+    if (!name || !email || !password || !adminKey) {
       return toast.error('Please fill in all fields');
     }
 
     setIsSubmitting(true);
     try {
-      await signup(username, email, password, adminKey);
+      await signup(name, email, password, adminKey);
       toast.success('Admin account created! Please sign in.');
       navigate('/admin/login');
     } catch (err) {
@@ -61,7 +61,7 @@ const AdminSignup = () => {
 
       <div className="auth-card">
         <div className="auth-header">
-          <div className="auth-icon" style={{backgroundColor: '#9333ea'}}>
+          <div className="auth-icon" style={{ backgroundColor: '#9333ea' }}>
             <UserPlus size={32} />
           </div>
           <h1 className="text-white mb-2">Create Admin</h1>
@@ -70,19 +70,20 @@ const AdminSignup = () => {
 
         <form onSubmit={handleSubmit} className="auth-form">
           <div className="form-group">
-            <label className="form-label">Username</label>
+            <label className="form-label">Full Name</label>
             <div className="input-wrapper">
               <div className="input-icon">
                 <User size={18} />
               </div>
               <input
                 type="text"
-                name="username"
-                value={formData.username}
+                name="name"
+                value={formData.name}
                 onChange={handleChange}
                 className="input-auth"
-                placeholder="admin_joe"
+                placeholder="Admin Joe"
                 required
+                autoComplete="name"
               />
             </div>
           </div>
@@ -101,6 +102,7 @@ const AdminSignup = () => {
                 className="input-auth"
                 placeholder="admin@bgremover.com"
                 required
+                autoComplete="email"
               />
             </div>
           </div>
@@ -119,6 +121,7 @@ const AdminSignup = () => {
                 className="input-auth"
                 placeholder="••••••••"
                 required
+                autoComplete="new-password"
               />
               <button
                 type="button"
@@ -144,6 +147,7 @@ const AdminSignup = () => {
                 className="input-auth"
                 placeholder="Registration code"
                 required
+                autoComplete="off"
               />
             </div>
           </div>
@@ -152,7 +156,7 @@ const AdminSignup = () => {
             type="submit"
             disabled={isSubmitting}
             className="btn btn-gradient w-full"
-            style={{padding: '1rem', borderRadius: '1rem', backgroundColor: '#9333ea'}}
+            style={{ padding: '1rem', borderRadius: '1rem', backgroundColor: '#9333ea' }}
           >
             {isSubmitting ? (
               <>
@@ -168,7 +172,7 @@ const AdminSignup = () => {
         <div className="auth-footer">
           <p>
             Already have an account?{' '}
-            <Link to="/admin/login" style={{color: '#9333ea'}}>
+            <Link to="/admin/login" style={{ color: '#9333ea' }}>
               Sign In
             </Link>
           </p>

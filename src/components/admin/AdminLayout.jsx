@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Navigate, Outlet, Link, useLocation } from 'react-router-dom';
-import { useAdminAuth } from '../../context/AdminAuthContext';
+import { useAuth } from '../../context/AuthContext';
 import {
   LayoutDashboard,
   FileText,
@@ -16,7 +16,7 @@ import {
 } from 'lucide-react';
 
 const AdminLayout = () => {
-  const { admin, loading, logout } = useAdminAuth();
+  const { user, loading, logout, isAdmin } = useAuth();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const location = useLocation();
 
@@ -28,7 +28,7 @@ const AdminLayout = () => {
     );
   }
 
-  if (!admin) {
+  if (!user || !isAdmin) {
     return <Navigate to="/admin/login" state={{ from: location }} replace />;
   }
 
@@ -93,11 +93,11 @@ const AdminLayout = () => {
           <Link to="/admin/settings" className="user-pill-link" style={{ textDecoration: 'none', width: '100%' }}>
             <div className="user-pill">
               <div className="user-avatar">
-                {admin.username.charAt(0).toUpperCase()}
+                {user.name?.charAt(0).toUpperCase()}
               </div>
               <div style={{ overflow: 'hidden' }}>
-                <p style={{ fontSize: '0.875rem', fontWeight: 600, color: '#fff', margin: 0 }}>{admin.username}</p>
-                <p style={{ fontSize: '0.75rem', color: '#64748b', margin: 0 }}>{admin.role}</p>
+                <p style={{ fontSize: '0.875rem', fontWeight: 600, color: '#fff', margin: 0 }}>{user.name}</p>
+                <p style={{ fontSize: '0.75rem', color: '#64748b', margin: 0 }}>Administrator</p>
               </div>
             </div>
           </Link>

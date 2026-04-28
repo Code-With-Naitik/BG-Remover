@@ -1,7 +1,7 @@
 import React, { lazy, Suspense } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { ThemeProvider } from './context/ThemeContext';
-import { AdminAuthProvider } from './context/AdminAuthContext';
+import { AuthProvider } from './context/AuthContext';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import ScrollToTop from './components/layout/ScrollToTop';
@@ -19,6 +19,10 @@ const AboutPage = lazy(() => import('./pages/AboutPage'));
 const ContactPage = lazy(() => import('./pages/ContactPage'));
 const PrivacyPage = lazy(() => import('./pages/PrivacyPage'));
 const TermsPage = lazy(() => import('./pages/TermsPage'));
+const LoginPage = lazy(() => import('./pages/LoginPage'));
+const SignupPage = lazy(() => import('./pages/SignupPage'));
+const DashboardPage = lazy(() => import('./pages/DashboardPage'));
+const SitemapPage = lazy(() => import('./pages/SitemapPage'));
 const ComingSoon = lazy(() => import('./components/layout/ComingSoon'));
 
 // Lazy Loaded Admin Pages
@@ -45,7 +49,7 @@ function App() {
   const isAdminRoute = location.pathname.startsWith('/admin');
 
   return (
-    <AdminAuthProvider>
+    <AuthProvider>
       <ThemeProvider>
         <ScrollToTop />
         <Toaster position="top-right" />
@@ -72,6 +76,10 @@ function App() {
                 <Route path="/contact" element={<ContactPage />} />
                 <Route path="/privacy-policy" element={<PrivacyPage />} />
                 <Route path="/terms" element={<TermsPage />} />
+                <Route path="/sitemap" element={<SitemapPage />} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/signup" element={<SignupPage />} />
+                <Route path="/dashboard" element={<DashboardPage />} />
 
                 {/* Admin Auth Routes */}
                 <Route path="/admin/login" element={<AdminLogin />} />
@@ -96,7 +104,7 @@ function App() {
           {!isAdminRoute && <Footer />}
         </div>
       </ThemeProvider>
-    </AdminAuthProvider>
+    </AuthProvider>
   );
 }
 

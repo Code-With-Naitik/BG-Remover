@@ -31,13 +31,14 @@ const FOOTER_LINKS = {
   ],
   Resources: [
     { label: 'Blog', to: '/blog' },
+    { label: 'Sitemap', to: '/sitemap' },
     { label: 'About Us', to: '/about' },
     { label: 'Contact', to: '/contact' },
-    { label: 'API Docs', to: '/pricing' },
   ],
   Legal: [
     { label: 'Privacy Policy', to: '/privacy-policy' },
     { label: 'Terms of Service', to: '/terms' },
+    { label: 'Refund Policy', to: '/terms' },
   ],
 };
 

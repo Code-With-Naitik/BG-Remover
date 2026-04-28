@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { useAdminAuth } from '../../context/AdminAuthContext';
+import { useAuth } from '../../context/AuthContext';
 import { toast } from 'react-hot-toast';
 import {
   Plus,
@@ -17,7 +17,7 @@ const AdminBlogList = () => {
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
-  const { token } = useAdminAuth();
+  const { token } = useAuth();
   const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
   const fetchBlogs = async () => {

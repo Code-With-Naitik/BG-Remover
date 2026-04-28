@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useAdminAuth } from '../../context/AdminAuthContext';
+import { useAuth } from '../../context/AuthContext';
 import { toast } from 'react-hot-toast';
 import {
   User,
@@ -16,15 +16,15 @@ import {
 } from 'lucide-react';
 
 const AdminSettings = () => {
-  const { admin, token, updateAdmin } = useAdminAuth();
+  const { user, token } = useAuth();
   const [activeTab, setActiveTab] = useState('profile');
   const [loading, setLoading] = useState(false);
   const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
   // Form states
   const [profileData, setProfileData] = useState({
-    username: admin?.username || '',
-    email: admin?.email || ''
+    name: user?.name || '',
+    email: user?.email || ''
   });
 
   const [passwordData, setPasswordData] = useState({
@@ -138,13 +138,13 @@ const AdminSettings = () => {
 
               <form onSubmit={handleProfileUpdate} style={{ maxWidth: '500px', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                 <div className="form-group">
-                  <label className="editor-label">Administrator Username</label>
+                  <label className="editor-label">Administrator Name</label>
                   <div className="input-wrapper">
                     <User size={16} className="input-icon" />
                     <input
                       type="text"
-                      value={profileData.username}
-                      onChange={(e) => setProfileData({ ...profileData, username: e.target.value })}
+                      value={profileData.name}
+                      onChange={(e) => setProfileData({ ...profileData, name: e.target.value })}
                       className="input-auth"
                       style={{ paddingLeft: '3rem' }}
                     />

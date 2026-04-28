@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useTheme } from '../../context/ThemeContext';
-import { Sun, Moon, Menu, X, Sparkles } from 'lucide-react';
+import { useAuth } from '../../context/AuthContext';
+import { Sun, Moon, Menu, X, Sparkles, User, LogOut, LayoutDashboard, Zap } from 'lucide-react';
 
 const NAV_LINKS = [
   { to: '/tool', label: 'Remove BG' },
@@ -12,9 +13,12 @@ const NAV_LINKS = [
 
 const Navbar = () => {
   const { theme, toggleTheme } = useTheme();
+  const { user, logout } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 16);
@@ -24,9 +28,15 @@ const Navbar = () => {
 
   useEffect(() => {
     setIsMenuOpen(false);
+    setIsProfileOpen(false);
   }, [location.pathname]);
 
   const isActive = (path) => location.pathname === path;
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  };
 
   return (
     <>
@@ -110,14 +120,6 @@ const Navbar = () => {
                   transition: 'all 0.2s',
                   textDecoration: 'none',
                 }}
-                onMouseEnter={e => {
-                  if (!isActive(to)) e.currentTarget.style.background = 'var(--bg-secondary)';
-                  e.currentTarget.style.color = 'var(--text-primary)';
-                }}
-                onMouseLeave={e => {
-                  if (!isActive(to)) e.currentTarget.style.background = 'transparent';
-                  e.currentTarget.style.color = isActive(to) ? 'var(--accent)' : 'var(--text-secondary)';
-                }}
               >
                 {label}
               </Link>
@@ -129,7 +131,6 @@ const Navbar = () => {
             {/* Theme Toggle */}
             <button
               onClick={toggleTheme}
-              title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
               style={{
                 width: '36px',
                 height: '36px',
@@ -141,29 +142,62 @@ const Navbar = () => {
                 justifyContent: 'center',
                 cursor: 'pointer',
                 color: 'var(--text-secondary)',
-                transition: 'all 0.2s',
-                flexShrink: 0,
-              }}
-              onMouseEnter={e => {
-                e.currentTarget.style.background = 'var(--bg-tertiary)';
-                e.currentTarget.style.color = 'var(--text-primary)';
-              }}
-              onMouseLeave={e => {
-                e.currentTarget.style.background = 'var(--bg-secondary)';
-                e.currentTarget.style.color = 'var(--text-secondary)';
               }}
             >
               {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
             </button>
 
-            {/* CTA */}
-            <Link
-              to="/tool"
-              className="btn btn-gradient btn-sm hide-mobile"
-              style={{ padding: '0.5rem 1.25rem', fontSize: '0.9rem' }}
-            >
-              Try for Free
-            </Link>
+            {user ? (
+              <div className="relative">
+                <button
+                  onClick={() => setIsProfileOpen(!isProfileOpen)}
+                  className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-50 border border-slate-200 hover:bg-slate-100 transition-all"
+                >
+                  <div className="w-6 h-6 rounded-full bg-indigo-600 text-white flex items-center justify-center text-[10px] font-bold">
+                    {user.name.charAt(0)}
+                  </div>
+                  <span className="text-xs font-bold text-slate-700 hide-mobile">{user.credits} Credits</span>
+                </button>
+
+                {isProfileOpen && (
+                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-2xl shadow-xl border border-slate-100 py-2 z-[110]">
+                    <Link to="/dashboard" className="flex items-center gap-3 px-4 py-2.5 text-sm font-bold text-slate-600 hover:bg-slate-50 transition-all">
+                      <LayoutDashboard size={16} /> Dashboard
+                    </Link>
+                    <Link to="/pricing" className="flex items-center gap-3 px-4 py-2.5 text-sm font-bold text-slate-600 hover:bg-slate-50 transition-all text-indigo-600">
+                      <Zap size={16} /> Get Credits
+                    </Link>
+                    <div className="h-px bg-slate-50 my-1"></div>
+                    <button onClick={handleLogout} className="flex items-center gap-3 w-full px-4 py-2.5 text-sm font-bold text-red-500 hover:bg-red-50 transition-all text-left">
+                      <LogOut size={16} /> Logout
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="flex items-center gap-2">
+                <Link
+                  to="/login"
+                  className="hide-mobile"
+                  style={{ 
+                    padding: '0.5rem 1rem', 
+                    fontSize: '0.9rem', 
+                    fontWeight: 600, 
+                    color: 'var(--text-primary)',
+                    textDecoration: 'none'
+                  }}
+                >
+                  Sign In
+                </Link>
+                <Link
+                  to="/signup"
+                  className="btn btn-gradient btn-sm"
+                  style={{ padding: '0.5rem 1.25rem', fontSize: '0.9rem' }}
+                >
+                  Get Started
+                </Link>
+              </div>
+            )}
 
             {/* Mobile Toggle */}
             <button
@@ -222,9 +256,26 @@ const Navbar = () => {
               {label}
             </Link>
           ))}
-          <Link to="/tool" className="btn btn-gradient" style={{ width: '100%', marginTop: '0.75rem' }}>
-            Try for Free
-          </Link>
+          {!user && (
+            <div style={{ marginTop: '0.75rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+              <Link to="/login" className="btn btn-secondary" style={{ width: '100%' }}>
+                Sign In
+              </Link>
+              <Link to="/signup" className="btn btn-gradient" style={{ width: '100%' }}>
+                Get Started
+              </Link>
+            </div>
+          )}
+          {user && (
+             <div style={{ marginTop: '0.75rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+               <Link to="/dashboard" className="btn btn-secondary" style={{ width: '100%' }}>
+                 Dashboard
+               </Link>
+               <button onClick={handleLogout} className="btn" style={{ width: '100%', color: 'red', border: '1px solid #fee2e2' }}>
+                 Logout
+               </button>
+             </div>
+          )}
         </div>
       )}
 

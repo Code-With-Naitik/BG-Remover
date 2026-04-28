@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { useAuth } from '../context/AuthContext';
 
 export const useImageProcessor = () => {
   const [isProcessing, setIsProcessing] = useState(false);
@@ -8,6 +9,9 @@ export const useImageProcessor = () => {
   const [processedImage, setProcessedImage] = useState(null);
   const [originalFiles, setOriginalFiles] = useState([]);
   const [error, setError] = useState(null);
+  const { token } = useAuth();
+
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
   const processImage = useCallback(async (files, size = 'auto') => {
     const fileList = Array.isArray(files) ? files : [files];
@@ -29,8 +33,9 @@ export const useImageProcessor = () => {
     });
 
     try {
-      const response = await axios.post('/api/image/remove-bg', formData, {
+      const response = await axios.post(`${API_URL}/image/remove-bg`, formData, {
         responseType: 'blob',
+        headers: token ? { Authorization: `Bearer ${token}` } : {}
       });
 
       // Handle JSON response (Batch or Error)
@@ -42,7 +47,6 @@ export const useImageProcessor = () => {
           throw new Error(result.error || 'Processing failed');
         }
 
-        // Multiple files
         const results = result.files;
         results.forEach(res => {
           saveToHistory(res.data, res.data);
@@ -54,7 +58,6 @@ export const useImageProcessor = () => {
         const processedUrl = URL.createObjectURL(response.data);
         setProcessedImage(processedUrl);
 
-        // Save to history (convert to base64 for persistence)
         const reader = new FileReader();
         reader.readAsDataURL(response.data);
         reader.onloadend = () => {
@@ -67,7 +70,6 @@ export const useImageProcessor = () => {
       console.error('Image Processing Error:', err);
       let errorMessage = 'Failed to process image. Please try again.';
 
-      // Extract error from Blob if necessary
       if (err.response && err.response.data instanceof Blob) {
         try {
           const text = await err.response.data.text();
@@ -79,13 +81,11 @@ export const useImageProcessor = () => {
       }
 
       setError(errorMessage);
-      toast.error(errorMessage);
-      // If failed, we might want to reset the original image preview
-      // setOriginalImage(null); 
+      toast.error(errorMessage, { duration: 5000 });
     } finally {
       setIsProcessing(false);
     }
-  }, []);
+  }, [token, API_URL]);
 
   const saveToHistory = (original, processed) => {
     try {
@@ -99,7 +99,6 @@ export const useImageProcessor = () => {
         date: new Date().toISOString()
       });
 
-      // Keep only last 5
       if (history.length > 5) {
         history = history.slice(0, 5);
       }

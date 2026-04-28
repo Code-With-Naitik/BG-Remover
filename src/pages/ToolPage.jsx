@@ -42,6 +42,7 @@ const ToolPage = () => {
         }}
       >
         <div className="container" style={{ maxWidth: '700px' }}>
+          <AdBanner type="header" />
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem' }}>
             <span className="badge badge-accent">
               <Sparkles size={12} /> AI-Powered
@@ -51,11 +52,12 @@ const ToolPage = () => {
             style={{
               fontSize: 'clamp(1.875rem, 4vw, 2.75rem)',
               marginBottom: '0.75rem',
-              letterSpacing: '-0.03em',
+              letterSpacing: '-0.02em',
+              fontWeight: 800,
+              color: 'var(--text-primary)'
             }}
           >
-            Remove Image Background{' '}
-            <span className="gradient-text">Instantly</span>
+            Remove Image Background
           </h1>
           <p style={{ color: 'var(--text-secondary)', fontSize: '1.0625rem' }}>
             Upload any image — our AI removes the background in under 3 seconds.
@@ -103,11 +105,11 @@ const ToolPage = () => {
 
                 {/* Download Panel */}
                 {processedImage && (
-                  <DownloadPanel 
-                    processedImage={processedImage} 
+                  <DownloadPanel
+                    processedImage={processedImage}
                     originalFiles={originalFiles}
                     processImage={processImage}
-                    onReset={reset} 
+                    onReset={reset}
                   />
                 )}
               </div>
@@ -145,6 +147,9 @@ const ToolPage = () => {
               </span>
             ))}
           </div>
+        </div>
+        <div className="container">
+          <AdBanner type="bottom" />
         </div>
       </section>
     </>

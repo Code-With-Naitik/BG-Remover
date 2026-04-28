@@ -95,71 +95,64 @@ const HomePage = () => {
       </Helmet>
 
       {/* ─── HERO ─── */}
-      <section style={{ position: 'relative', overflow: 'hidden', padding: '6rem 0 5rem' }}>
-        {/* Glow Orbs */}
-        <div className="glow-orb" style={{ width: '600px', height: '600px', background: 'var(--accent)', top: '-200px', left: '-100px' }} />
-        <div className="glow-orb" style={{ width: '500px', height: '500px', background: '#a855f7', bottom: '-200px', right: '-100px', opacity: 0.25 }} />
-
+      <section style={{ position: 'relative', overflow: 'hidden', padding: '5rem 0 6rem', background: 'var(--bg-primary)' }}>
+        
         <div className="container" style={{ textAlign: 'center', maxWidth: '860px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
-          {/* Pill badge */}
-          <div className="animate-fade-in" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.4rem 1rem', background: 'var(--accent-light)', border: '1px solid rgba(99,102,241,0.25)', borderRadius: 'var(--radius-full)', marginBottom: '2rem', cursor: 'default' }}>
-            <span style={{ display: 'inline-block', width: '7px', height: '7px', borderRadius: '50%', background: 'var(--success)' }} />
-            <Sparkles size={13} color="var(--accent)" />
-            <span style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--accent)' }}>AI v2.0 — 2× More Accurate</span>
-          </div>
-
-          <h1 className="animate-slide-up" style={{ fontSize: 'clamp(2.5rem, 6vw, 4rem)', marginBottom: '1.5rem', letterSpacing: '-0.04em' }}>
-            Remove Image Backgrounds<br />
-            <span className="gradient-text-vibrant">Automatically & Free</span>
+          <AdBanner type="header" />
+          <h1 className="animate-slide-up" style={{ fontSize: 'clamp(2.5rem, 6vw, 4.5rem)', marginBottom: '1rem', letterSpacing: '-0.02em', color: 'var(--text-primary)' }}>
+            Remove Image Background
           </h1>
 
-          <p className="animate-slide-up delay-100" style={{ fontSize: '1.25rem', color: 'var(--text-secondary)', marginBottom: '3rem', lineHeight: 1.7, maxWidth: '620px', margin: '0 auto 3rem' }}>
-            Drop in any photo — our AI removes the background in under 3 seconds with pixel-perfect precision. No Photoshop. No sign-up.
+          <p className="animate-slide-up delay-100" style={{ fontSize: '1.375rem', color: 'var(--text-secondary)', marginBottom: '3rem', lineHeight: 1.6, maxWidth: '620px', margin: '0 auto 3rem', fontWeight: 500 }}>
+            100% automatically and <span style={{ background: 'var(--bg-secondary)', padding: '0.2rem 0.6rem', borderRadius: '0.25rem', fontWeight: 700, color: 'var(--text-primary)' }}>5 Free Daily Credits</span>
           </p>
 
-          {/* Upload CTA Card */}
-          <div className="animate-slide-up delay-200">
+          {/* Upload CTA Card - remove.bg style massive button area */}
+          <div className="animate-slide-up delay-200" style={{ marginBottom: '2.5rem' }}>
             <Link to="/tool" style={{ textDecoration: 'none' }}>
               <div
-                className="animate-pulse-glow"
                 style={{
                   display: 'inline-flex',
                   flexDirection: 'column',
                   alignItems: 'center',
-                  gap: '1.25rem',
-                  padding: '2.5rem 3rem',
+                  justifyContent: 'center',
+                  padding: '3.5rem 2rem',
                   background: 'var(--bg-card)',
-                  border: '2px dashed var(--accent)',
-                  borderRadius: 'var(--radius-xl)',
+                  borderRadius: '1.5rem',
+                  boxShadow: 'var(--shadow-xl)',
                   cursor: 'pointer',
-                  maxWidth: '420px',
+                  maxWidth: '560px',
                   width: '100%',
                   margin: '0 auto',
                   transition: 'all 0.3s ease',
+                  border: '1px solid var(--border-color)',
                 }}
                 onMouseEnter={e => {
-                  e.currentTarget.style.background = 'var(--accent-light)';
                   e.currentTarget.style.transform = 'translateY(-4px)';
+                  e.currentTarget.style.boxShadow = 'var(--shadow-glow-lg)';
+                  e.currentTarget.style.borderColor = 'var(--accent-light)';
                 }}
                 onMouseLeave={e => {
-                  e.currentTarget.style.background = 'var(--bg-card)';
                   e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = 'var(--shadow-xl)';
+                  e.currentTarget.style.borderColor = 'var(--border-color)';
                 }}
               >
-                <div style={{ width: '64px', height: '64px', borderRadius: '50%', background: 'var(--accent-gradient)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 25px rgba(99,102,241,0.4)' }}>
-                  <UploadCloud size={30} color="#fff" />
+                <div 
+                  className="btn btn-primary" 
+                  style={{ 
+                    fontSize: '1.25rem', 
+                    padding: '1.1rem 2.8rem', 
+                    borderRadius: 'var(--radius-full)',
+                    marginBottom: '1.5rem',
+                    boxShadow: '0 8px 25px rgba(59, 130, 246, 0.4)'
+                  }}
+                >
+                  Upload Image
                 </div>
-                <div>
-                  <p style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 800, fontSize: '1.125rem', marginBottom: '0.25rem', color: 'var(--text-primary)' }}>
-                    Upload an Image
-                  </p>
-                  <p style={{ fontSize: '0.875rem', color: 'var(--text-muted)' }}>
-                    or drag and drop • JPG, PNG, WEBP up to 10 MB
-                  </p>
-                </div>
-                <div className="btn btn-gradient btn-lg" style={{ width: '100%' }}>
-                  Remove Background Free <ArrowRight size={18} />
-                </div>
+                <p style={{ fontSize: '1rem', color: 'var(--text-secondary)', margin: 0 }}>
+                  or drop a file, paste image or <span style={{ color: 'var(--accent)', textDecoration: 'underline' }}>URL</span>
+                </p>
               </div>
             </Link>
           </div>
@@ -172,7 +165,7 @@ const HomePage = () => {
               { icon: Users, label: 'No Sign-up' },
             ].map(({ icon: Icon, label }) => (
               <span key={label} style={{ display: 'flex', alignItems: 'center', gap: '0.375rem', fontSize: '0.9rem', color: 'var(--text-secondary)', fontWeight: 500 }}>
-                <Icon size={16} color="var(--success)" />
+                <Icon size={16} color="var(--text-muted)" />
                 {label}
               </span>
             ))}
@@ -314,33 +307,35 @@ const HomePage = () => {
       </section>
 
       {/* ─── CTA BANNER ─── */}
-      <section style={{ padding: '5rem 0' }}>
+      <section style={{ padding: '5rem 0', background: 'var(--bg-secondary)' }}>
         <div className="container" style={{ maxWidth: '720px', textAlign: 'center' }}>
           <div
             style={{
-              background: 'var(--accent-gradient)',
+              background: 'var(--accent)',
               borderRadius: 'var(--radius-xl)',
               padding: '4rem 2rem',
               position: 'relative',
               overflow: 'hidden',
+              boxShadow: 'var(--shadow-lg)'
             }}
           >
             <div style={{ position: 'absolute', top: '-40%', right: '-10%', width: '300px', height: '300px', background: 'rgba(255,255,255,0.08)', borderRadius: '50%' }} />
             <h2 style={{ color: '#fff', fontSize: '2.25rem', marginBottom: '1rem', position: 'relative' }}>
               Start Removing Backgrounds Today
             </h2>
-            <p style={{ color: 'rgba(255,255,255,0.8)', marginBottom: '2rem', fontSize: '1.0625rem', position: 'relative' }}>
-              Free to use. No sign-up. 5 images a day at no cost.
+            <p style={{ color: 'rgba(255,255,255,0.85)', marginBottom: '2.5rem', fontSize: '1.0625rem', position: 'relative', fontWeight: 500 }}>
+              Free to use. No sign-up. Experience the magic instantly.
             </p>
             <Link
               to="/tool"
-              style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: '#fff', color: 'var(--accent)', padding: '0.875rem 2rem', borderRadius: 'var(--radius-full)', fontWeight: 700, fontSize: '1rem', boxShadow: '0 8px 25px rgba(0,0,0,0.2)', textDecoration: 'none', transition: 'transform 0.2s' }}
+              style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: '#fff', color: 'var(--accent)', padding: '0.875rem 2.5rem', borderRadius: 'var(--radius-full)', fontWeight: 700, fontSize: '1.125rem', boxShadow: '0 8px 25px rgba(0,0,0,0.15)', textDecoration: 'none', transition: 'transform 0.2s' }}
               onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-2px)'}
               onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}
             >
-              Try it Free <ArrowRight size={18} />
+              Upload Image <ArrowRight size={18} />
             </Link>
           </div>
+          <AdBanner type="bottom" />
         </div>
       </section>
     </>

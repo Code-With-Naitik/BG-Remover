@@ -107,9 +107,9 @@ const ImageUploader = ({ onUpload, isProcessing }) => {
               </p>
               <button
                 type="button"
-                className="btn btn-gradient btn-lg"
+                className="btn btn-primary btn-lg"
               >
-                <UploadCloud size={20} /> Choose Image
+                <UploadCloud size={20} /> Upload Image
               </button>
             </div>
           )}

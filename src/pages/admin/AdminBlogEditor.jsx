@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
-import { useAdminAuth } from '../../context/AdminAuthContext';
+import { useAuth } from '../../context/AuthContext';
 import { toast } from 'react-hot-toast';
 import {
   Save,
@@ -16,7 +16,7 @@ const AdminBlogEditor = () => {
   const { id } = useParams();
   const isEdit = !!id;
   const navigate = useNavigate();
-  const { token } = useAdminAuth();
+  const { token } = useAuth();
   const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
   const [loading, setLoading] = useState(isEdit);
