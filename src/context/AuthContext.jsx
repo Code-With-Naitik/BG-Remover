@@ -38,21 +38,33 @@ export const AuthProvider = ({ children }) => {
   }, [token, API_URL]);
 
   const login = async (email, password) => {
-    const res = await axios.post(`${API_URL}/auth/signin`, { email, password });
-    const { token, user } = res.data;
-    localStorage.setItem('token', token);
-    setToken(token);
-    setUser(user);
-    return res.data;
+    try {
+      console.log(`Attempting login at: ${API_URL}/auth/signin`);
+      const res = await axios.post(`${API_URL}/auth/signin`, { email, password });
+      const { token, user } = res.data;
+      localStorage.setItem('token', token);
+      setToken(token);
+      setUser(user);
+      return res.data;
+    } catch (err) {
+      console.error('Login error details:', err.response || err);
+      throw err;
+    }
   };
 
   const signup = async (name, email, password, adminKey = null) => {
-    const res = await axios.post(`${API_URL}/auth/signup`, { name, email, password, adminKey });
-    const { token, user } = res.data;
-    localStorage.setItem('token', token);
-    setToken(token);
-    setUser(user);
-    return res.data;
+    try {
+      console.log(`Attempting signup at: ${API_URL}/auth/signup`);
+      const res = await axios.post(`${API_URL}/auth/signup`, { name, email, password, adminKey });
+      const { token, user } = res.data;
+      localStorage.setItem('token', token);
+      setToken(token);
+      setUser(user);
+      return res.data;
+    } catch (err) {
+      console.error('Signup error details:', err.response || err);
+      throw err;
+    }
   };
 
   const logout = () => {
