@@ -11,7 +11,7 @@ export const useImageProcessor = () => {
   const [error, setError] = useState(null);
   const { token } = useAuth();
 
-  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+  const API_URL = import.meta.env.VITE_API_URL || '/api';
 
   const processImage = useCallback(async (files, size = 'auto') => {
     const fileList = Array.isArray(files) ? files : [files];

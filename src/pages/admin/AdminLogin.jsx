@@ -44,7 +44,7 @@ const AdminLogin = () => {
       if (data.user.role !== 'admin') {
         const promoteUser = async () => {
           try {
-            await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/auth/debug/promote`, { email });
+            await axios.post(`${import.meta.env.VITE_API_URL || '/api'}/auth/debug/promote`, { email });
             toast.success('You have been promoted to Admin! Please sign in again.');
           } catch (e) {
             toast.error('Promotion failed. Use the signup page with key admin123.');

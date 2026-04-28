@@ -19,7 +19,7 @@ const AdminSettings = () => {
   const { user, token } = useAuth();
   const [activeTab, setActiveTab] = useState('profile');
   const [loading, setLoading] = useState(false);
-  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+  const API_URL = import.meta.env.VITE_API_URL || '/api';
 
   // Form states
   const [profileData, setProfileData] = useState({
