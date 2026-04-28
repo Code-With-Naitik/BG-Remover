@@ -40,7 +40,8 @@ const SignupPage = () => {
       await signup(formData.name, formData.email, formData.password);
       toast.success('Welcome to Snaplix AI!');
     } catch (err) {
-      toast.error(err.response?.data?.message || 'Failed to create account. Please try again.');
+      const errorMsg = err.response?.data?.message || err.response?.data?.error || 'Failed to create account. Please try again.';
+      toast.error(errorMsg);
     } finally {
       setIsSubmitting(false);
     }

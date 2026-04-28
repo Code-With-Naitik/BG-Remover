@@ -32,7 +32,8 @@ const LoginPage = () => {
       await login(email, password);
       toast.success('Welcome back!');
     } catch (err) {
-      toast.error(err.response?.data?.message || 'Invalid credentials. Please try again.');
+      const errorMsg = err.response?.data?.message || err.response?.data?.error || 'Invalid credentials. Please try again.';
+      toast.error(errorMsg);
     } finally {
       setIsSubmitting(false);
     }
