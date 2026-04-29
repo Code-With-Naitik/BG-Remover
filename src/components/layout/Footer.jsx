@@ -147,7 +147,7 @@ const Footer = () => {
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.625rem' }}>
                 {links.map(({ label, to }) => (
                   <Link
-                    key={to}
+                    key={label}
                     to={to}
                     style={{ color: 'var(--text-secondary)', fontSize: '0.9375rem', textDecoration: 'none', transition: 'color 0.2s' }}
                     onMouseEnter={e => e.currentTarget.style.color = 'var(--accent)'}

@@ -138,6 +138,115 @@ const PAGE_CONTENT = {
       { q: 'Can I use HD images for commercial purposes?', a: 'Yes. The Pro plan includes a commercial use license.' },
     ],
   },
+  '/remove-background-india': {
+    title: 'Remove Background India — Best Free Tool for Creators',
+    h1: 'Remove Background Online in India',
+    keyword: 'remove background india',
+    hero: 'India’s favorite AI background remover. Fast, free, and optimized for Indian creators, students, and small businesses.',
+    article: `
+      <h2>The Best Background Remover for Indian Creators</h2>
+      <p>India is a global hub for content creation, e-commerce, and digital services. Whether you are selling on Flipkart, Myntra, or Instagram, having a high-quality <strong>remove background india</strong> tool is essential for your success.</p>
+      
+      <h3>Why Indians Love Snaplix AI</h3>
+      <p>Our platform is designed to work seamlessly even on mobile data connections across India. We understand that time is money for small business owners in cities like Delhi, Mumbai, and Bangalore.</p>
+      <ul>
+        <li><strong>Free Forever:</strong> No credit card or international payment needed for standard use.</li>
+        <li><strong>E-commerce Ready:</strong> Perfect for creating product images for local marketplaces.</li>
+        <li><strong>Language Independent:</strong> A simple, visual interface that anyone can use.</li>
+      </ul>
+
+      <h3>Optimized for Indian E-commerce</h3>
+      <p>If you are an entrepreneur starting your journey on Meesho or Amazon India, you know that white background images are mandatory. Snaplix AI helps you save thousands of rupees on professional photography by giving you studio-quality cutouts in seconds.</p>
+    `,
+    faqs: [
+      { q: 'Is Snaplix AI free to use in India?', a: 'Yes! It is 100% free for standard resolution downloads with a limit of 5 per day.' },
+      { q: 'Does it work on slow internet connections?', a: 'Yes, our tool is lightweight and optimized for performance on 4G and 5G networks in India.' },
+      { q: 'Can I use it for my Aadhaar or Passport photo?', a: 'Absolutely. It is great for preparing digital copies of government IDs.' },
+    ],
+  },
+  '/remove-background-from-passport-photo': {
+    title: 'Remove Background from Passport Photo — Official White BG',
+    h1: 'Remove Background from Passport Photo',
+    keyword: 'remove background from passport photo',
+    hero: 'Instantly convert any selfie into an official passport photo with a clean white background. 100% compliant with global standards.',
+    article: `
+      <h2>Prepare Your Passport Photo at Home</h2>
+      <p>Going to a studio just for a white background photo is a thing of the past. Now, you can <strong>remove background from passport photo</strong> at home using your smartphone camera and our advanced AI tool.</p>
+      
+      <h3>Official Passport Photo Requirements</h3>
+      <p>Most countries, including the USA, UK, and India, require passport photos to have a plain white or light-colored background without shadows or patterns. Our AI ensures:</p>
+      <ul>
+        <li><strong>Uniform White Background:</strong> Total elimination of shadows behind the head.</li>
+        <li><strong>Edge Sharpness:</strong> Precise cutout of hair and ears for official recognition.</li>
+        <li><strong>Correct Aspect Ratio:</strong> Maintains the original quality for printing at standard sizes like 2x2 inches.</li>
+      </ul>
+
+      <h3>How to Create a Passport Photo</h3>
+      <ol>
+        <li>Stand against any wall and take a well-lit selfie.</li>
+        <li>Upload the photo to Snaplix AI.</li>
+        <li>Download the transparent PNG and add a solid white background.</li>
+        <li>Print it at your local pharmacy or photo kiosk.</li>
+      </ol>
+    `,
+    faqs: [
+      { q: 'Can I use this for my US Visa application?', a: 'Yes, our AI creates the perfect white background required for US Visa and Passport photos.' },
+      { q: 'Is the white background purely white?', a: 'Yes, once you remove the background, you can add a #FFFFFF white background for official compliance.' },
+      { q: 'Does it work for baby passport photos?', a: 'Yes! It is actually much easier to use our tool than to try and hold a baby against a white sheet.' },
+    ],
+  },
+  '/remove-background-from-car-image': {
+    title: 'Remove Background from Car Image — Automotive AI',
+    h1: 'Remove Background from Car Photos',
+    keyword: 'remove background from car image',
+    hero: 'The ultimate tool for car dealers and automotive photographers. Remove messy showroom backgrounds in one click.',
+    article: `
+      <h2>Automotive AI: Background Removal for Cars</h2>
+      <p>Selling cars online is all about the visuals. A cluttered dealership lot or a messy street background can distract potential buyers. Learn how to <strong>remove background from car image</strong> files to make your inventory stand out.</p>
+      
+      <h3>The Dealer Advantage</h3>
+      <p>Cars are some of the most difficult objects to isolate due to reflections, glass transparency, and complex shadows on the ground. Snaplix AI features a specialized mode for vehicles:</p>
+      <ul>
+        <li><strong>Reflective Surface Handling:</strong> Intelligently distinguishes between the car body and its reflections.</li>
+        <li><strong>Glass Transparency:</strong> Preserves the look of windows while removing the background seen through them.</li>
+        <li><strong>Ground Shadows:</strong> Option to keep or remove the shadow beneath the car for a realistic look.</li>
+      </ul>
+
+      <h3>Perfect for Marketplace Listings</h3>
+      <p>Whether you are listing on AutoTrader, Cars.com, or Facebook Marketplace, a clean "Studio Look" can increase your click-through rate by up to 40%.</p>
+    `,
+    faqs: [
+      { q: 'Can it handle shiny car paint?', a: 'Yes, our AI is trained specifically to distinguish reflections from the actual background.' },
+      { q: 'Does it work for bikes and trucks too?', a: 'Absolutely. It works for all types of vehicles including motorcycles, SUVs, and commercial trucks.' },
+      { q: 'Can I batch process my entire car inventory?', a: 'Pro users can upload multiple images to speed up their workflow.' },
+    ],
+  },
+  '/remove-background-from-logo': {
+    title: 'Remove Background from Logo — Create Transparent PNG Logos',
+    h1: 'Remove Background from Logo',
+    keyword: 'remove background from logo',
+    hero: 'Make any logo transparent instantly. Perfect for designers, business owners, and social media creators.',
+    article: `
+      <h2>How to Create a Transparent Logo in Seconds</h2>
+      <p>Lost your original logo file and only have a JPEG? Don't worry. You can <strong>remove background from logo</strong> images easily with Snaplix AI to create a high-quality transparent PNG.</p>
+      
+      <h3>Why Logos Need Transparency</h3>
+      <p>A logo with a white background box looks unprofessional when placed on a website header, a business card, or a colorful flyer. A transparent PNG allows your branding to sit naturally on any surface.</p>
+      <ul>
+        <li><strong>Vector-Like Precision:</strong> Our AI detects sharp edges and text with extreme accuracy.</li>
+        <li><strong>Preserve Interior Details:</strong> Removes the background while keeping small holes (like the middle of an 'O') intact.</li>
+        <li><strong>High Resolution:</strong> Maintain the crispness of your branding assets.</li>
+      </ul>
+
+      <h3>Design Workflow Integration</h3>
+      <p>Simply upload your JPEG or low-quality PNG, let the AI remove the background, and download the result. You can then use it in Canva, Photoshop, or directly on your Shopify store header.</p>
+    `,
+    faqs: [
+      { q: 'Will my logo lose quality?', a: 'No, our AI preserves the sharp edges and colors of your logo perfectly.' },
+      { q: 'Can it remove white backgrounds from complex logos?', a: 'Yes, it is highly effective at removing solid white or colored backgrounds from intricate designs.' },
+      { q: 'Is it free to make a logo transparent?', a: 'Yes, you can process your logos for free on our standard plan.' },
+    ],
+  },
 };
 
 const SeoLandingPage = ({ title, keyword }) => {
@@ -193,17 +302,35 @@ const SeoLandingPage = ({ title, keyword }) => {
           />
 
           {/* Internal links */}
-          <div style={{ marginTop: '3rem', display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
-            <span style={{ color: 'var(--text-muted)', fontSize: '0.875rem', fontWeight: 600 }}>Related tools:</span>
-            {[
-              { to: '/remove-background-online', label: 'Remove Background Online' },
-              { to: '/free-background-remover', label: 'Free Remover' },
-              { to: '/background-remover-hd', label: 'HD Remover' },
-            ].filter(l => l.to !== location.pathname).map(({ to, label }) => (
-              <Link key={to} to={to} style={{ fontSize: '0.875rem', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-                {label} <ArrowRight size={13} />
-              </Link>
-            ))}
+          <div style={{ marginTop: '4rem', padding: '2rem', background: 'white', borderRadius: '24px', border: '1px solid var(--border-color)' }}>
+            <h4 style={{ fontSize: '1.25rem', fontWeight: 800, marginBottom: '1.5rem' }}>Related Resources</h4>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                <span style={{ color: 'var(--text-muted)', fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Tools</span>
+                {[
+                  { to: '/remove-background-online', label: 'Remove Background Online' },
+                  { to: '/free-background-remover', label: 'Free Background Remover' },
+                  { to: '/background-remover-hd', label: 'HD Background Remover' },
+                  { to: '/remove-background-from-logo', label: 'Logo Background Remover' },
+                ].filter(l => l.to !== location.pathname).map(({ to, label }) => (
+                  <Link key={to} to={to} style={{ fontSize: '0.9375rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <ArrowRight size={14} /> {label}
+                  </Link>
+                ))}
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                <span style={{ color: 'var(--text-muted)', fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Blog Guides</span>
+                {[
+                  { to: '/blog/how-to-remove-background-from-image-step-by-step', label: 'Step-by-Step Guide' },
+                  { to: '/blog/best-free-background-remover-tools-in-2026', label: 'Best Tools of 2026' },
+                  { to: '/blog/how-to-make-transparent-png-images', label: 'Creating Transparent PNGs' },
+                ].map(({ to, label }) => (
+                  <Link key={to} to={to} style={{ fontSize: '0.9375rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <ArrowRight size={14} /> {label}
+                  </Link>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>

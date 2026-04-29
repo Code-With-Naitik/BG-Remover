@@ -2,22 +2,40 @@ import React from 'react';
 import ReactCompareImage from 'react-compare-image';
 
 const BeforeAfterSlider = ({ originalImage, processedImage }) => {
-  // We add a checkerboard background pattern class
-  const checkerboardStyle = {
-    backgroundImage: 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'20\' height=\'20\'%3E%3Crect width=\'10\' height=\'10\' fill=\'%23e5e7eb\'/%3E%3Crect x=\'10\' width=\'10\' height=\'10\' fill=\'%23f3f4f6\'/%3E%3Crect y=\'10\' width=\'10\' height=\'10\' fill=\'%23f3f4f6\'/%3E%3Crect x=\'10\' y=\'10\' width=\'10\' height=\'10\' fill=\'%23e5e7eb\'/%3E%3C/svg%3E")',
-    borderRadius: '1rem',
-    overflow: 'hidden',
-    boxShadow: 'var(--shadow-md)'
-  };
-
   return (
-    <div style={checkerboardStyle}>
+    <div 
+      style={{ 
+        borderRadius: '24px', 
+        overflow: 'hidden',
+        background: 'url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAMUlEQVQ4T2NkYGAQYcAP3uIn7YzZ2SX48D1S3Y7P0WAnS98OOfgY6S5A6fWvYfA6AzSbwY08D07MAAAAAElFTkSuQmCC)',
+      }}
+    >
       <ReactCompareImage 
         leftImage={originalImage} 
         rightImage={processedImage} 
-        sliderLineColor="var(--accent-primary)"
-        leftImageLabel="Original"
-        rightImageLabel="Removed Background"
+        sliderLineColor="#2563EB"
+        sliderLineWidth={3}
+        handleSize={40}
+        leftImageLabel="ORIGINAL"
+        rightImageLabel="REMOVED"
+        leftImageLabelStyle={{
+          background: 'rgba(0,0,0,0.5)',
+          color: 'white',
+          fontSize: '0.75rem',
+          fontWeight: 800,
+          padding: '4px 12px',
+          borderRadius: '4px',
+          letterSpacing: '0.05em'
+        }}
+        rightImageLabelStyle={{
+          background: 'var(--accent)',
+          color: 'white',
+          fontSize: '0.75rem',
+          fontWeight: 800,
+          padding: '4px 12px',
+          borderRadius: '4px',
+          letterSpacing: '0.05em'
+        }}
       />
     </div>
   );

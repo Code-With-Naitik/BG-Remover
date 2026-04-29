@@ -44,6 +44,8 @@ const LoadingScreen = () => (
   </div>
 );
 
+import StickyCTA from './components/layout/StickyCTA';
+
 function App() {
   const location = useLocation();
   const isAdminRoute = location.pathname.startsWith('/admin');
@@ -67,11 +69,15 @@ function App() {
                 <Route path="/blog" element={<BlogListPage />} />
                 <Route path="/blog/:slug" element={<BlogPostPage />} />
 
-                {/* SEO Landing Pages */}
+                {/* Programmatic SEO Landing Pages */}
                 <Route path="/remove-background-online" element={<SeoLandingPage title="Remove Background Online" keyword="remove background online" />} />
                 <Route path="/free-background-remover" element={<SeoLandingPage title="Free Background Remover" keyword="remove backgrounds for free" />} />
                 <Route path="/remove-bg-from-image" element={<SeoLandingPage title="Remove BG From Image" keyword="remove bg from image" />} />
                 <Route path="/background-remover-hd" element={<SeoLandingPage title="HD Background Remover" keyword="remove background in HD quality" />} />
+                <Route path="/remove-background-india" element={<SeoLandingPage title="Remove Background India" keyword="remove background online in India" />} />
+                <Route path="/remove-background-from-passport-photo" element={<SeoLandingPage title="Remove Background from Passport Photo" keyword="remove background from passport photo" />} />
+                <Route path="/remove-background-from-car-image" element={<SeoLandingPage title="Remove Background from Car Image" keyword="remove background from car image" />} />
+                <Route path="/remove-background-from-logo" element={<SeoLandingPage title="Remove Background from Logo" keyword="remove background from logo" />} />
 
                 {/* Legal & Info */}
                 <Route path="/about" element={<AboutPage />} />
@@ -104,6 +110,7 @@ function App() {
             </Suspense>
           </main>
           {!isAdminRoute && !isAuthRoute && !isDashboardRoute && <Footer />}
+          <StickyCTA />
         </div>
       </ThemeProvider>
     </AuthProvider>

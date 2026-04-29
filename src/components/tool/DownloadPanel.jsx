@@ -1,4 +1,4 @@
-import { Download, Crown, Share2, RotateCcw } from 'lucide-react';
+import { Download, Crown, Share2, RotateCcw, CheckCircle2 } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { useHDCredits } from '../../hooks/useHDCredits';
@@ -26,12 +26,7 @@ const DownloadPanel = ({ processedImage, originalFiles, processImage, onReset })
 
     if (confirm(`Use 1 HD credit? You have ${credits} remaining this week.`)) {
       try {
-        // Trigger re-process with 'full' size
         await processImage(originalFiles, 'full');
-        // The processImage hook will update processedImage once done
-        // We can't easily auto-trigger the download here because it's async,
-        // but the UI will update and the user can click 'Download HD' again or it will happen.
-        // Actually, let's just use the credit and let the process start.
         useCredit();
         toast.success('HD processing started!');
       } catch (e) {
@@ -58,83 +53,106 @@ const DownloadPanel = ({ processedImage, originalFiles, processImage, onReset })
   return (
     <div
       style={{
-        marginTop: '1.5rem',
+        marginTop: '2rem',
         background: 'var(--bg-card)',
         border: '1px solid var(--border-color)',
-        borderRadius: 'var(--radius-lg)',
-        padding: '1.75rem',
+        borderRadius: '24px',
+        padding: '2rem',
+        boxShadow: 'var(--shadow-xl)',
       }}
     >
-      <h3 style={{ fontSize: '1.125rem', fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 700, marginBottom: '1.25rem' }}>
-        Download Your Image
-      </h3>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.5rem' }}>
+        <div style={{ background: 'var(--accent-light)', padding: '0.5rem', borderRadius: '10px' }}>
+          <CheckCircle2 size={20} color="var(--accent)" />
+        </div>
+        <h3 style={{ fontSize: '1.25rem', fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 800, color: 'var(--text-primary)', margin: 0 }}>
+          Background Removed!
+        </h3>
+      </div>
 
-      <div className="grid-2" style={{ marginBottom: '1.5rem' }}>
+      <div className="grid-2" style={{ marginBottom: '2rem' }}>
         {/* Free Download */}
         <div
           style={{
-            padding: '1.25rem',
+            padding: '1.5rem',
             background: 'var(--bg-secondary)',
             border: '1px solid var(--border-color)',
-            borderRadius: 'var(--radius-md)',
-            display: 'flex', flexDirection: 'column', gap: '0.75rem',
+            borderRadius: '16px',
+            display: 'flex', flexDirection: 'column', gap: '1rem',
+            transition: 'transform 0.2s',
           }}
+          onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-4px)'}
+          onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}
         >
           <div>
-            <p style={{ fontWeight: 700, marginBottom: '0.25rem' }}>Standard</p>
-            <p style={{ fontSize: '0.8125rem', color: 'var(--text-muted)' }}>Great for web & social. Up to 0.25 MP.</p>
+            <p style={{ fontWeight: 800, fontSize: '1.125rem', marginBottom: '0.25rem', color: 'var(--text-primary)' }}>Standard</p>
+            <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>Great for social media. <br /> Up to 0.25 Megapixels.</p>
           </div>
-          <button onClick={handleDownloadFree} className="btn btn-primary" style={{ width: '100%' }}>
-            <Download size={16} /> Download Free
+          <button onClick={handleDownloadFree} className="btn btn-primary btn-lg" style={{ width: '100%', borderRadius: '12px' }}>
+            <Download size={18} /> Download
           </button>
         </div>
 
         {/* HD Download */}
         <div
           style={{
-            padding: '1.25rem',
-            background: 'var(--accent-light)',
-            border: '2px solid var(--accent)',
-            borderRadius: 'var(--radius-md)',
-            display: 'flex', flexDirection: 'column', gap: '0.75rem',
+            padding: '1.5rem',
+            background: 'white',
+            border: '2px solid transparent',
+            backgroundImage: 'linear-gradient(white, white), var(--accent-gradient)',
+            backgroundOrigin: 'border-box',
+            backgroundClip: 'padding-box, border-box',
+            borderRadius: '16px',
+            display: 'flex', flexDirection: 'column', gap: '1rem',
             position: 'relative',
+            transition: 'transform 0.2s, box-shadow 0.2s',
+          }}
+          onMouseEnter={e => {
+            e.currentTarget.style.transform = 'translateY(-4px)';
+            e.currentTarget.style.boxShadow = 'var(--shadow-glow-lg)';
+          }}
+          onMouseLeave={e => {
+            e.currentTarget.style.transform = 'translateY(0)';
+            e.currentTarget.style.boxShadow = 'none';
           }}
         >
           <div
             style={{
-              position: 'absolute', top: '-12px', right: '12px',
+              position: 'absolute', top: '-14px', right: '16px',
               background: 'var(--accent-gradient)',
-              color: '#fff', padding: '0.2rem 0.75rem',
+              color: '#fff', padding: '0.35rem 0.85rem',
               borderRadius: 'var(--radius-full)',
-              fontSize: '0.75rem', fontWeight: 700,
-              display: 'flex', alignItems: 'center', gap: '0.25rem',
+              fontSize: '0.75rem', fontWeight: 800,
+              display: 'flex', alignItems: 'center', gap: '0.375rem',
+              boxShadow: '0 4px 12px rgba(37, 99, 235, 0.3)',
+              letterSpacing: '0.02em'
             }}
           >
-            <Crown size={12} /> PRO
+            <Crown size={12} fill="#fff" /> RECOMMENDED
           </div>
           <div>
-            <p style={{ fontWeight: 700, marginBottom: '0.25rem' }}>HD Quality</p>
-            <p style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)' }}>
-              Best for print & commercial. {credits} credits left.
+            <p style={{ fontWeight: 800, fontSize: '1.125rem', marginBottom: '0.25rem', color: 'var(--text-primary)' }}>HD Quality</p>
+            <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
+              Best for print & design. <br /> {credits} credits left.
             </p>
           </div>
           <button
             onClick={handleDownloadHD}
-            className="btn btn-gradient"
-            style={{ width: '100%' }}
+            className="btn btn-gradient btn-lg"
+            style={{ width: '100%', borderRadius: '12px' }}
           >
-            <Download size={16} /> Download HD
+            <Download size={18} /> Download HD
           </button>
         </div>
       </div>
 
-      {/* Secondary Actions */}
-      <div style={{ display: 'flex', gap: '0.75rem', paddingTop: '0.75rem', borderTop: '1px solid var(--border-color)' }}>
-        <button onClick={handleShare} className="btn btn-outline" style={{ flex: 1 }}>
-          <Share2 size={15} /> Share Result
+      {/* Actions */}
+      <div style={{ display: 'flex', gap: '1rem', paddingTop: '1.5rem', borderTop: '1px solid var(--border-color)' }}>
+        <button onClick={handleShare} className="btn btn-outline btn-lg" style={{ flex: 1, borderRadius: '12px' }}>
+          <Share2 size={18} /> Share Result
         </button>
-        <button onClick={onReset} className="btn btn-ghost" style={{ flex: 1 }}>
-          <RotateCcw size={15} /> Upload Another
+        <button onClick={onReset} className="btn btn-ghost btn-lg" style={{ flex: 1, borderRadius: '12px' }}>
+          <RotateCcw size={18} /> Start New
         </button>
       </div>
     </div>

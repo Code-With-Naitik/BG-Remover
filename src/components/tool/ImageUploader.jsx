@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { UploadCloud, ImageIcon, FileImage, AlertCircle } from 'lucide-react';
+import { UploadCloud, ImageIcon, FileImage, AlertCircle, Image as ImageIconLucide } from 'lucide-react';
 
 const SAMPLE_IMAGES = [
   { url: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&h=200&fit=crop', label: 'Portrait' },
@@ -48,110 +48,116 @@ const ImageUploader = ({ onUpload, isProcessing }) => {
   };
 
   return (
-    <div>
+    <div className="animate-scale-in">
       {/* Drop Zone */}
       <div
         {...getRootProps()}
         style={{
-          border: `2px dashed ${isDragActive ? 'var(--accent)' : 'var(--border-hover)'}`,
-          borderRadius: 'var(--radius-xl)',
-          padding: '3.5rem 2rem',
+          border: `2px dashed ${isDragActive ? 'var(--accent)' : '#D1D5DB'}`,
+          borderRadius: '16px',
+          padding: '5rem 2rem',
           textAlign: 'center',
           cursor: isProcessing ? 'not-allowed' : 'pointer',
           background: isDragActive ? 'var(--accent-light)' : 'var(--bg-card)',
-          transition: 'all 0.25s ease',
+          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
           position: 'relative',
           overflow: 'hidden',
+          boxShadow: isDragActive ? 'var(--shadow-glow)' : 'var(--shadow-sm)',
         }}
-        onMouseEnter={e => { if (!isProcessing && !isDragActive) e.currentTarget.style.borderColor = 'var(--accent)'; }}
-        onMouseLeave={e => { if (!isDragActive) e.currentTarget.style.borderColor = 'var(--border-hover)'; }}
+        onMouseEnter={e => {
+          if (!isProcessing && !isDragActive) {
+            e.currentTarget.style.borderColor = 'var(--accent)';
+            e.currentTarget.style.background = 'var(--accent-light)';
+            e.currentTarget.style.transform = 'scale(1.01)';
+          }
+        }}
+        onMouseLeave={e => {
+          if (!isDragActive) {
+            e.currentTarget.style.borderColor = '#D1D5DB';
+            e.currentTarget.style.background = 'var(--bg-card)';
+            e.currentTarget.style.transform = 'scale(1)';
+          }
+        }}
+        onMouseDown={e => {
+          if (!isProcessing) e.currentTarget.style.transform = 'scale(0.98)';
+        }}
+        onMouseUp={e => {
+          if (!isProcessing) e.currentTarget.style.transform = 'scale(1.01)';
+        }}
       >
-        {/* Subtle bg gradient when drag active */}
-        {isDragActive && (
-          <div style={{ position: 'absolute', inset: 0, background: 'var(--accent-gradient)', opacity: 0.05, borderRadius: 'inherit' }} />
-        )}
-
         <input {...getInputProps()} />
 
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem', position: 'relative', zIndex: 1 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.25rem', position: 'relative', zIndex: 1 }}>
           <div
             style={{
-              width: '80px', height: '80px', borderRadius: '50%',
+              width: '96px', height: '96px', borderRadius: '24px',
               background: isDragActive ? 'var(--accent-gradient)' : 'var(--bg-secondary)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              border: `1px solid ${isDragActive ? 'transparent' : 'var(--border-color)'}`,
-              transition: 'all 0.3s ease',
-              boxShadow: isDragActive ? 'var(--shadow-glow)' : 'var(--shadow-sm)',
+              transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+              boxShadow: isDragActive ? 'var(--shadow-glow-lg)' : 'none',
+              transform: isDragActive ? 'rotate(10deg) scale(1.1)' : 'none'
             }}
           >
             {isDragActive
-              ? <UploadCloud size={36} color="#fff" />
-              : <FileImage size={36} color="var(--accent)" />
+              ? <UploadCloud size={48} color="#fff" />
+              : <ImageIconLucide size={48} color="var(--accent)" />
             }
           </div>
 
-          {isDragActive ? (
-            <div>
-              <p style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 800, fontSize: '1.375rem', color: 'var(--accent)', marginBottom: '0.25rem' }}>
-                Release to Upload
-              </p>
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Drop your image here</p>
-            </div>
-          ) : (
-            <div>
-              <p style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 800, fontSize: '1.375rem', color: 'var(--text-primary)', marginBottom: '0.5rem' }}>
-                Drag & Drop Your Image
-              </p>
-              <p style={{ color: 'var(--text-secondary)', fontSize: '0.9375rem', marginBottom: '1.5rem' }}>
-                or click anywhere to browse your files
-              </p>
-              <button
-                type="button"
-                className="btn btn-primary btn-lg"
-              >
-                <UploadCloud size={20} /> Upload Image
-              </button>
-            </div>
-          )}
-
-          <div style={{ display: 'flex', gap: '1rem', marginTop: '0.5rem', flexWrap: 'wrap', justifyContent: 'center' }}>
-            {['JPG', 'PNG', 'WEBP'].map(fmt => (
-              <span key={fmt} className="badge badge-accent">{fmt}</span>
-            ))}
-            <span className="badge" style={{ background: 'var(--bg-secondary)', color: 'var(--text-muted)' }}>Max 10 MB</span>
+          <div style={{ maxWidth: '400px' }}>
+            <h3 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '0.5rem', letterSpacing: '-0.01em' }}>
+              {isDragActive ? 'Drop your image here' : 'Drag & drop your image'}
+            </h3>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '1rem', fontWeight: 500 }}>
+              or click to upload <span style={{ color: 'var(--text-muted)', fontWeight: 400 }}>(PNG, JPG supported)</span>
+            </p>
           </div>
+
+          {!isDragActive && (
+            <button
+              type="button"
+              className="btn btn-primary btn-xl animate-pulse-glow"
+              style={{ marginTop: '0.5rem', borderRadius: '12px' }}
+            >
+              Upload Image
+            </button>
+          )}
         </div>
       </div>
 
       {/* Error message */}
       {rejectedMsg && (
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: '1rem', padding: '0.75rem 1rem', background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.2)', borderRadius: 'var(--radius-md)', color: '#ef4444', fontSize: '0.9rem' }}>
-          <AlertCircle size={16} /> {rejectedMsg}
+        <div className="animate-slide-up" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: '1.5rem', padding: '1rem', background: 'rgba(239,68,68,0.05)', border: '1px solid rgba(239,68,68,0.1)', borderRadius: '12px', color: '#ef4444', fontSize: '0.9375rem', fontWeight: 500 }}>
+          <AlertCircle size={18} /> {rejectedMsg}
         </div>
       )}
 
       {/* Sample Images */}
-      <div style={{ marginTop: '2rem' }}>
-        <p style={{ textAlign: 'center', color: 'var(--text-muted)', fontSize: '0.875rem', fontWeight: 600, letterSpacing: '0.05em', textTransform: 'uppercase', marginBottom: '1rem' }}>
-          Or try a sample
-        </p>
-        <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+      <div style={{ marginTop: '3.5rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', justifyContent: 'center', marginBottom: '1.5rem' }}>
+          <div style={{ flex: 1, height: '1px', background: 'var(--border-color)' }} />
+          <p style={{ color: 'var(--text-muted)', fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase' }}>
+            No image? Try one of these
+          </p>
+          <div style={{ flex: 1, height: '1px', background: 'var(--border-color)' }} />
+        </div>
+        <div style={{ display: 'flex', gap: '1.5rem', justifyContent: 'center', flexWrap: 'wrap' }}>
           {SAMPLE_IMAGES.map(({ url, label }) => (
             <button
               key={label}
               onClick={() => handleSample(url)}
               disabled={isProcessing}
+              className="card-hover"
               style={{
-                display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem',
-                background: 'none', border: '2px solid var(--border-color)', borderRadius: 'var(--radius-md)',
-                padding: '0.5rem', cursor: 'pointer', transition: 'all 0.2s',
+                display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75rem',
+                background: 'var(--bg-card)', border: '1px solid var(--border-color)', borderRadius: '16px',
+                padding: '0.75rem', cursor: 'pointer', transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                 opacity: isProcessing ? 0.5 : 1,
+                width: '100px'
               }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--accent)'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border-color)'; e.currentTarget.style.transform = 'none'; }}
             >
-              <img src={url} alt={label} style={{ width: '72px', height: '72px', objectFit: 'cover', borderRadius: 'var(--radius-sm)' }} />
-              <span style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary)' }}>{label}</span>
+              <img src={url} alt={label} style={{ width: '80px', height: '80px', objectFit: 'cover', borderRadius: '10px' }} />
+              <span style={{ fontSize: '0.8125rem', fontWeight: 600, color: 'var(--text-secondary)' }}>{label}</span>
             </button>
           ))}
         </div>

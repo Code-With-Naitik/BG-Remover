@@ -1,7 +1,7 @@
 User-agent: *
 Allow: /
+Disallow: /admin
+Disallow: /dashboard
+Disallow: /api
 
-Sitemap: https://bgremoverpro.com/sitemap.xml
-
-# Block API routes from indexing
-Disallow: /api/
+Sitemap: https://snaplix.ai/sitemap.xml
