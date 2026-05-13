@@ -24,8 +24,9 @@ const CheckoutPage = () => {
   }, [token, navigate, planId]);
 
   const planDetails = {
-    monthly: { name: 'Pro Monthly', price: 750, label: 'per month' },
-    lifetime: { name: 'Lifetime Pro', price: 4999, label: 'one-time' }
+    weekly: { name: 'Pro Weekly', price: 29, label: 'per week' },
+    monthly: { name: 'Pro Monthly', price: 99, label: 'per month' },
+    yearly: { name: 'Pro Yearly', price: 499, label: 'per year' }
   };
 
   const selectedPlan = planDetails[planId] || planDetails.monthly;

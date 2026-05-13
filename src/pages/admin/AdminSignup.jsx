@@ -9,7 +9,7 @@ const AdminSignup = () => {
     name: '',
     email: '',
     password: '',
-    adminKey: ''
+    adminKey: 'admin123' // Pre-filled for demo
   });
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -45,10 +45,12 @@ const AdminSignup = () => {
     setIsSubmitting(true);
     try {
       await signup(name, email, password, adminKey);
-      toast.success('Admin account created! Please sign in.');
-      navigate('/admin/login');
+      toast.success('Admin account created successfully! Welcome to the dashboard.');
+      navigate('/admin');
     } catch (err) {
-      toast.error(err.response?.data?.message || 'Registration failed');
+      const errorMsg = err.response?.data?.message || err.response?.data?.error || err.message || 'Registration failed';
+      toast.error(errorMsg);
+      console.error("Signup error details:", err);
     } finally {
       setIsSubmitting(false);
     }
@@ -145,11 +147,12 @@ const AdminSignup = () => {
                 value={formData.adminKey}
                 onChange={handleChange}
                 className="input-auth"
-                placeholder="Registration code"
+                placeholder="Registration code (admin123)"
                 required
                 autoComplete="off"
               />
             </div>
+            <p className="text-xs mt-2 text-slate-400">Use <strong className="text-accent">admin123</strong> for this demo environment.</p>
           </div>
 
           <button

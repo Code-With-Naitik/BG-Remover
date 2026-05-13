@@ -1,5 +1,5 @@
-import React from 'react';
-import { X, Crown, Zap, CheckCircle, Sparkles, ArrowRight, ChevronDown, ShieldCheck, Star } from 'lucide-react';
+import React, { useState } from 'react';
+import { X, Crown, Zap, CheckCircle, Sparkles, ArrowRight, ChevronDown, ShieldCheck, Star, Activity, Lock, Globe } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 
@@ -23,9 +23,27 @@ const PLANS = [
     ],
   },
   {
+    id: 'weekly',
+    name: 'Pro Weekly',
+    price: '₹29',
+    period: 'week',
+    desc: 'Short term access for quick professional tasks.',
+    badge: null,
+    cta: 'Get Weekly Plan',
+    ctaTo: '/signup',
+    highlight: false,
+    color: 'blue',
+    features: [
+      'Unlimited removals',
+      'HD quality (up to 25 MP)',
+      'Commercial license',
+      'Priority processing',
+    ],
+  },
+  {
     id: 'monthly',
     name: 'Pro Monthly',
-    price: '₹750',
+    price: '₹99',
     period: 'mo',
     desc: 'Full power for professional creators and teams.',
     badge: 'Popular Choice',
@@ -43,21 +61,20 @@ const PLANS = [
     ],
   },
   {
-    id: 'lifetime',
-    name: 'Lifetime Pro',
-    price: '₹4,999',
-    period: 'once',
+    id: 'yearly',
+    name: 'Pro Yearly',
+    price: '₹499',
+    period: 'year',
     desc: 'The ultimate investment for power users.',
     badge: 'Best Value',
-    cta: 'Get Lifetime Access',
+    cta: 'Get Yearly Access',
     ctaTo: '/signup',
     highlight: false,
     color: 'purple',
     features: [
-      'Everything in Pro',
-      'One-time payment',
+      'Everything in Pro Monthly',
+      'Save over 50% vs monthly',
       'VIP feature access',
-      'White-labeling (soon)',
       'Custom API limits',
       'Dedicated manager',
     ],
@@ -72,6 +89,7 @@ const FAQ = [
 ];
 
 const PricingPage = () => {
+  const [openFaq, setOpenFaq] = useState(0);
   return (
     <div className="pricing-page">
       <Helmet>
@@ -144,40 +162,68 @@ const PricingPage = () => {
           ))}
         </div>
 
-        {/* Comparison Section */}
-        <section className="comparison-section glass-card animate-slide-up">
-          <div className="comparison-header">
-            <ShieldCheck size={32} className="text-accent" />
-            <h2>Trusted by 10,000+ Professionals</h2>
-            <p>Our infrastructure is built for reliability and security.</p>
-          </div>
-          
-          <div className="comparison-features">
-            <div className="comp-item">
-              <h4>99.9% Uptime</h4>
-              <p>Reliable processing whenever you need it.</p>
+        {/* Infrastructure / Trust Section */}
+        <section className="infrastructure-section animate-slide-up">
+          <div className="infra-content">
+            <div className="infra-header">
+              <div className="infra-icon-wrap">
+                <ShieldCheck size={28} className="text-white" />
+              </div>
+              <h2>Enterprise-Grade Infrastructure</h2>
+              <p>Trusted by 10,000+ professionals. Built for absolute reliability, security, and global scale.</p>
             </div>
-            <div className="comp-divider"></div>
-            <div className="comp-item">
-              <h4>SSL Secure</h4>
-              <p>Your images and data are fully encrypted.</p>
-            </div>
-            <div className="comp-divider"></div>
-            <div className="comp-item">
-              <h4>Global API</h4>
-              <p>Fast responses from our edge network.</p>
+            
+            <div className="infra-grid">
+              <div className="infra-card">
+                <div className="infra-card-icon">
+                  <Activity size={24} color="var(--emerald)" />
+                </div>
+                <h4>99.99% Uptime</h4>
+                <p>Reliable processing whenever you need it, backed by redundant server architecture.</p>
+              </div>
+              
+              <div className="infra-card">
+                <div className="infra-card-icon">
+                  <Lock size={24} color="var(--accent)" />
+                </div>
+                <h4>SSL Secure</h4>
+                <p>Military-grade 256-bit encryption. Your images and data are fully protected.</p>
+              </div>
+              
+              <div className="infra-card">
+                <div className="infra-card-icon">
+                  <Globe size={24} color="#a855f7" />
+                </div>
+                <h4>Global CDN</h4>
+                <p>Lightning-fast API responses from our globally distributed edge network.</p>
+              </div>
             </div>
           </div>
         </section>
 
         {/* FAQ Section */}
-        <section className="faq-section">
-          <h2>Frequently Asked Questions</h2>
-          <div className="faq-grid">
+        <section className="faq-section animate-slide-up">
+          <div className="faq-header">
+            <div className="faq-badge">Got Questions?</div>
+            <h2>Frequently Asked Questions</h2>
+            <p>Everything you need to know about the product and billing.</p>
+          </div>
+          <div className="faq-list">
             {FAQ.map((item, i) => (
-              <div key={i} className="faq-item glass-card">
-                <h4>{item.q}</h4>
-                <p>{item.a}</p>
+              <div 
+                key={i} 
+                className={`faq-accordion-item ${openFaq === i ? 'open' : ''}`}
+                onClick={() => setOpenFaq(openFaq === i ? -1 : i)}
+              >
+                <div className="faq-question">
+                  <h4>{item.q}</h4>
+                  <div className="faq-icon-wrapper">
+                    <ChevronDown size={20} className="faq-icon" />
+                  </div>
+                </div>
+                <div className="faq-answer">
+                  <p>{item.a}</p>
+                </div>
               </div>
             ))}
           </div>
@@ -259,8 +305,8 @@ const PricingPage = () => {
 
         .plans-grid {
           display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 2rem;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 1.5rem;
           margin-bottom: 8rem;
         }
 
@@ -410,91 +456,243 @@ const PricingPage = () => {
           flex-shrink: 0;
         }
 
-        /* Comparison Section */
-        .comparison-section {
-          text-align: center;
-          padding: 4rem;
+        /* Infrastructure / Trust Section */
+        .infrastructure-section {
+          position: relative;
           margin-bottom: 8rem;
           border-radius: 3rem;
+          background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-secondary) 100%);
+          border: 1px solid var(--border-color);
+          overflow: hidden;
+          box-shadow: var(--shadow-lg);
         }
 
-        .comparison-header h2 {
-          font-size: 2rem;
-          font-weight: 900;
-          margin: 1rem 0 0.5rem;
+        .infra-content {
+          padding: 5rem 4rem;
+          position: relative;
+          z-index: 2;
         }
 
-        .comparison-header p {
-          color: var(--text-secondary);
-          font-weight: 500;
-          margin-bottom: 3rem;
-        }
-
-        .comparison-features {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 2rem;
-        }
-
-        .comp-item h4 {
-          font-size: 1.25rem;
-          font-weight: 800;
-          margin-bottom: 0.25rem;
-        }
-
-        .comp-item p {
-          font-size: 0.875rem;
-          color: var(--text-muted);
-          font-weight: 600;
-        }
-
-        .comp-divider {
-          width: 1px;
-          height: 60px;
-          background: var(--border-color);
-        }
-
-        /* FAQ */
-        .faq-section h2 {
+        .infra-header {
           text-align: center;
-          font-size: 2.5rem;
-          font-weight: 900;
           margin-bottom: 4rem;
         }
 
-        .faq-grid {
-          display: grid;
-          grid-template-columns: repeat(2, 1fr);
-          gap: 1.5rem;
+        .infra-icon-wrap {
+          width: 64px;
+          height: 64px;
+          background: var(--accent-gradient);
+          border-radius: 20px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin: 0 auto 1.5rem;
+          box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4);
+          transform: rotate(-5deg);
         }
 
-        .faq-item {
-          padding: 2rem;
-          border-radius: 2rem;
-        }
-
-        .faq-item h4 {
-          font-size: 1.125rem;
-          font-weight: 800;
+        .infra-header h2 {
+          font-size: 2.5rem;
+          font-weight: 900;
           margin-bottom: 1rem;
+          letter-spacing: -0.02em;
         }
 
-        .faq-item p {
+        .infra-header p {
+          color: var(--text-secondary);
+          font-size: 1.125rem;
+          font-weight: 500;
+          max-width: 600px;
+          margin: 0 auto;
+        }
+
+        .infra-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 2rem;
+        }
+
+        .infra-card {
+          background: var(--bg-primary);
+          border: 1px solid var(--border-color);
+          padding: 2.5rem 2rem;
+          border-radius: 2rem;
+          text-align: left;
+          transition: all 0.3s ease;
+          box-shadow: var(--shadow-sm);
+        }
+
+        .infra-card:hover {
+          transform: translateY(-8px);
+          box-shadow: var(--shadow-glow);
+          border-color: var(--accent);
+        }
+
+        .infra-card-icon {
+          width: 48px;
+          height: 48px;
+          border-radius: 16px;
+          background: var(--bg-secondary);
+          border: 1px solid var(--border-color);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-bottom: 1.5rem;
+        }
+
+        .infra-card h4 {
+          font-size: 1.25rem;
+          font-weight: 800;
+          margin-bottom: 0.75rem;
+          color: var(--text-primary);
+        }
+
+        .infra-card p {
           font-size: 0.9375rem;
           color: var(--text-secondary);
           line-height: 1.6;
           font-weight: 500;
         }
 
-        @media (max-width: 1024px) {
-          .plans-grid { grid-template-columns: 1fr; max-width: 500px; margin: 0 auto 5rem; }
+        /* FAQ Section */
+        .faq-section {
+          max-width: 800px;
+          margin: 0 auto 8rem;
+        }
+
+        .faq-header {
+          text-align: center;
+          margin-bottom: 4rem;
+        }
+
+        .faq-badge {
+          display: inline-block;
+          padding: 0.4rem 1.25rem;
+          background: var(--bg-secondary);
+          color: var(--accent);
+          border: 1px solid var(--border-color);
+          border-radius: 100px;
+          font-size: 0.8125rem;
+          font-weight: 800;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          margin-bottom: 1.5rem;
+        }
+
+        .faq-section h2 {
+          font-size: 2.5rem;
+          font-weight: 900;
+          margin-bottom: 1rem;
+          letter-spacing: -0.02em;
+        }
+
+        .faq-section p {
+          color: var(--text-secondary);
+          font-size: 1.125rem;
+          font-weight: 500;
+        }
+
+        .faq-list {
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
+        }
+
+        .faq-accordion-item {
+          background: var(--bg-card);
+          border: 1px solid var(--border-color);
+          border-radius: 1.5rem;
+          overflow: hidden;
+          transition: all 0.3s ease;
+          cursor: pointer;
+        }
+
+        .faq-accordion-item:hover {
+          border-color: var(--accent);
+          box-shadow: var(--shadow-sm);
+        }
+
+        .faq-accordion-item.open {
+          border-color: var(--accent);
+          box-shadow: var(--shadow-glow);
+        }
+
+        .faq-question {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 1.5rem 2rem;
+        }
+
+        .faq-question h4 {
+          font-size: 1.125rem;
+          font-weight: 700;
+          margin: 0;
+          color: var(--text-primary);
+        }
+
+        .faq-icon-wrapper {
+          width: 32px;
+          height: 32px;
+          border-radius: 50%;
+          background: var(--bg-secondary);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+          transition: all 0.3s ease;
+        }
+
+        .faq-accordion-item:hover .faq-icon-wrapper {
+          background: var(--accent-light);
+          color: var(--accent);
+        }
+
+        .faq-accordion-item.open .faq-icon-wrapper {
+          background: var(--accent);
+          color: white;
+        }
+
+        .faq-icon {
+          transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .faq-accordion-item.open .faq-icon {
+          transform: rotate(180deg);
+        }
+
+        .faq-answer {
+          max-height: 0;
+          overflow: hidden;
+          transition: max-height 0.4s ease-in-out, opacity 0.3s ease;
+          opacity: 0;
+        }
+
+        .faq-accordion-item.open .faq-answer {
+          max-height: 200px;
+          opacity: 1;
+        }
+
+        .faq-answer p {
+          padding: 0 2rem 1.5rem;
+          margin: 0;
+          font-size: 1rem;
+          color: var(--text-secondary);
+          line-height: 1.6;
+        }
+
+        @media (max-width: 1200px) {
+          .plans-grid { grid-template-columns: repeat(2, 1fr); max-width: 800px; margin: 0 auto 5rem; }
           .plan-card.highlighted { transform: none; }
           .plan-card.highlighted:hover { transform: translateY(-10px); }
-          .faq-grid { grid-template-columns: 1fr; }
-          .comparison-features { flex-direction: column; gap: 2rem; }
-          .comp-divider { width: 50%; height: 1px; }
+        }
+        @media (max-width: 768px) {
+          .plans-grid { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto 5rem; }
+          .infra-grid { grid-template-columns: 1fr; }
+          .infra-content { padding: 3rem 2rem; }
           .pricing-header h1 { font-size: 3rem; }
+          .faq-question { padding: 1.25rem 1.5rem; }
+          .faq-answer p { padding: 0 1.5rem 1.25rem; }
         }
       `}</style>
     </div>

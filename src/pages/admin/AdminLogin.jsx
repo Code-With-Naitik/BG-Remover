@@ -73,7 +73,8 @@ const AdminLogin = () => {
       toast.success('Welcome back, Admin!');
       navigate('/admin');
     } catch (err) {
-      toast.error(err.response?.data?.message || 'Invalid credentials');
+      const errorMsg = err.response?.data?.message || err.response?.data?.error || err.message || 'Invalid credentials';
+      toast.error(errorMsg);
     } finally {
       setIsSubmitting(false);
     }

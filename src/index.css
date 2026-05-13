@@ -818,14 +818,18 @@ textarea.input {
 
 .auth-card {
   width: 100%;
-  max-width: 420px;
-  padding: 2.5rem;
-  background: rgba(15, 15, 25, 0.4);
-  backdrop-filter: blur(24px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  max-width: 440px;
+  padding: 3rem 2.5rem;
+  background: rgba(15, 15, 25, 0.65);
+  backdrop-filter: blur(30px) saturate(150%);
+  -webkit-backdrop-filter: blur(30px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-top: 2px solid rgba(147, 51, 234, 0.4);
   border-radius: 2rem;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.1);
   margin: 1rem;
+  position: relative;
+  z-index: 10;
 }
 
 .auth-header {
@@ -839,11 +843,21 @@ textarea.input {
   justify-content: center;
   width: 64px;
   height: 64px;
-  background: var(--accent);
+  background: linear-gradient(135deg, #9333ea 0%, #3b82f6 100%);
   border-radius: 1.25rem;
   margin: 0 auto 1.5rem auto;
-  box-shadow: 0 10px 20px rgba(99, 102, 241, 0.2);
+  box-shadow: 0 10px 25px rgba(147, 51, 234, 0.3), inset 0 2px 4px rgba(255, 255, 255, 0.2);
   color: #fff;
+}
+
+.auth-header h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.auth-header p {
+  font-size: 0.9375rem;
 }
 
 .auth-form {
@@ -883,19 +897,25 @@ textarea.input {
 .input-auth {
   width: 100%;
   padding: 0.875rem 1rem 0.875rem 3rem;
-  background: rgba(30, 30, 45, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 1rem;
-  color: #fff;
+  color: #f8fafc;
   font-size: 1rem;
-  transition: all 0.2s;
+  font-weight: 500;
+  transition: all 0.3s ease;
   outline: none;
 }
 
+.input-auth::placeholder {
+  color: #64748b;
+  font-weight: 400;
+}
+
 .input-auth:focus {
-  border-color: var(--accent);
-  background: rgba(30, 30, 45, 0.8);
-  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+  border-color: #9333ea;
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 0 4px rgba(147, 51, 234, 0.15);
 }
 
 .password-toggle {
