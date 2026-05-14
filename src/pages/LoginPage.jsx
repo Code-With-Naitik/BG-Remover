@@ -19,7 +19,12 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (user) {
-      navigate(redirect);
+      // If user is admin and redirecting to default dashboard, send to /admin instead
+      if (user.role === 'admin' && redirect === '/dashboard') {
+        navigate('/admin');
+      } else {
+        navigate(redirect);
+      }
     }
   }, [user, navigate, redirect]);
 

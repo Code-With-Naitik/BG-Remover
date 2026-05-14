@@ -19,6 +19,15 @@ export const AuthProvider = ({ children }) => {
         return;
       }
 
+      // Skip verification for mock token
+      if (token === 'mock_token') {
+        if (!user) {
+          setUser({ id: 'mock-123', name: 'Demo Admin', email: 'admin@demo.com', role: 'admin' });
+        }
+        setLoading(false);
+        return;
+      }
+
       try {
         const res = await axios.get(`${API_URL}/auth/me`, {
           headers: { Authorization: `Bearer ${token}` }

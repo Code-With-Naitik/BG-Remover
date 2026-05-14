@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useTheme } from '../../context/ThemeContext';
 import { useAuth } from '../../context/AuthContext';
-import { Sun, Moon, Menu, X, Sparkles, User, LogOut, LayoutDashboard, Zap, ChevronDown, Settings } from 'lucide-react';
+import { Sun, Moon, Menu, X, Sparkles, User, LogOut, LayoutDashboard, Zap, ChevronDown, Settings, ShieldCheck } from 'lucide-react';
 
 const NAV_LINKS = [
   { to: '/tool', label: 'Remove BG' },
@@ -168,10 +168,18 @@ const Navbar = () => {
                       <p className="user-name-display">{user.name}</p>
                       <p className="user-email-display">{user.email}</p>
                     </div>
-                    
+
                     <div className="dropdown-divider"></div>
 
                     <div className="dropdown-links">
+                      {user.role === 'admin' && (
+                        <Link to="/admin" className="dropdown-item">
+                          <div className="item-icon bg-purple-50 text-purple-600">
+                            <ShieldCheck size={16} />
+                          </div>
+                          <span>Admin Panel</span>
+                        </Link>
+                      )}
                       <Link to="/dashboard" className="dropdown-item">
                         <div className="item-icon bg-indigo-50 text-indigo-600">
                           <LayoutDashboard size={16} />
@@ -208,10 +216,10 @@ const Navbar = () => {
                 <Link
                   to="/login"
                   className="hide-mobile"
-                  style={{ 
-                    padding: '0.5rem 1rem', 
-                    fontSize: '0.9rem', 
-                    fontWeight: 600, 
+                  style={{
+                    padding: '0.5rem 1rem',
+                    fontSize: '0.9rem',
+                    fontWeight: 600,
                     color: 'var(--text-primary)',
                     textDecoration: 'none'
                   }}
@@ -296,14 +304,14 @@ const Navbar = () => {
             </div>
           )}
           {user && (
-             <div style={{ marginTop: '0.75rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-               <Link to="/dashboard" className="btn btn-secondary" style={{ width: '100%' }}>
-                 Dashboard
-               </Link>
-               <button onClick={handleLogout} className="btn" style={{ width: '100%', color: 'red', border: '1px solid #fee2e2' }}>
-                 Logout
-               </button>
-             </div>
+            <div style={{ marginTop: '0.75rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+              <Link to="/dashboard" className="btn btn-secondary" style={{ width: '100%' }}>
+                Dashboard
+              </Link>
+              <button onClick={handleLogout} className="btn" style={{ width: '100%', color: 'red', border: '1px solid #fee2e2' }}>
+                Logout
+              </button>
+            </div>
           )}
         </div>
       )}

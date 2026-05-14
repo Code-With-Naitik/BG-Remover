@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../../context/AuthContext';
 import { toast } from 'react-hot-toast';
@@ -12,14 +12,16 @@ const AdminLogin = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { login, logout, user, loading } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  const redirect = location.state?.from?.pathname || '/admin';
 
   useEffect(() => {
     if (!loading && user) {
       if (user.role === 'admin') {
-        navigate('/admin');
+        navigate(redirect, { replace: true });
       }
     }
-  }, [user, loading, navigate]);
+  }, [user, loading, navigate, redirect]);
 
   if (loading) {
     return (
@@ -71,7 +73,7 @@ const AdminLogin = () => {
       }
 
       toast.success('Welcome back, Admin!');
-      navigate('/admin');
+      navigate(redirect);
     } catch (err) {
       const errorMsg = err.response?.data?.message || err.response?.data?.error || err.message || 'Invalid credentials';
       toast.error(errorMsg);

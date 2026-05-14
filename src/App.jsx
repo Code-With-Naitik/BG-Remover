@@ -23,6 +23,7 @@ const LoginPage = lazy(() => import('./pages/LoginPage'));
 const SignupPage = lazy(() => import('./pages/SignupPage'));
 const DashboardPage = lazy(() => import('./pages/DashboardPage'));
 const SitemapPage = lazy(() => import('./pages/SitemapPage'));
+const SamplePage = lazy(() => import('./pages/SamplePage'));
 const ComingSoon = lazy(() => import('./components/layout/ComingSoon'));
 
 // Lazy Loaded Admin Pages
@@ -68,6 +69,7 @@ function App() {
                 <Route path="/pricing" element={<PricingPage />} />
                 <Route path="/blog" element={<BlogListPage />} />
                 <Route path="/blog/:slug" element={<BlogPostPage />} />
+                <Route path="/sample" element={<SamplePage />} />
 
                 {/* Programmatic SEO Landing Pages */}
                 <Route path="/remove-background-online" element={<SeoLandingPage title="Remove Background Online" keyword="remove background online" />} />
