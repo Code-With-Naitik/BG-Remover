@@ -10,7 +10,7 @@ import { Helmet } from 'react-helmet-async';
 import { Sparkles, Clock, Shield, Zap } from 'lucide-react';
 
 const ToolPage = () => {
-  const { isProcessing, originalImage, originalFiles, processedImage, processImage, reset } = useImageProcessor();
+  const { isProcessing, originalImage, originalFiles, processedImage, processImage, reset, currentHistoryId } = useImageProcessor();
 
   return (
     <div style={{ background: 'var(--bg-primary)', minHeight: '100vh' }}>
@@ -92,6 +92,7 @@ const ToolPage = () => {
                     originalFiles={originalFiles}
                     processImage={processImage}
                     onReset={reset}
+                    currentHistoryId={currentHistoryId}
                   />
                 )}
               </div>

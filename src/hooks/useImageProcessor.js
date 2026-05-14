@@ -9,6 +9,7 @@ export const useImageProcessor = () => {
   const [processedImage, setProcessedImage] = useState(null);
   const [originalFiles, setOriginalFiles] = useState([]);
   const [error, setError] = useState(null);
+  const [currentHistoryId, setCurrentHistoryId] = useState(null);
   const { token } = useAuth();
 
   const API_URL = import.meta.env.VITE_API_URL || '/api';
@@ -48,9 +49,13 @@ export const useImageProcessor = () => {
         }
 
         const results = result.files;
-        results.forEach(res => {
-          saveToHistory(res.data, res.data);
+        // Batch processing - we can just set currentHistoryId to the first one
+        let firstId = null;
+        results.forEach((res, index) => {
+          const id = saveToHistory(res.data, res.data);
+          if (index === 0) firstId = id;
         });
+        setCurrentHistoryId(firstId);
         setProcessedImage(results[0].data);
         toast.success(`${results.length} images processed!`);
       } else {
@@ -61,7 +66,8 @@ export const useImageProcessor = () => {
         const reader = new FileReader();
         reader.readAsDataURL(response.data);
         reader.onloadend = () => {
-          saveToHistory(localUrl, reader.result);
+          const id = saveToHistory(localUrl, reader.result);
+          setCurrentHistoryId(id);
         };
 
         toast.success('Background removed!');
@@ -92,8 +98,10 @@ export const useImageProcessor = () => {
       const historyStr = localStorage.getItem('bgremover_history') || '[]';
       let history = JSON.parse(historyStr);
 
+      const id = Date.now();
+
       history.unshift({
-        id: Date.now(),
+        id,
         original,
         processed,
         date: new Date().toISOString()
@@ -105,8 +113,10 @@ export const useImageProcessor = () => {
 
       localStorage.setItem('bgremover_history', JSON.stringify(history));
       window.dispatchEvent(new Event('history_updated'));
+      return id;
     } catch (e) {
       console.error('Failed to save history', e);
+      return null;
     }
   };
 
@@ -114,6 +124,7 @@ export const useImageProcessor = () => {
     setOriginalImage(null);
     setProcessedImage(null);
     setError(null);
+    setCurrentHistoryId(null);
   };
 
   return {
@@ -122,6 +133,7 @@ export const useImageProcessor = () => {
     originalFiles,
     processedImage,
     error,
+    currentHistoryId,
     processImage,
     reset
   };

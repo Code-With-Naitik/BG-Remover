@@ -4,7 +4,7 @@ import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { useHDCredits } from '../../hooks/useHDCredits';
 
-const BACKGROUND_PRESETS = [
+export const BACKGROUND_PRESETS = [
   { id: 'transparent', label: 'Transparent', style: { background: 'url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAMUlEQVQ4T2NkYGAQYcAP3uIn7YzZ2SX48D1S3Y7P0WAnS98OOfgY6S5A6fWvYfA6AzSbwY08D07MAAAAAElFTkSuQmCC)' } },
   { id: 'white', label: 'White', style: { background: '#ffffff' } },
   { id: 'black', label: 'Black', style: { background: '#000000' } },
@@ -16,7 +16,7 @@ const BACKGROUND_PRESETS = [
   { id: 'nature', label: 'Nature', url: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&q=80' },
 ];
 
-const EditorStudio = ({ processedImage, originalFiles, processImage, onReset }) => {
+const EditorStudio = ({ processedImage, originalFiles, processImage, onReset, currentHistoryId }) => {
   const navigate = useNavigate();
   const { credits, useCredit, isPro } = useHDCredits();
   const [showUpgradeModal, setShowUpgradeModal] = useState(false);
@@ -35,6 +35,23 @@ const EditorStudio = ({ processedImage, originalFiles, processImage, onReset }) 
     }
   }, [originalFiles]);
 
+  useEffect(() => {
+    if (currentHistoryId) {
+      try {
+        const historyStr = localStorage.getItem('bgremover_history');
+        if (historyStr) {
+          let history = JSON.parse(historyStr);
+          const index = history.findIndex(item => item.id === currentHistoryId);
+          if (index !== -1) {
+            history[index].bgData = { activeBg, blurAmount, shadowAmount };
+            localStorage.setItem('bgremover_history', JSON.stringify(history));
+            window.dispatchEvent(new Event('history_updated'));
+          }
+        }
+      } catch (e) { }
+    }
+  }, [activeBg, blurAmount, shadowAmount, currentHistoryId]);
+
   const activeBgData = BACKGROUND_PRESETS.find(b => b.id === activeBg);
 
   const getContainerStyle = () => {
@@ -49,8 +66,8 @@ const EditorStudio = ({ processedImage, originalFiles, processImage, onReset }) 
       filters.push(`drop-shadow(0px ${shadowAmount}px ${shadowAmount * 1.5}px rgba(0,0,0,0.6))`);
     }
     return {
-      maxWidth: '90%', 
-      maxHeight: '90%', 
+      maxWidth: '90%',
+      maxHeight: '90%',
       objectFit: 'contain',
       filter: filters.join(' '),
       transition: 'filter 0.3s ease',
@@ -73,7 +90,7 @@ const EditorStudio = ({ processedImage, originalFiles, processImage, onReset }) 
       const ctx = canvas.getContext('2d');
       const img = new Image();
       img.crossOrigin = "anonymous";
-      
+
       await new Promise((resolve, reject) => {
         img.onload = resolve;
         img.onerror = reject;
@@ -89,12 +106,21 @@ const EditorStudio = ({ processedImage, originalFiles, processImage, onReset }) 
           ctx.fillStyle = activeBgData.style.background;
           ctx.fillRect(0, 0, canvas.width, canvas.height);
         } else if (activeBgData.style && activeBgData.style.background.startsWith('linear-gradient')) {
-          // Simplification: We draw a solid color fallback for gradients in canvas, or draw the gradient.
-          // For a perfect export, drawing gradients on canvas requires parsing CSS. 
-          // We will use a fallback or simple gradient here.
           const grad = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-          grad.addColorStop(0, '#6366F1'); // Placeholder
-          grad.addColorStop(1, '#EC4899');
+          if (activeBgData.id === 'gradient-1') {
+            grad.addColorStop(0, '#FF9A9E');
+            grad.addColorStop(0.99, '#FECFEF');
+            grad.addColorStop(1, '#FECFEF');
+          } else if (activeBgData.id === 'gradient-2') {
+            grad.addColorStop(0, '#2E3192');
+            grad.addColorStop(1, '#1BFFFF');
+          } else if (activeBgData.id === 'gradient-3') {
+            grad.addColorStop(0, '#FF0844');
+            grad.addColorStop(1, '#FFB199');
+          } else {
+            grad.addColorStop(0, '#6366F1');
+            grad.addColorStop(1, '#EC4899');
+          }
           ctx.fillStyle = grad;
           ctx.fillRect(0, 0, canvas.width, canvas.height);
         } else if (activeBgData.url) {
@@ -104,7 +130,7 @@ const EditorStudio = ({ processedImage, originalFiles, processImage, onReset }) 
             bgImg.onload = resolve;
             bgImg.src = activeBgData.url;
           });
-          
+
           if (blurAmount > 0) ctx.filter = `blur(${blurAmount}px)`;
           // Cover logic
           const scale = Math.max(canvas.width / bgImg.width, canvas.height / bgImg.height);
@@ -158,17 +184,17 @@ const EditorStudio = ({ processedImage, originalFiles, processImage, onReset }) 
 
   return (
     <div className="animate-scale-in" style={{ marginTop: '2rem', display: 'grid', gridTemplateColumns: '1fr 340px', gap: '2rem', minHeight: '650px' }}>
-      
+
       {/* ─── MAIN WORKSPACE ─── */}
-      <div 
-        style={{ 
-          background: 'var(--bg-secondary)', 
-          borderRadius: '32px', 
+      <div
+        style={{
+          background: 'var(--bg-secondary)',
+          borderRadius: '32px',
           border: '1px solid var(--border-color)',
-          overflow: 'hidden', 
-          position: 'relative', 
+          overflow: 'hidden',
+          position: 'relative',
           boxShadow: 'var(--shadow-sm)',
-          display: 'flex', 
+          display: 'flex',
           flexDirection: 'column'
         }}
       >
@@ -181,13 +207,13 @@ const EditorStudio = ({ processedImage, originalFiles, processImage, onReset }) 
             <span style={{ marginLeft: '1rem', fontSize: '0.875rem', fontWeight: 700, color: 'var(--text-muted)' }}>Snaplix Workspace</span>
           </div>
           <div style={{ display: 'flex', gap: '1rem' }}>
-            <button 
-              onMouseDown={() => setIsComparing(true)} 
+            <button
+              onMouseDown={() => setIsComparing(true)}
               onMouseUp={() => setIsComparing(false)}
               onMouseLeave={() => setIsComparing(false)}
               onTouchStart={() => setIsComparing(true)}
               onTouchEnd={() => setIsComparing(false)}
-              className="btn btn-white" 
+              className="btn btn-white"
               style={{ padding: '0.5rem 1rem', borderRadius: '10px', fontSize: '0.875rem' }}
             >
               <SplitSquareHorizontal size={16} /> {isComparing ? 'Showing Original' : 'Hold to Compare'}
@@ -202,16 +228,16 @@ const EditorStudio = ({ processedImage, originalFiles, processImage, onReset }) 
         <div style={{ flex: 1, position: 'relative', overflow: 'hidden' }}>
           {/* Base checkerboard so transparent regions show checkers */}
           <div style={{ position: 'absolute', inset: 0, background: 'url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAMUlEQVQ4T2NkYGAQYcAP3uIn7YzZ2SX48D1S3Y7P0WAnS98OOfgY6S5A6fWvYfA6AzSbwY08D07MAAAAAElFTkSuQmCC)', opacity: 0.3 }} />
-          
+
           {/* User Background Layer */}
           <div style={{ position: 'absolute', inset: 0, ...getContainerStyle(), filter: blurAmount > 0 ? `blur(${blurAmount}px)` : 'none', transform: blurAmount > 0 ? 'scale(1.05)' : 'scale(1)' }} />
 
           {/* Image Layer */}
           <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem' }}>
-            <img 
-              src={isComparing ? originalUrl : processedImage} 
-              alt="Workspace Canvas" 
-              style={isComparing ? { maxWidth: '90%', maxHeight: '90%', objectFit: 'contain', zIndex: 2 } : getImageStyle()} 
+            <img
+              src={isComparing ? originalUrl : processedImage}
+              alt="Workspace Canvas"
+              style={isComparing ? { maxWidth: '90%', maxHeight: '90%', objectFit: 'contain', zIndex: 2 } : getImageStyle()}
             />
           </div>
         </div>
@@ -219,95 +245,95 @@ const EditorStudio = ({ processedImage, originalFiles, processImage, onReset }) 
 
       {/* ─── SIDEBAR CONTROLS ─── */}
       <div style={{ padding: '2rem', borderRadius: '32px', background: 'var(--bg-card)', border: '1px solid var(--border-color)', display: 'flex', flexDirection: 'column', gap: '2rem', boxShadow: 'var(--shadow-lg)' }}>
-        
+
         <div>
           <h3 style={{ fontSize: '1.25rem', fontWeight: 900, marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.6rem', color: 'var(--text-primary)' }}>
             <Wand2 size={20} color="var(--accent)" /> Pro Tools
           </h3>
-          
+
           <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-            
-             {/* Backgrounds */}
-             <div>
-               <label style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.8rem', fontWeight: 800, color: 'var(--text-secondary)', textTransform: 'uppercase', marginBottom: '1rem' }}>
-                 <ImageIcon size={14} /> Backgrounds
-               </label>
-               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.75rem' }}>
-                  {BACKGROUND_PRESETS.map(bg => (
-                    <button 
-                      key={bg.id}
-                      onClick={() => setActiveBg(bg.id)}
-                      title={bg.label}
-                      style={{ 
-                        width: '100%', height: '60px', borderRadius: '14px', 
-                        border: activeBg === bg.id ? '2px solid var(--accent)' : '1px solid var(--border-color)',
-                        padding: '3px', background: 'var(--bg-primary)', cursor: 'pointer', transition: 'all 0.2s',
-                        boxShadow: activeBg === bg.id ? 'var(--shadow-glow)' : 'none'
-                      }}
-                    >
-                      <div style={{ 
-                        width: '100%', height: '100%', borderRadius: '10px', 
-                        ...(bg.style || {}),
-                        background: bg.url ? `url(${bg.url}) center/cover` : (bg.style?.background || 'transparent'),
-                        display: 'flex', alignItems: 'center', justifyContent: 'center'
-                      }} />
-                    </button>
-                  ))}
-               </div>
-             </div>
 
-             {/* Background Blur */}
-             <div style={{ opacity: activeBgData?.url ? 1 : 0.4, pointerEvents: activeBgData?.url ? 'auto' : 'none', transition: 'opacity 0.3s' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
-                  <label style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.8rem', fontWeight: 800, color: 'var(--text-secondary)', textTransform: 'uppercase' }}>
-                    <Sliders size={14} /> Bg Blur
-                  </label>
-                  <span style={{ fontSize: '0.8rem', fontWeight: 800, color: 'var(--accent)' }}>{blurAmount}px</span>
-                </div>
-                <input 
-                  type="range" min="0" max="20" value={blurAmount} 
-                  onChange={(e) => setBlurAmount(e.target.value)}
-                  style={{ width: '100%', accentColor: 'var(--accent)', height: '6px', borderRadius: '4px' }}
-                />
-             </div>
+            {/* Backgrounds */}
+            <div>
+              <label style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.8rem', fontWeight: 800, color: 'var(--text-secondary)', textTransform: 'uppercase', marginBottom: '1rem' }}>
+                <ImageIcon size={14} /> Backgrounds
+              </label>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.75rem' }}>
+                {BACKGROUND_PRESETS.map(bg => (
+                  <button
+                    key={bg.id}
+                    onClick={() => setActiveBg(bg.id)}
+                    title={bg.label}
+                    style={{
+                      width: '100%', height: '60px', borderRadius: '14px',
+                      border: activeBg === bg.id ? '2px solid var(--accent)' : '1px solid var(--border-color)',
+                      padding: '3px', background: 'var(--bg-primary)', cursor: 'pointer', transition: 'all 0.2s',
+                      boxShadow: activeBg === bg.id ? 'var(--shadow-glow)' : 'none'
+                    }}
+                  >
+                    <div style={{
+                      width: '100%', height: '100%', borderRadius: '10px',
+                      ...(bg.style || {}),
+                      background: bg.url ? `url(${bg.url}) center/cover` : (bg.style?.background || 'transparent'),
+                      display: 'flex', alignItems: 'center', justifyContent: 'center'
+                    }} />
+                  </button>
+                ))}
+              </div>
+            </div>
 
-             {/* Drop Shadow */}
-             <div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
-                  <label style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.8rem', fontWeight: 800, color: 'var(--text-secondary)', textTransform: 'uppercase' }}>
-                    <Layers size={14} /> Subject Shadow
-                  </label>
-                  <span style={{ fontSize: '0.8rem', fontWeight: 800, color: 'var(--accent)' }}>{shadowAmount}%</span>
-                </div>
-                <input 
-                  type="range" min="0" max="40" value={shadowAmount} 
-                  onChange={(e) => setShadowAmount(e.target.value)}
-                  style={{ width: '100%', accentColor: 'var(--accent)', height: '6px', borderRadius: '4px' }}
-                />
-             </div>
+            {/* Background Blur */}
+            <div style={{ opacity: activeBgData?.url ? 1 : 0.4, pointerEvents: activeBgData?.url ? 'auto' : 'none', transition: 'opacity 0.3s' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
+                <label style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.8rem', fontWeight: 800, color: 'var(--text-secondary)', textTransform: 'uppercase' }}>
+                  <Sliders size={14} /> Bg Blur
+                </label>
+                <span style={{ fontSize: '0.8rem', fontWeight: 800, color: 'var(--accent)' }}>{blurAmount}px</span>
+              </div>
+              <input
+                type="range" min="0" max="20" value={blurAmount}
+                onChange={(e) => setBlurAmount(e.target.value)}
+                style={{ width: '100%', accentColor: 'var(--accent)', height: '6px', borderRadius: '4px' }}
+              />
+            </div>
+
+            {/* Drop Shadow */}
+            <div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
+                <label style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.8rem', fontWeight: 800, color: 'var(--text-secondary)', textTransform: 'uppercase' }}>
+                  <Layers size={14} /> Subject Shadow
+                </label>
+                <span style={{ fontSize: '0.8rem', fontWeight: 800, color: 'var(--accent)' }}>{shadowAmount}%</span>
+              </div>
+              <input
+                type="range" min="0" max="40" value={shadowAmount}
+                onChange={(e) => setShadowAmount(e.target.value)}
+                style={{ width: '100%', accentColor: 'var(--accent)', height: '6px', borderRadius: '4px' }}
+              />
+            </div>
 
           </div>
         </div>
 
         {/* Action Buttons */}
         <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: '1rem', paddingTop: '2rem', borderTop: '1px solid var(--border-color)' }}>
-          <button 
-            onClick={handleDownloadHD} 
+          <button
+            onClick={handleDownloadHD}
             disabled={isDownloading}
-            className="btn btn-gradient btn-xl" 
+            className="btn btn-gradient btn-xl"
             style={{ width: '100%', borderRadius: '16px', fontSize: '1.0625rem', fontWeight: 800, boxShadow: 'var(--shadow-glow-lg)', opacity: isDownloading ? 0.7 : 1 }}
           >
             {isDownloading ? 'Processing...' : <><Download size={20} /> Download HD</>}
           </button>
-          
-          <button 
+
+          <button
             onClick={handleShare}
-            className="btn btn-outline btn-xl" 
+            className="btn btn-outline btn-xl"
             style={{ width: '100%', borderRadius: '16px', fontSize: '1.0625rem', fontWeight: 700 }}
           >
             <Share2 size={18} /> Share Result
           </button>
-          
+
           <div style={{ textAlign: 'center', marginTop: '0.5rem' }}>
             <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.8125rem', color: 'var(--text-muted)', fontWeight: 700, padding: '0.4rem 1rem', background: 'var(--bg-secondary)', borderRadius: '100px' }}>
               <Crown size={14} color="#F59E0B" /> {credits} HD credits remaining

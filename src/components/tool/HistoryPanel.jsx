@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Trash2, Download, Trash, Package } from 'lucide-react';
+import { BACKGROUND_PRESETS } from './EditorStudio';
 
 const HistoryPanel = () => {
   const [history, setHistory] = useState([]);
@@ -95,7 +96,24 @@ const HistoryPanel = () => {
         gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', 
         gap: '1.5rem' 
       }}>
-        {history.map((item) => (
+        {history.map((item) => {
+          const bgData = item.bgData || { activeBg: 'transparent', blurAmount: 0, shadowAmount: 0 };
+          const preset = BACKGROUND_PRESETS.find(p => p.id === bgData.activeBg);
+          
+          let bgStyle = {
+            background: 'url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAMUlEQVQ4T2NkYGAQYcAP3uIn7YzZ2SX48D1S3Y7P0WAnS98OOfgY6S5A6fWvYfA6AzSbwY08D07MAAAAAElFTkSuQmCC)'
+          };
+          if (preset) {
+            if (preset.style) bgStyle = preset.style;
+            else if (preset.url) bgStyle = { background: `url(${preset.url}) center/cover` };
+          }
+          
+          let imgStyle = { maxHeight: '100%', maxWidth: '100%', objectFit: 'contain', position: 'relative', zIndex: 2 };
+          if (bgData.shadowAmount > 0) {
+            imgStyle.filter = `drop-shadow(0px ${bgData.shadowAmount}px ${bgData.shadowAmount * 1.5}px rgba(0,0,0,0.6))`;
+          }
+
+          return (
           <div key={item.id} className="card card-hover" style={{ padding: '0.75rem', display: 'flex', flexDirection: 'column', gap: '0.75rem', position: 'relative' }}>
             
             {/* Delete Button */}
@@ -134,11 +152,20 @@ const HistoryPanel = () => {
               justifyContent: 'center',
               overflow: 'hidden',
               border: '1px solid var(--border-color)',
+              position: 'relative'
             }}>
+              {/* background layer */}
+              <div style={{
+                position: 'absolute', inset: 0, 
+                ...bgStyle,
+                filter: bgData.blurAmount > 0 ? `blur(${bgData.blurAmount}px)` : 'none',
+                transform: bgData.blurAmount > 0 ? 'scale(1.05)' : 'scale(1)',
+                zIndex: 1
+              }} />
               <img 
                 src={item.processed} 
                 alt="Processed result" 
-                style={{ maxHeight: '100%', maxWidth: '100%', objectFit: 'contain' }} 
+                style={imgStyle} 
               />
             </div>
             
@@ -155,7 +182,7 @@ const HistoryPanel = () => {
               </button>
             </div>
           </div>
-        ))}
+        )})}
       </div>
     </div>
   );
