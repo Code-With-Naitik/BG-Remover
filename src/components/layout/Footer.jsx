@@ -29,16 +29,25 @@ const FOOTER_LINKS = {
     { label: 'Free Tool', to: '/free-background-remover' },
     { label: 'HD Remover', to: '/background-remover-hd' },
   ],
-  Resources: [
-    { label: 'Blog', to: '/blog' },
-    { label: 'Sitemap', to: '/sitemap' },
-    { label: 'About Us', to: '/about' },
-    { label: 'Contact', to: '/contact' },
+  Solutions: [
+    { label: 'For Individuals', to: '/tool' },
+    { label: 'For Photographers', to: '/tool' },
+    { label: 'For Ecommerce', to: '/tool' },
+    { label: 'For Developers', to: '/tool' },
+    { label: 'For Enterprise', to: '/tool' },
   ],
-  Legal: [
+  'Tools & API': [
+    { label: 'API Documentation', to: '/tool' },
+    { label: 'Bulk Remover', to: '/tool' },
+    { label: 'Remove BG Online', to: '/remove-background-online' },
+    { label: 'Passport Photo', to: '/remove-background-from-passport-photo' },
+  ],
+  Company: [
+    { label: 'About Us', to: '/about' },
+    { label: 'Blog', to: '/blog' },
+    { label: 'Contact', to: '/contact' },
     { label: 'Privacy Policy', to: '/privacy-policy' },
     { label: 'Terms of Service', to: '/terms' },
-    { label: 'Refund Policy', to: '/terms' },
   ],
 };
 
@@ -112,7 +121,7 @@ const Footer = () => {
         </div>
 
         {/* ── Main Link Grid ── */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1.8fr repeat(3, 1fr)', gap: '3rem 4rem', marginBottom: '3rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1.5fr repeat(4, 1fr)', gap: '2.5rem 3rem', marginBottom: '3rem' }}>
 
           {/* Brand Column */}
           <div>
