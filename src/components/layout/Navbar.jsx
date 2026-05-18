@@ -1,14 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useTheme } from '../../context/ThemeContext';
 import { useAuth } from '../../context/AuthContext';
 import { Sun, Moon, Menu, X, Sparkles, User, LogOut, LayoutDashboard, Zap, ChevronDown, Settings, ShieldCheck } from 'lucide-react';
 
 const NAV_LINKS = [
-  { to: '/tool', label: 'Remove BG' },
   { to: '/blog', label: 'Blog' },
   { to: '/pricing', label: 'Pricing' },
   { to: '/about', label: 'About' },
+];
+
+const FEATURE_LINKS = [
+  { to: '/tool', label: '✂️ Remove Background', desc: 'One-click AI background removal' },
+  { to: '/pricing', label: '💎 Pricing Plans', desc: 'Free plan + premium upgrades' },
 ];
 
 const Navbar = () => {
@@ -17,8 +21,21 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [featuresOpen, setFeaturesOpen] = useState(false);
+  const featuresRef = useRef(null);
   const location = useLocation();
   const navigate = useNavigate();
+
+  // Close features dropdown on outside click
+  useEffect(() => {
+    const handler = (e) => {
+      if (featuresRef.current && !featuresRef.current.contains(e.target)) {
+        setFeaturesOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, []);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 16);
@@ -29,6 +46,7 @@ const Navbar = () => {
   useEffect(() => {
     setIsMenuOpen(false);
     setIsProfileOpen(false);
+    setFeaturesOpen(false);
   }, [location.pathname]);
 
   const isActive = (path) => location.pathname === path;
@@ -106,6 +124,33 @@ const Navbar = () => {
             className="hide-mobile"
             style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}
           >
+            {/* Features Dropdown — click-based */}
+            <div style={{ position: 'relative' }} ref={featuresRef}>
+              <button
+                onClick={() => setFeaturesOpen(o => !o)}
+                style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', padding: '0.5rem 0.875rem', borderRadius: 'var(--radius-full)', fontSize: '0.9375rem', fontWeight: 500, color: featuresOpen ? 'var(--accent)' : 'var(--text-secondary)', background: featuresOpen ? 'var(--accent-light)' : 'transparent', border: 'none', cursor: 'pointer', transition: 'all 0.2s' }}
+              >
+                Features <ChevronDown size={14} style={{ transition: 'transform 0.2s', transform: featuresOpen ? 'rotate(180deg)' : 'rotate(0deg)' }} />
+              </button>
+              {featuresOpen && (
+                <div style={{ position: 'absolute', top: '100%', left: 0, width: '270px', background: 'var(--glass-bg)', backdropFilter: 'blur(20px)', border: '1px solid var(--border-color)', borderRadius: '16px', padding: '0.5rem', boxShadow: '0 20px 40px rgba(0,0,0,0.12)', zIndex: 200, marginTop: '0.25rem' }}>
+                  {FEATURE_LINKS.map(fl => (
+                    <Link
+                      key={fl.label}
+                      to={fl.to}
+                      onClick={() => setFeaturesOpen(false)}
+                      style={{ display: 'flex', flexDirection: 'column', gap: '0.15rem', padding: '0.625rem 0.875rem', borderRadius: '10px', textDecoration: 'none', transition: 'background 0.15s' }}
+                      onMouseEnter={e => e.currentTarget.style.background = 'var(--accent-light)'}
+                      onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
+                    >
+                      <span style={{ fontSize: '0.875rem', fontWeight: 700, color: 'var(--text-primary)' }}>{fl.label}</span>
+                      <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{fl.desc}</span>
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+
             {NAV_LINKS.map(({ to, label }) => (
               <Link
                 key={to}
@@ -128,6 +173,10 @@ const Navbar = () => {
 
           {/* Actions */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.625rem' }}>
+            {/* Remove BG Prominent Button */}
+            {/* <Link to="/tool" className="hide-mobile btn btn-gradient btn-sm" style={{ borderRadius: '10px', padding: '0.55rem 1.1rem', fontSize: '0.875rem', fontWeight: 700 }}>
+              ✂️ Remove BG
+            </Link> */}
             {/* Theme Toggle */}
             <button
               onClick={toggleTheme}
@@ -165,21 +214,28 @@ const Navbar = () => {
                 {isProfileOpen && (
                   <div className="profile-dropdown glass animate-fade-in">
                     <div className="dropdown-header">
-                      <p className="user-name-display">{user.name}</p>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.125rem' }}>
+                        <p className="user-name-display" style={{ margin: 0 }}>{user.name}</p>
+                        {user.role === 'admin' && (
+                          <span style={{ fontSize: '0.65rem', fontWeight: 800, background: 'var(--accent-light)', color: 'var(--accent)', padding: '0.1rem 0.4rem', borderRadius: '4px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                            Admin
+                          </span>
+                        )}
+                      </div>
                       <p className="user-email-display">{user.email}</p>
                     </div>
 
                     <div className="dropdown-divider"></div>
 
                     <div className="dropdown-links">
-                      {user.role === 'admin' && (
+                      {/* {user.role === 'admin' && (
                         <Link to="/admin" className="dropdown-item">
                           <div className="item-icon bg-purple-50 text-purple-600">
                             <ShieldCheck size={16} />
                           </div>
                           <span>Admin Panel</span>
                         </Link>
-                      )}
+                      )} */}
                       <Link to="/dashboard" className="dropdown-item">
                         <div className="item-icon bg-indigo-50 text-indigo-600">
                           <LayoutDashboard size={16} />
@@ -305,6 +361,11 @@ const Navbar = () => {
           )}
           {user && (
             <div style={{ marginTop: '0.75rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+              {user.role === 'admin' && (
+                <Link to="/admin" className="btn btn-outline" style={{ width: '100%', borderColor: 'var(--accent)', color: 'var(--accent)' }}>
+                  Admin Panel
+                </Link>
+              )}
               <Link to="/dashboard" className="btn btn-secondary" style={{ width: '100%' }}>
                 Dashboard
               </Link>

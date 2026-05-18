@@ -20,10 +20,37 @@ const AdminDashboard = () => {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const res = await axios.get(`${API_URL}/admin/stats`, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
-        setStats(res.data);
+        if (token === 'mock_token') {
+          const blogs = JSON.parse(localStorage.getItem('mock_blogs')) || [];
+          const messages = JSON.parse(localStorage.getItem('mock_messages')) || [];
+          const gallery = JSON.parse(localStorage.getItem('mock_gallery')) || [];
+          const history = JSON.parse(localStorage.getItem('bgremover_history')) || [];
+          
+          const recentRemovals = gallery.slice(-5).reverse().map((item, idx) => ({
+            _id: item._id,
+            ip: '192.168.1.' + (idx + 42),
+            count: 1,
+            date: new Date(parseInt(item._id) || Date.now()).toLocaleDateString()
+          }));
+
+          setStats({
+            stats: {
+              totalBlogs: blogs.length,
+              totalMessages: messages.length,
+              totalGallery: gallery.length,
+              totalRemovals: gallery.length,
+            },
+            recentActivity: {
+              messages: messages.slice(0, 5),
+              removals: recentRemovals
+            }
+          });
+        } else {
+          const res = await axios.get(`${API_URL}/admin/stats`, {
+            headers: { Authorization: `Bearer ${token}` }
+          });
+          setStats(res.data);
+        }
       } catch (err) {
         console.error('Error fetching stats:', err);
       } finally {

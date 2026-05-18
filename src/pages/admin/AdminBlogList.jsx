@@ -12,6 +12,7 @@ import {
   Loader2,
   FileText
 } from 'lucide-react';
+import { BLOG_POSTS } from '../../data/blogData';
 
 const AdminBlogList = () => {
   const [blogs, setBlogs] = useState([]);
@@ -22,10 +23,31 @@ const AdminBlogList = () => {
 
   const fetchBlogs = async () => {
     try {
-      const res = await axios.get(`${API_URL}/blog/admin-all`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      setBlogs(res.data.data);
+      if (token === 'mock_token') {
+        const initialMockBlogs = BLOG_POSTS.map((blog, index) => ({
+          _id: `mock-${index + 1}`,
+          title: blog.title,
+          slug: blog.slug,
+          description: blog.description,
+          content: blog.content,
+          featuredImage: blog.image,
+          tags: [blog.category],
+          published: true,
+          createdAt: new Date(blog.date).toISOString()
+        }));
+        
+        let mockBlogs = JSON.parse(localStorage.getItem('mock_blogs'));
+        if (!mockBlogs || mockBlogs.length === 0 || mockBlogs[0]._id === '1') {
+          mockBlogs = initialMockBlogs;
+        }
+        localStorage.setItem('mock_blogs', JSON.stringify(mockBlogs));
+        setBlogs(mockBlogs);
+      } else {
+        const res = await axios.get(`${API_URL}/blog/admin-all`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        setBlogs(res.data.data);
+      }
     } catch (err) {
       toast.error('Failed to fetch blogs');
     } finally {
@@ -41,6 +63,15 @@ const AdminBlogList = () => {
     if (!window.confirm('Are you sure you want to delete this blog post?')) return;
 
     try {
+      if (token === 'mock_token') {
+        const mockBlogs = JSON.parse(localStorage.getItem('mock_blogs')) || [];
+        const newBlogs = mockBlogs.filter(b => b._id !== id);
+        localStorage.setItem('mock_blogs', JSON.stringify(newBlogs));
+        setBlogs(newBlogs);
+        toast.success('Blog deleted successfully (Mock)');
+        return;
+      }
+
       await axios.delete(`${API_URL}/blog/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });

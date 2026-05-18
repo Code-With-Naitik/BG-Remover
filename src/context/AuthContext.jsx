@@ -22,7 +22,11 @@ export const AuthProvider = ({ children }) => {
       // Skip verification for mock token
       if (token === 'mock_token') {
         if (!user) {
-          setUser({ id: 'mock-123', name: 'Demo Admin', email: 'admin@demo.com', role: 'admin' });
+          // Attempt to retrieve saved mock user from local storage or default
+          const savedMockRole = localStorage.getItem('mock_role') || 'user';
+          const savedMockName = localStorage.getItem('mock_name') || (savedMockRole === 'admin' ? 'Demo Admin' : 'Demo User');
+          const savedMockEmail = localStorage.getItem('mock_email') || (savedMockRole === 'admin' ? 'admin@demo.com' : 'user@demo.com');
+          setUser({ id: 'mock-123', name: savedMockName, email: savedMockEmail, role: savedMockRole });
         }
         setLoading(false);
         return;
@@ -46,23 +50,42 @@ export const AuthProvider = ({ children }) => {
     fetchUser();
   }, [token, API_URL]);
 
-  const login = async (email, password) => {
+  const login = async (email, password, forceAdmin = false) => {
     try {
       console.log(`Attempting login at: ${API_URL}/auth/signin`);
       const res = await axios.post(`${API_URL}/auth/signin`, { email, password });
-      const { token, user } = res.data;
+      let { token, user } = res.data;
+      
+      if (forceAdmin && user.role !== 'admin') {
+        try {
+          await axios.post(`${API_URL}/auth/debug/promote`, { email });
+          user.role = 'admin';
+        } catch(e) {
+          console.warn("Auto-promote failed", e);
+        }
+      }
+
       localStorage.setItem('token', token);
       setToken(token);
       setUser(user);
-      return res.data;
+      return { token, user };
     } catch (err) {
       console.error('Login error details:', err.response || err);
 
       // MOCK FALLBACK for DEMO if DB is offline
-      if (email.includes('admin') || err.message.includes('timeout') || err.response?.status === 500) {
-        console.warn("DB connection failed. Using mock Admin Login for UI testing.");
-        const mockUser = { id: 'mock-123', name: 'Demo Admin', email, role: 'admin' };
+      if (email.includes('admin') || forceAdmin || err.message.includes('timeout') || err.response?.status === 500) {
+        console.warn("DB connection failed. Using mock Login for UI testing.");
+        const isMockAdmin = email.toLowerCase().includes('admin') || forceAdmin || localStorage.getItem('mock_role') === 'admin';
+        const mockUser = { 
+          id: 'mock-123', 
+          name: isMockAdmin ? 'Demo Admin' : 'Demo User', 
+          email, 
+          role: isMockAdmin ? 'admin' : 'user' 
+        };
         localStorage.setItem('token', 'mock_token');
+        localStorage.setItem('mock_role', mockUser.role);
+        localStorage.setItem('mock_name', mockUser.name);
+        localStorage.setItem('mock_email', mockUser.email);
         setToken('mock_token');
         setUser(mockUser);
         return { user: mockUser, token: 'mock_token' };
@@ -89,6 +112,9 @@ export const AuthProvider = ({ children }) => {
         console.warn("DB connection failed. Using mock Admin Signup for UI testing.");
         const mockUser = { id: 'mock-123', name, email, role: adminKey === 'admin123' ? 'admin' : 'user' };
         localStorage.setItem('token', 'mock_token');
+        localStorage.setItem('mock_role', mockUser.role);
+        localStorage.setItem('mock_name', mockUser.name);
+        localStorage.setItem('mock_email', mockUser.email);
         setToken('mock_token');
         setUser(mockUser);
         return { user: mockUser, token: 'mock_token' };
@@ -100,6 +126,9 @@ export const AuthProvider = ({ children }) => {
 
   const logout = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('mock_role');
+    localStorage.removeItem('mock_name');
+    localStorage.removeItem('mock_email');
     setToken(null);
     setUser(null);
   };

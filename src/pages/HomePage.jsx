@@ -7,6 +7,13 @@ import {
 } from 'lucide-react';
 import AdBanner from '../components/layout/AdBanner';
 import { Helmet } from 'react-helmet-async';
+import {
+  AnnouncementBanner,
+  BeforeAfterSection,
+  BeforeAfterSlider,
+  AIFeaturesSection,
+  UseCaseTabs,
+} from '../components/HomePageSections';
 
 const FEATURES = [
   {
@@ -91,69 +98,6 @@ const StatItem = ({ target, suffix, label, isDecimal }) => {
   );
 };
 
-// Showcase Card Component
-const ShowcaseCard = ({ title, imageUrl, isTransparent, isVariations }) => {
-  const [error, setError] = useState(false);
-  
-  return (
-    <div style={{ 
-      background: '#fff', 
-      borderRadius: '24px', 
-      overflow: 'hidden', 
-      boxShadow: '0 10px 30px -5px rgba(0,0,0,0.08)',
-      transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-      display: 'flex',
-      flexDirection: 'column',
-      minHeight: '260px'
-    }}
-    onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-8px)'; e.currentTarget.style.boxShadow = '0 20px 40px -10px rgba(0,0,0,0.12)'; }}
-    onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 10px 30px -5px rgba(0,0,0,0.08)'; }}
-    >
-      <div style={{ 
-        aspectRatio: '3/2', 
-        position: 'relative',
-        background: isTransparent ? 'url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAMUlEQVQ4T2NkYGAQYcAP3uIn7YzZ2SX48D1S3Y7P0WAnS98OOfgY6S5A6fWvYfA6AzSbwY08D07MAAAAAElFTkSuQmCC) repeat' : '#f8fafc',
-        backgroundSize: '20px 20px',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: '1rem'
-      }}>
-        {error ? (
-          <div style={{ textAlign: 'center', color: '#94a3b8', fontSize: '0.75rem', fontWeight: 600, padding: '1rem' }}>
-            <div style={{ marginBottom: '0.5rem', fontSize: '1.25rem' }}>✨</div>
-            AI Processing Result...
-          </div>
-        ) : !isVariations ? (
-          <img 
-            src={imageUrl} 
-            alt={title} 
-            onError={() => setError(true)}
-            crossOrigin="anonymous"
-            style={{ width: '100%', height: '100%', objectFit: 'contain' }} 
-          />
-        ) : (
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gridTemplateRows: '1fr 1fr', height: '100%', width: '100%', gap: '4px' }}>
-            {['#60a5fa', '#f87171', '#e2e8f0', '#1e293b'].map((bg, i) => (
-              <div key={i} style={{ overflow: 'hidden', position: 'relative', background: bg, borderRadius: '8px' }}>
-                <img 
-                  src={imageUrl} 
-                  onError={() => setError(true)}
-                  crossOrigin="anonymous"
-                  style={{ width: '100%', height: '100%', objectFit: 'contain', padding: '4px' }} 
-                />
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-      <div style={{ padding: '1.25rem', textAlign: 'center', fontWeight: 800, color: '#475569', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.05em', background: '#fff' }}>
-        {title}
-      </div>
-    </div>
-  );
-};
-
 const UploadZone = () => {
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
@@ -197,12 +141,10 @@ const UploadZone = () => {
 
   return (
     <section style={{ padding: '7rem 0', background: 'var(--bg-primary)', position: 'relative', overflow: 'hidden' }}>
-      {/* Background gradient orbs */}
       <div style={{ position: 'absolute', top: '-10%', left: '5%', width: '500px', height: '500px', background: 'radial-gradient(circle, rgba(37,99,235,0.08) 0%, transparent 70%)', filter: 'blur(60px)', pointerEvents: 'none' }} />
       <div style={{ position: 'absolute', bottom: '-10%', right: '5%', width: '400px', height: '400px', background: 'radial-gradient(circle, rgba(6,182,212,0.08) 0%, transparent 70%)', filter: 'blur(60px)', pointerEvents: 'none' }} />
 
       <div className="container" style={{ maxWidth: '860px', position: 'relative', zIndex: 1 }}>
-        {/* Header */}
         <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'var(--accent-light)', padding: '0.4rem 1.1rem', borderRadius: '100px', color: 'var(--accent)', fontWeight: 700, fontSize: '0.8rem', marginBottom: '1.25rem', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
             <UploadCloud size={14} /> Upload & Remove
@@ -216,7 +158,6 @@ const UploadZone = () => {
           </p>
         </div>
 
-        {/* Drop Zone */}
         <input ref={fileInputRef} type="file" accept="image/jpeg,image/png,image/webp,image/gif" style={{ display: 'none' }} onChange={handleFileInput} />
 
         <div
@@ -237,39 +178,31 @@ const UploadZone = () => {
             boxShadow: isDragging ? 'var(--shadow-glow)' : 'var(--shadow-md)',
           }}
         >
-          {/* Inner glow when dragging */}
           {isDragging && <div style={{ position: 'absolute', inset: 0, background: 'var(--accent-gradient)', opacity: 0.04, borderRadius: '26px', pointerEvents: 'none' }} />}
 
           {!preview ? (
             <>
-              {/* Upload Icon */}
               <div style={{ width: '96px', height: '96px', borderRadius: '50%', background: isDragging ? 'var(--accent)' : 'var(--accent-light)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 2rem', transition: 'all 0.3s ease', boxShadow: isDragging ? 'var(--shadow-glow)' : 'none' }}>
                 <UploadCloud size={44} color={isDragging ? '#fff' : 'var(--accent)'} strokeWidth={1.5} />
               </div>
-
               <h3 style={{ fontSize: '1.625rem', fontWeight: 900, marginBottom: '0.6rem', color: isDragging ? 'var(--accent)' : 'var(--text-primary)' }}>
                 {isDragging ? '🎯 Release to upload!' : 'Drag & drop your image here'}
               </h3>
               <p style={{ color: 'var(--text-secondary)', fontSize: '1rem', marginBottom: '2rem' }}>
                 or <span style={{ color: 'var(--accent)', fontWeight: 700, textDecoration: 'underline', textUnderlineOffset: '3px' }}>browse from your device</span>
               </p>
-
-              {/* Format chips */}
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '2rem' }}>
                 {['JPG', 'PNG', 'WebP', 'GIF'].map(f => (
                   <span key={f} style={{ padding: '0.3rem 0.85rem', background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', borderRadius: '100px', fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-secondary)' }}>{f}</span>
                 ))}
                 <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', fontWeight: 500 }}>· Max 20MB</span>
               </div>
-
               <button className="btn btn-gradient btn-xl" style={{ borderRadius: '16px', padding: '1rem 3rem', fontSize: '1.0625rem', pointerEvents: 'none' }}>
                 <UploadCloud size={20} /> Choose Image
               </button>
             </>
           ) : (
-            /* Preview State */
             <div style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: '2rem', alignItems: 'center', textAlign: 'left' }}>
-              {/* Thumbnail */}
               <div style={{ position: 'relative', borderRadius: '16px', overflow: 'hidden', aspectRatio: '1', background: 'var(--bg-secondary)', boxShadow: 'var(--shadow-lg)' }}>
                 <img src={preview} alt="Preview" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
                 <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg, transparent 60%, rgba(16,185,129,0.4) 100%)' }} />
@@ -277,8 +210,6 @@ const UploadZone = () => {
                   <CheckCircle size={11} /> Ready
                 </div>
               </div>
-
-              {/* File Info & Actions */}
               <div>
                 <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', background: 'rgba(16,185,129,0.12)', color: '#10B981', padding: '0.3rem 0.85rem', borderRadius: '100px', fontSize: '0.8rem', fontWeight: 700, marginBottom: '1rem' }}>
                   <CheckCircle size={13} /> Image Ready
@@ -302,14 +233,12 @@ const UploadZone = () => {
           )}
         </div>
 
-        {/* Error message */}
         {error && (
           <div style={{ marginTop: '1rem', padding: '0.875rem 1.25rem', background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.25)', borderRadius: '12px', color: '#EF4444', fontSize: '0.9rem', fontWeight: 600, textAlign: 'center' }}>
             ⚠️ {error}
           </div>
         )}
 
-        {/* Trust row */}
         <div style={{ marginTop: '2rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '2rem', flexWrap: 'wrap' }}>
           {[
             { icon: '🔒', text: '100% Secure & Private' },
@@ -327,8 +256,8 @@ const UploadZone = () => {
 };
 
 const HomePage = () => {
+  const navigate = useNavigate();
   const [gallery, setGallery] = useState([]);
-  const [activeGallery, setActiveGallery] = useState(0);
   const [stats, setStats] = useState({
     totalRemovals: '10M+',
     totalHappyUsers: '500K+',
@@ -338,19 +267,26 @@ const HomePage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [galleryRes, statsRes] = await Promise.all([
-          axios.get('/api/gallery'),
-          axios.get('/api/admin/public-stats')
-        ]);
-        setGallery(galleryRes.data.data);
-        if (statsRes.data.success) {
-          const s = statsRes.data.data;
-          setStats({
-            totalRemovals: s.totalRemovals > 1000 ? (s.totalRemovals / 1000).toFixed(1) + 'k+' : s.totalRemovals,
-            totalHappyUsers: s.totalHappyUsers > 1000 ? (s.totalHappyUsers / 1000).toFixed(1) + 'k+' : s.totalHappyUsers,
-            totalGallery: s.totalGallery
-          });
+        let galleryData = [];
+        try {
+          const galleryRes = await axios.get('/api/gallery', { timeout: 2000 });
+          galleryData = galleryRes.data.data;
+        } catch (e) {
+          galleryData = JSON.parse(localStorage.getItem('mock_gallery')) || [];
         }
+        setGallery(galleryData);
+
+        try {
+          const statsRes = await axios.get('/api/admin/public-stats', { timeout: 2000 });
+          if (statsRes.data.success) {
+            const s = statsRes.data.data;
+            setStats({
+              totalRemovals: s.totalRemovals > 1000 ? (s.totalRemovals / 1000).toFixed(1) + 'k+' : s.totalRemovals,
+              totalHappyUsers: s.totalHappyUsers > 1000 ? (s.totalHappyUsers / 1000).toFixed(1) + 'k+' : s.totalHappyUsers,
+              totalGallery: s.totalGallery
+            });
+          }
+        } catch (e) {}
       } catch (err) {
         console.error(err);
       }
@@ -365,192 +301,165 @@ const HomePage = () => {
         <meta name="description" content="Remove image backgrounds instantly with our premium AI-powered tool. Perfect for designers, e-commerce, and creators." />
       </Helmet>
 
-      {/* ─── SLAZZER-STYLE HERO SECTION ─── */}
+      {/* ─── ANNOUNCEMENT BANNER ─── */}
+      <AnnouncementBanner />
+
+      {/* ─── PREMIUM HERO SECTION ─── */}
       <section style={{ 
         position: 'relative', 
-        padding: '6rem 0 8rem', 
-        background: '#fff', 
+        padding: 'clamp(5rem, 10vw, 8rem) 0', 
+        background: 'var(--bg-primary)', 
         overflow: 'hidden',
-        borderBottom: '1px solid var(--border-color)'
       }}>
-        <div className="container">
-          <div style={{ 
+        {/* Decorative Background Elements */}
+        <div style={{ position: 'absolute', top: '-10%', right: '-5%', width: '45vw', height: '45vw', background: 'radial-gradient(circle, rgba(37,99,235,0.05) 0%, transparent 70%)', filter: 'blur(80px)', pointerEvents: 'none' }} />
+        <div style={{ position: 'absolute', bottom: '0%', left: '-5%', width: '40vw', height: '40vw', background: 'radial-gradient(circle, rgba(139,92,246,0.05) 0%, transparent 70%)', filter: 'blur(80px)', pointerEvents: 'none' }} />
+        
+        {/* Subtitle Mesh Grid */}
+        <div style={{ position: 'absolute', inset: 0, backgroundImage: 'radial-gradient(rgba(0,0,0,0.02) 1px, transparent 1px)', backgroundSize: '40px 40px', opacity: 0.5, pointerEvents: 'none' }} />
+
+        <div className="container" style={{ position: 'relative', zIndex: 1 }}>
+          <div className="hero-grid" style={{ 
             display: 'grid', 
-            gridTemplateColumns: '1.2fr 0.8fr', 
-            gap: '4rem', 
+            gridTemplateColumns: '1.05fr 0.95fr', 
+            gap: 'clamp(3rem, 6vw, 6rem)', 
             alignItems: 'center' 
           }}>
             
-            {/* Left Content: Text & Value Prop */}
-            <div className="animate-slide-up">
+            {/* Left Content: Value Prop & Primary CTA */}
+            <div className="animate-slide-up hero-content">
+              {/* "New" Badge */}
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(37,99,235,0.08)', padding: '0.45rem 1rem', borderRadius: '100px', color: '#2563EB', fontWeight: 800, fontSize: '0.75rem', marginBottom: '1.75rem', textTransform: 'uppercase', letterSpacing: '0.08em', border: '1px solid rgba(37,99,235,0.15)' }}>
+                <Sparkles size={14} fill="currentColor" /> Powered by Advanced AI
+              </div>
+
               <h1 style={{ 
-                fontSize: 'clamp(2.5rem, 5vw, 4rem)', 
+                fontSize: 'clamp(2.75rem, 6vw, 4.5rem)', 
                 fontWeight: 900, 
-                color: '#1e293b', 
-                lineHeight: 1.1, 
-                marginBottom: '1.5rem',
-                letterSpacing: '-0.02em'
+                color: 'var(--text-primary)', 
+                lineHeight: 1.05, 
+                marginBottom: '1.75rem',
+                letterSpacing: '-0.04em'
               }}>
                 Remove Background <br /> 
-                <span style={{ color: 'var(--accent)' }}>from Image</span>
+                <span style={{ background: 'var(--accent-gradient)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Automatically</span>
               </h1>
+              
               <p style={{ 
-                fontSize: '1.5rem', 
-                color: '#64748b', 
-                fontWeight: 600, 
-                marginBottom: '2.5rem' 
+                fontSize: 'clamp(1.125rem, 2vw, 1.375rem)', 
+                color: 'var(--text-secondary)', 
+                fontWeight: 500, 
+                marginBottom: '3rem',
+                lineHeight: 1.6,
+                maxWidth: '540px'
               }}>
-                100% Automatically and Free
+                Snaplix AI delivers pixel-perfect transparent backgrounds in seconds. No manual selection, no editing skills — just magic.
               </p>
               
-              {/* Feature Tags */}
-              <div style={{ display: 'flex', gap: '1.5rem', marginBottom: '3rem' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#64748b', fontSize: '0.9rem', fontWeight: 600 }}>
-                  <CheckCircle size={18} color="var(--success)" /> No manual clipping
+              {/* Action Area */}
+              <div className="hero-action-area" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1.25rem', alignItems: 'center' }}>
+                  <input 
+                    type="file" 
+                    id="hero-upload-input" 
+                    style={{ display: 'none' }} 
+                    onChange={(e) => {
+                      const file = e.target.files[0];
+                      if (file) navigate('/tool', { state: { initialFile: file } });
+                    }}
+                    accept="image/*"
+                  />
+                  <label 
+                    htmlFor="hero-upload-input"
+                    className="btn btn-gradient btn-xl"
+                    style={{
+                      borderRadius: '18px',
+                      padding: '1.25rem 2.75rem',
+                      fontSize: '1.125rem',
+                      boxShadow: '0 20px 40px rgba(37, 99, 235, 0.25)',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    <UploadCloud size={24} strokeWidth={2.5} /> Upload Image
+                  </label>
+                  
+                  <Link to="/tool" style={{ color: 'var(--text-primary)', fontWeight: 800, fontSize: '1rem', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '1rem' }} className="hover-link">
+                    Try For Free <ArrowRight size={18} />
+                  </Link>
                 </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#64748b', fontSize: '0.9rem', fontWeight: 600 }}>
-                  <CheckCircle size={18} color="var(--success)" /> Instant results
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#64748b', fontSize: '0.9rem', fontWeight: 600 }}>
-                  <CheckCircle size={18} color="var(--success)" /> High resolution
-                </div>
+                
+                <p style={{ fontSize: '0.875rem', color: '#94a3b8', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <span style={{ color: '#cbd5e1' }}>●</span> 100% Free to Start
+                  <span style={{ color: '#cbd5e1', marginLeft: '0.5rem' }}>●</span> No Account Required
+                </p>
               </div>
 
-              {/* Trusted By */}
-              <div style={{ borderTop: '1px solid #f1f5f9', paddingTop: '2rem' }}>
-                <p style={{ fontSize: '0.75rem', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '1rem' }}>
-                  Trusted by developers & designers
-                </p>
-                <div style={{ display: 'flex', gap: '2rem', opacity: 0.5, filter: 'grayscale(1)' }}>
-                   {/* Placeholder logos */}
-                   <span style={{ fontWeight: 900, fontSize: '1.25rem' }}>STUDIOMIND</span>
-                   <span style={{ fontWeight: 900, fontSize: '1.25rem' }}>SNAPLIX</span>
-                   <span style={{ fontWeight: 900, fontSize: '1.25rem' }}>AI-PRO</span>
+              {/* Trust Section */}
+              <div style={{ marginTop: '4rem', borderTop: '1px solid #f1f5f9', paddingTop: '2.5rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '3rem', opacity: 0.4, filter: 'grayscale(1)' }}>
+                   <span style={{ fontWeight: 900, fontSize: '1rem', letterSpacing: '0.1em' }}>STUDIOMIND</span>
+                   <span style={{ fontWeight: 900, fontSize: '1rem', letterSpacing: '0.1em' }}>SNAPLIX</span>
+                   <span style={{ fontWeight: 900, fontSize: '1rem', letterSpacing: '0.1em' }}>AI-PRO</span>
                 </div>
               </div>
             </div>
 
-            {/* Right Content: Interactive Upload Card */}
-            <div className="animate-fade-in delay-200">
-              <div style={{ 
-                background: '#fff',
-                borderRadius: '32px',
-                padding: '2.5rem',
-                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0, 0, 0, 0.02)',
-                border: '1px solid #f1f5f9',
-                position: 'relative',
-                textAlign: 'center',
-                zIndex: 10
-              }}>
-                {/* Upload Button Area */}
-                <input 
-                  type="file" 
-                  id="hero-upload-input" 
-                  style={{ display: 'none' }} 
-                  onChange={(e) => {
-                    const file = e.target.files[0];
-                    if (file) {
-                      // In a real app, we'd pass this to the tool page via state or context
-                      navigate('/tool', { state: { initialFile: file } });
-                    }
-                  }}
-                  accept="image/*"
-                />
-                <label 
-                  htmlFor="hero-upload-input"
-                  style={{
-                    background: 'var(--accent)',
-                    color: '#fff',
-                    padding: '1.25rem 2rem',
-                    borderRadius: '16px',
-                    fontWeight: 800,
-                    fontSize: '1.125rem',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '0.75rem',
-                    marginBottom: '1rem',
-                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                    boxShadow: '0 10px 25px -5px rgba(37, 99, 235, 0.4)',
-                    cursor: 'pointer'
-                  }}
-                  onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 15px 30px -5px rgba(37, 99, 235, 0.5)'; }}
-                  onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 10px 25px -5px rgba(37, 99, 235, 0.4)'; }}
-                >
-                  <UploadCloud size={24} strokeWidth={2.5} /> Upload Image
-                </label>
-
-                <p style={{ color: '#64748b', fontSize: '0.9375rem', marginBottom: '1.5rem', fontWeight: 500 }}>
-                  or drag and drop images
-                </p>
-
+            {/* Right Content: Interactive Showcase Widget */}
+            <div className="animate-fade-in delay-200" style={{ position: 'relative' }}>
+              {/* Outer Glow Orb */}
+              <div style={{ position: 'absolute', inset: '-40px', background: 'radial-gradient(circle, rgba(37,99,235,0.08) 0%, transparent 70%)', filter: 'blur(50px)', zIndex: 0 }} />
+              
+              <div style={{ position: 'relative', zIndex: 1 }}>
+                <BeforeAfterSlider gallery={gallery} showTabs={false} fixedIndex={0} />
+                
+                {/* Floating Performance Badge */}
                 <div style={{ 
-                  padding: '1.25rem',
-                  border: '2px dashed #e2e8f0',
-                  borderRadius: '16px',
-                  background: '#f8fafc',
-                  marginBottom: '2rem',
-                  fontSize: '0.9rem',
-                  color: '#94a3b8',
-                  fontWeight: 600,
-                  transition: 'all 0.2s'
-                }}
-                onDragOver={e => { e.preventDefault(); e.currentTarget.style.borderColor = 'var(--accent)'; e.currentTarget.style.background = 'var(--accent-light)'; }}
-                onDragLeave={e => { e.currentTarget.style.borderColor = '#e2e8f0'; e.currentTarget.style.background = '#f8fafc'; }}
-                onDrop={e => {
-                  e.preventDefault();
-                  const file = e.dataTransfer.files[0];
-                  if (file) navigate('/tool', { state: { initialFile: file } });
-                }}
-                >
-                  Paste image or <span style={{ color: '#64748b' }}>Ctrl + V</span>
-                </div>
-
-                {/* Sample Images Section */}
-                <div style={{ textAlign: 'left' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
-                    <p style={{ fontSize: '0.8125rem', fontWeight: 800, color: '#475569', margin: 0 }}>
-                      No image? Try one:
-                    </p>
-                    <span style={{ fontSize: '0.75rem', color: 'var(--accent)', fontWeight: 700, cursor: 'pointer' }}>View all</span>
-                  </div>
-                  <div style={{ display: 'flex', gap: '0.75rem' }}>
-                    {[
-                      'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&q=80',
-                      'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=120&q=80',
-                      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=120&q=80',
-                      'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=120&q=80'
-                    ].map((src, i) => (
-                      <div key={i} style={{ 
-                        width: '64px', 
-                        height: '64px', 
-                        borderRadius: '12px', 
-                        overflow: 'hidden', 
-                        cursor: 'pointer',
-                        border: '2px solid #f1f5f9',
-                        transition: 'all 0.2s'
-                      }}
-                      onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--accent)'; e.currentTarget.style.transform = 'scale(1.05)'; }}
-                      onMouseLeave={e => { e.currentTarget.style.borderColor = '#f1f5f9'; e.currentTarget.style.transform = 'scale(1)'; }}
-                      >
-                        <img src={src} alt="Sample" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Privacy Badge */}
-                <div style={{ 
-                  marginTop: '2.5rem', 
+                  position: 'absolute', 
+                  top: '-1.5rem', 
+                  right: '-1.5rem', 
+                  background: 'var(--glass-bg)', 
+                  padding: '0.75rem 1.25rem', 
+                  borderRadius: '18px', 
+                  boxShadow: 'var(--shadow-md)', 
                   display: 'flex', 
                   alignItems: 'center', 
-                  justifyContent: 'center', 
-                  gap: '0.5rem',
-                  color: '#94a3b8',
-                  fontSize: '0.75rem',
-                  fontWeight: 600
+                  gap: '0.75rem',
+                  border: '1px solid var(--border-color)',
+                  backdropFilter: 'blur(10px)',
+                  animation: 'float 6s ease-in-out infinite'
                 }}>
-                  <Shield size={14} /> 100% Safe & Secure
+                  <div style={{ width: '36px', height: '36px', background: 'rgba(16,185,129,0.1)', color: '#10B981', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Zap size={18} fill="currentColor" />
+                  </div>
+                  <div>
+                    <div style={{ fontSize: '0.8125rem', fontWeight: 800, color: 'var(--text-primary)' }}>Lightning Fast</div>
+                    <div style={{ fontSize: '0.65rem', fontWeight: 600, color: 'var(--text-secondary)' }}>&lt; 3s Processing</div>
+                  </div>
+                </div>
+
+                {/* Floating Quality Badge */}
+                <div style={{ 
+                  position: 'absolute', 
+                  bottom: '-1rem', 
+                  left: '-1rem', 
+                  background: 'var(--glass-bg)', 
+                  padding: '0.75rem 1.25rem', 
+                  borderRadius: '18px', 
+                  boxShadow: 'var(--shadow-md)', 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  gap: '0.75rem',
+                  border: '1px solid var(--border-color)',
+                  backdropFilter: 'blur(10px)',
+                  animation: 'float 6s ease-in-out infinite reverse'
+                }}>
+                  <div style={{ width: '36px', height: '36px', background: 'rgba(37,99,235,0.1)', color: '#2563EB', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Shield size={18} fill="currentColor" />
+                  </div>
+                  <div>
+                    <div style={{ fontSize: '0.8125rem', fontWeight: 800, color: 'var(--text-primary)' }}>Pro Precision</div>
+                    <div style={{ fontSize: '0.65rem', fontWeight: 600, color: 'var(--text-secondary)' }}>99.9% Edge Accuracy</div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -558,142 +467,25 @@ const HomePage = () => {
           </div>
         </div>
 
-        {/* Global Keyframes for Hero Animations */}
+        {/* Hero Animations */}
         <style dangerouslySetInnerHTML={{
           __html: `
-          @keyframes slide-mask-vertical {
-            0% { clip-path: inset(0 0 0 10%); }
-            100% { clip-path: inset(0 0 0 90%); }
+          @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(1deg); }
           }
-          @keyframes float-up-down {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
+          .hover-link:hover {
+            color: #2563EB !important;
+            transform: translateX(4px);
+          }
+          .hover-link { transition: all 0.2s ease; }
+          @media (max-width: 992px) {
+            .hero-grid { grid-template-columns: 1fr !important; gap: 4rem !important; text-align: center; }
+            .hero-content { display: flex; flex-direction: column; align-items: center; }
+            .hero-action-area { align-items: center !important; }
+            .hero-action-area > div { justify-content: center !important; }
           }
         `}} />
-      </section>
-
-      {/* ─── HIGH QUALITY CUTOUTS SECTION (SLAZZER STYLE) ─── */}
-      <section style={{ padding: '8rem 0', background: '#fff' }}>
-        <div className="container">
-          <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-            <h2 style={{ 
-              fontSize: 'clamp(2rem, 4vw, 3.25rem)', 
-              fontWeight: 900, 
-              color: '#1e293b', 
-              marginBottom: '1rem',
-              letterSpacing: '-0.03em'
-            }}>
-              High quality cutouts
-            </h2>
-            <p style={{ color: '#64748b', fontSize: '1.125rem', fontWeight: 500 }}>
-              Precision in every pixel. Handles complex hair, fur, and edges with ease.
-            </p>
-          </div>
-
-          {/* Categories Tabs - SLAZZER STYLE */}
-          <div style={{ 
-            display: 'flex', 
-            justifyContent: 'center', 
-            gap: '3rem', 
-            marginBottom: '4rem',
-            borderBottom: '1px solid #e2e8f0',
-            paddingBottom: '0'
-          }}>
-            {[
-              { id: 'people', label: 'People' },
-              { id: 'product', label: 'Product' },
-              { id: 'car', label: 'Car' },
-              { id: 'animals', label: 'Animals' },
-              { id: 'graphics', label: 'Graphics' },
-              { id: 'realestate', label: 'Real Estate' }
-            ].map((tab, i) => (
-              <button 
-                key={tab.id}
-                onClick={() => setActiveGallery(i)}
-                style={{
-                  padding: '1rem 0',
-                  background: 'transparent',
-                  border: 'none',
-                  borderBottom: activeGallery === i ? '3px solid var(--accent)' : '3px solid transparent',
-                  color: activeGallery === i ? 'var(--accent)' : '#64748b',
-                  fontWeight: 700,
-                  fontSize: '1rem',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s ease',
-                  marginBottom: '-1.5px'
-                }}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </div>
-
-          {/* Multi-State Showcase Gallery */}
-          <div style={{ 
-            display: 'grid', 
-            gridTemplateColumns: 'repeat(3, 1fr)', 
-            gap: '1.5rem'
-          }}>
-            <ShowcaseCard 
-              title="Original" 
-              imageUrl={[
-                'https://res.cloudinary.com/demo/image/upload/woman.jpg',
-                'https://res.cloudinary.com/demo/image/upload/shoe.jpg',
-                'https://res.cloudinary.com/demo/image/upload/car.jpg',
-                'https://res.cloudinary.com/demo/image/upload/dog.jpg',
-                'https://res.cloudinary.com/demo/image/upload/sample.jpg',
-                'https://res.cloudinary.com/demo/image/upload/couple.jpg',
-              ][activeGallery]} 
-            />
-            <ShowcaseCard 
-              title="Transparent" 
-              isTransparent
-              imageUrl={[
-                'https://res.cloudinary.com/demo/image/upload/e_bgremoval/woman.png',
-                'https://res.cloudinary.com/demo/image/upload/e_bgremoval/shoe.png',
-                'https://res.cloudinary.com/demo/image/upload/e_bgremoval/car.png',
-                'https://res.cloudinary.com/demo/image/upload/e_bgremoval/dog.png',
-                'https://res.cloudinary.com/demo/image/upload/e_bgremoval/sample.png',
-                'https://res.cloudinary.com/demo/image/upload/e_bgremoval/couple.png',
-              ][activeGallery]} 
-            />
-            <ShowcaseCard 
-              title="Variations" 
-              isVariations
-              imageUrl={[
-                'https://res.cloudinary.com/demo/image/upload/e_bgremoval/woman.png',
-                'https://res.cloudinary.com/demo/image/upload/e_bgremoval/shoe.png',
-                'https://res.cloudinary.com/demo/image/upload/e_bgremoval/car.png',
-                'https://res.cloudinary.com/demo/image/upload/e_bgremoval/dog.png',
-                'https://res.cloudinary.com/demo/image/upload/e_bgremoval/sample.png',
-                'https://res.cloudinary.com/demo/image/upload/e_bgremoval/couple.png',
-              ][activeGallery]} 
-            />
-          </div>
-          {/* Bottom CTA for Section */}
-          <div style={{ textAlign: 'center', marginTop: '4rem' }}>
-             <Link to="/sample" style={{ 
-               color: 'var(--accent)', 
-               fontWeight: 800, 
-               textDecoration: 'none', 
-               display: 'inline-flex', 
-               alignItems: 'center', 
-               gap: '0.75rem',
-               background: 'var(--accent-light)',
-               padding: '1rem 2rem',
-               borderRadius: '100px',
-               fontSize: '1rem',
-               transition: 'all 0.3s ease',
-               boxShadow: '0 4px 15px rgba(37,99,235,0.1)'
-             }}
-             onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 8px 25px rgba(37,99,235,0.2)'; e.currentTarget.style.background = 'var(--accent)'; e.currentTarget.style.color = '#fff'; }}
-             onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 4px 15px rgba(37,99,235,0.1)'; e.currentTarget.style.background = 'var(--accent-light)'; e.currentTarget.style.color = 'var(--accent)'; }}
-             >
-               View All Magic Samples <ArrowRight size={20} />
-             </Link>
-          </div>
-        </div>
       </section>
 
       {/* ─── HOW IT WORKS SECTION ─── */}
@@ -784,6 +576,9 @@ const HomePage = () => {
         </div>
       </section>
 
+      {/* ─── BEFORE/AFTER GALLERY SECTION ─── */}
+      <BeforeAfterSection gallery={gallery} />
+
       {/* ─── FEATURES SECTION ─── */}
       <section style={{ padding: '8rem 0', background: 'var(--bg-secondary)', position: 'relative', overflow: 'hidden' }}>
         {/* Subtle grid pattern overlay */}
@@ -863,6 +658,12 @@ const HomePage = () => {
 
       {/* ─── UPLOAD ZONE SECTION ─── */}
       <UploadZone />
+
+      {/* ─── AI FEATURES SHOWCASE ─── */}
+      <AIFeaturesSection />
+
+      {/* ─── USE CASE TABS ─── */}
+      <UseCaseTabs />
 
       {/* ─── TESTIMONIALS GRID ─── */}
       <section style={{ padding: '8rem 0', background: 'var(--bg-secondary)', position: 'relative', overflow: 'hidden' }}>

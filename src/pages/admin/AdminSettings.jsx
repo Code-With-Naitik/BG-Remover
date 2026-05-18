@@ -44,10 +44,13 @@ const AdminSettings = () => {
     e.preventDefault();
     setLoading(true);
     try {
+      if (token === 'mock_token') {
+        toast.success('Profile updated successfully (Mock)');
+        return;
+      }
       const res = await axios.put(`${API_URL}/auth/update-profile`, profileData, {
         headers: { Authorization: `Bearer ${token}` }
       });
-      // updateAdmin(res.data.data); // If context supports it
       toast.success('Profile updated successfully');
     } catch (err) {
       toast.error(err.response?.data?.error || 'Failed to update profile');
@@ -63,6 +66,11 @@ const AdminSettings = () => {
     }
     setLoading(true);
     try {
+      if (token === 'mock_token') {
+        toast.success('Password changed successfully (Mock)');
+        setPasswordData({ currentPassword: '', newPassword: '', confirmPassword: '' });
+        return;
+      }
       await axios.put(`${API_URL}/auth/change-password`, {
         currentPassword: passwordData.currentPassword,
         newPassword: passwordData.newPassword

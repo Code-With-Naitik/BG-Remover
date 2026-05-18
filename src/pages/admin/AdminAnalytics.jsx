@@ -32,10 +32,43 @@ const AdminAnalytics = () => {
   useEffect(() => {
     const fetchAnalytics = async () => {
       try {
-        const res = await axios.get(`${API_URL}/admin/analytics`, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
-        setData(res.data.data);
+        if (token === 'mock_token') {
+          const gallery = JSON.parse(localStorage.getItem('mock_gallery')) || [];
+          
+          // Generate last 7 days dynamically
+          const mockTrends = [];
+          for (let i = 6; i >= 0; i--) {
+            const d = new Date();
+            d.setDate(d.getDate() - i);
+            const dateStr = d.toISOString().split('T')[0];
+            
+            // Filter gallery items created on this day
+            const dayCount = gallery.filter(item => {
+              const timestamp = parseInt(item._id);
+              if (isNaN(timestamp)) return false;
+              const itemDateStr = new Date(timestamp).toISOString().split('T')[0];
+              return itemDateStr === dateStr;
+            }).length;
+            
+            // Today is 100% real, other days have baseline simulated traffic
+            mockTrends.push({ 
+              date: dateStr, 
+              removals: dayCount + (i === 0 ? 0 : Math.floor(Math.random() * 5) + 8)
+            });
+          }
+
+          setData({
+            usageTrends: mockTrends,
+            activeUsers: gallery.length > 0 ? Math.ceil(gallery.length * 1.3) + 2 : 0,
+            successRate: gallery.length > 0 ? '99.8%' : '0.0%',
+            avgProcessing: gallery.length > 0 ? '1.2s' : '0.0s'
+          });
+        } else {
+          const res = await axios.get(`${API_URL}/admin/analytics`, {
+            headers: { Authorization: `Bearer ${token}` }
+          });
+          setData(res.data.data);
+        }
       } catch (err) {
         console.error('Analytics Fetch Error:', err);
       } finally {
@@ -165,7 +198,7 @@ const AdminAnalytics = () => {
           <div className="stat-card" style={{flex: 1}}>
             <div className="stat-info">
               <p>Active Users</p>
-              <h3>1,284</h3>
+              <h3>{data?.activeUsers !== undefined ? data.activeUsers : '1,284'}</h3>
               <div style={{marginTop: '1rem', color: '#10b981', fontSize: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.25rem'}}>
                 <TrendingUp size={12} />
                 <span>+14% from yesterday</span>
@@ -179,7 +212,7 @@ const AdminAnalytics = () => {
           <div className="stat-card" style={{flex: 1}}>
             <div className="stat-info">
               <p>Success Rate</p>
-              <h3>99.2%</h3>
+              <h3>{data?.successRate || '99.2%'}</h3>
               <div style={{marginTop: '1rem', color: '#10b981', fontSize: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.25rem'}}>
                 <TrendingUp size={12} />
                 <span>Steady performance</span>
@@ -193,7 +226,7 @@ const AdminAnalytics = () => {
           <div className="stat-card" style={{flex: 1}}>
             <div className="stat-info">
               <p>Avg. Processing</p>
-              <h3>1.4s</h3>
+              <h3>{data?.avgProcessing || '1.4s'}</h3>
               <div style={{marginTop: '1rem', color: '#f59e0b', fontSize: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.25rem'}}>
                 <Calendar size={12} />
                 <span>Last 24 hours</span>

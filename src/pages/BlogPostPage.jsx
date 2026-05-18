@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { BLOG_POSTS } from '../data/blogData';
@@ -8,15 +8,25 @@ import ToolPage from './ToolPage';
 
 const BlogPostPage = () => {
   const { slug } = useParams();
-  const post = BLOG_POSTS.find((p) => p.slug === slug);
+  const [post, setPost] = useState(null);
 
-  // Mock Comment State
-  const [comments, setComments] = useState([
-    { id: 1, author: 'Jane Doe', date: 'May 10, 2026', text: 'This was incredibly helpful! Removing backgrounds used to take me hours. Snaplix AI is a game changer.' },
-    { id: 2, author: 'Mark Smith', date: 'May 11, 2026', text: 'I love how fast the AI is. Great tutorial and very well explained.' }
-  ]);
-  const [newComment, setNewComment] = useState('');
-  const [commentName, setCommentName] = useState('');
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem('mock_blogs');
+      if (stored) {
+        const mockBlogs = JSON.parse(stored);
+        const found = mockBlogs.find(p => p.slug === slug);
+        if (found) {
+          setPost(found);
+          return;
+        }
+      }
+    } catch (e) {
+      console.error(e);
+    }
+    setPost(BLOG_POSTS.find((p) => p.slug === slug));
+  }, [slug]);
+
 
   if (!post) return <div className="container" style={{ padding: '10rem 0', textAlign: 'center' }}><h1>Post Not Found</h1></div>;
 
@@ -25,28 +35,11 @@ const BlogPostPage = () => {
     '@type': 'Article',
     headline: post.title,
     description: post.description,
-    image: post.image,
-    datePublished: post.date,
+    image: post.featuredImage || post.image,
+    datePublished: post.createdAt || post.date,
     author: { '@type': 'Organization', name: 'Snaplix AI' },
   };
 
-  const handleAddComment = (e) => {
-    e.preventDefault();
-    if (!newComment.trim() || !commentName.trim()) {
-      toast.error('Please enter your name and comment.');
-      return;
-    }
-    const newC = {
-      id: Date.now(),
-      author: commentName,
-      date: new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
-      text: newComment
-    };
-    setComments([newC, ...comments]);
-    setNewComment('');
-    setCommentName('');
-    toast.success('Comment posted successfully! Admin can now manage it.');
-  };
 
   return (
     <>
@@ -63,14 +56,14 @@ const BlogPostPage = () => {
             <ArrowLeft size={16} /> Back to Blog
           </Link>
           <div style={{ display: 'flex', gap: '1rem', marginBottom: '1.5rem', fontSize: '0.875rem', fontWeight: 800, color: 'var(--accent)', textTransform: 'uppercase' }}>
-            <span>{post.category}</span>
+            <span>{(post.tags && post.tags[0]) || post.category}</span>
           </div>
           <h1 style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', fontWeight: 900, marginBottom: '2rem', letterSpacing: '-0.02em', lineHeight: 1.1 }}>
             {post.title}
           </h1>
           <div style={{ display: 'flex', alignItems: 'center', gap: '2rem', flexWrap: 'wrap', color: 'var(--text-secondary)', fontWeight: 500 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}><User size={18} /> Snaplix Team</div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}><Calendar size={18} /> {new Date(post.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}><Calendar size={18} /> {new Date(post.createdAt || post.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}><Clock size={18} /> 6 min read</div>
           </div>
         </div>
@@ -84,7 +77,7 @@ const BlogPostPage = () => {
             {/* Main Content */}
             <main>
               <div style={{ borderRadius: '32px', overflow: 'hidden', marginBottom: '4rem', boxShadow: 'var(--shadow-xl)' }}>
-                <img src={post.image} alt={post.title} style={{ width: '100%', height: 'auto', display: 'block' }} />
+                <img src={post.featuredImage || post.image} alt={post.title} style={{ width: '100%', height: 'auto', display: 'block' }} />
               </div>
 
               <article 
@@ -99,58 +92,6 @@ const BlogPostPage = () => {
                 <Link to="/tool" className="btn btn-primary btn-xl">Try Snaplix AI Now</Link>
               </div>
 
-              {/* ─── Comment Section ─── */}
-              <div style={{ marginTop: '5rem', paddingTop: '4rem', borderTop: '1px solid var(--border-color)' }}>
-                <h3 style={{ fontSize: '1.75rem', fontWeight: 900, marginBottom: '2rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                  <MessageCircle size={24} color="var(--accent)" /> Comments ({comments.length})
-                </h3>
-
-                {/* Add Comment Form */}
-                <form onSubmit={handleAddComment} className="card" style={{ padding: '2rem', borderRadius: '24px', marginBottom: '3rem', background: 'var(--bg-card)', border: '1px solid var(--border-color)' }}>
-                  <h4 style={{ fontSize: '1.125rem', fontWeight: 800, marginBottom: '1.5rem' }}>Leave a Reply</h4>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                    <input 
-                      type="text" 
-                      placeholder="Your Name" 
-                      value={commentName}
-                      onChange={e => setCommentName(e.target.value)}
-                      style={{ padding: '1rem', borderRadius: '12px', border: '1px solid var(--border-color)', background: 'var(--bg-primary)', color: 'var(--text-primary)', outline: 'none' }}
-                      required
-                    />
-                    <textarea 
-                      placeholder="Write your comment here..." 
-                      rows="4"
-                      value={newComment}
-                      onChange={e => setNewComment(e.target.value)}
-                      style={{ padding: '1rem', borderRadius: '12px', border: '1px solid var(--border-color)', background: 'var(--bg-primary)', color: 'var(--text-primary)', outline: 'none', resize: 'vertical' }}
-                      required
-                    />
-                    <button type="submit" className="btn btn-primary" style={{ alignSelf: 'flex-start', borderRadius: '12px', padding: '0.75rem 2rem' }}>
-                      Post Comment
-                    </button>
-                  </div>
-                </form>
-
-                {/* Comment List */}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-                  {comments.map((comment) => (
-                    <div key={comment.id} style={{ display: 'flex', gap: '1.5rem' }}>
-                      <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'var(--accent-light)', color: 'var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 900, fontSize: '1.25rem', flexShrink: 0 }}>
-                        {comment.author.charAt(0).toUpperCase()}
-                      </div>
-                      <div>
-                        <div style={{ display: 'flex', alignItems: 'baseline', gap: '1rem', marginBottom: '0.5rem' }}>
-                          <h5 style={{ fontSize: '1.0625rem', fontWeight: 800, margin: 0 }}>{comment.author}</h5>
-                          <span style={{ fontSize: '0.8125rem', color: 'var(--text-muted)', fontWeight: 500 }}>{comment.date}</span>
-                        </div>
-                        <p style={{ color: 'var(--text-secondary)', fontSize: '1rem', lineHeight: 1.6, margin: 0 }}>
-                          {comment.text}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
 
             </main>
 

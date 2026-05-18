@@ -10,7 +10,7 @@ import { Helmet } from 'react-helmet-async';
 import { Sparkles, Clock, Shield, Zap } from 'lucide-react';
 
 const ToolPage = () => {
-  const { isProcessing, originalImage, originalFiles, processedImage, processImage, reset, currentHistoryId } = useImageProcessor();
+  const { isProcessing, originalImage, originalFiles, processedImage, processImage, reset, currentHistoryId, error } = useImageProcessor();
 
   return (
     <div style={{ background: 'var(--bg-primary)', minHeight: '100vh' }}>
@@ -18,7 +18,7 @@ const ToolPage = () => {
         <title>Remove Image Background — Snaplix AI Tool</title>
         <meta name="description" content="Upload any image and remove its background automatically in seconds using our free AI tool." />
       </Helmet>
-      
+
       <Toaster
         position="top-center"
         toastOptions={{
@@ -86,7 +86,7 @@ const ToolPage = () => {
                   <div style={{ height: '400px', position: 'relative', background: 'white', borderRadius: '32px', border: '1px solid var(--border-color)' }}>
                     <ProcessingOverlay />
                   </div>
-                ) : (
+                ) : processedImage ? (
                   <EditorStudio
                     processedImage={processedImage}
                     originalFiles={originalFiles}
@@ -94,6 +94,12 @@ const ToolPage = () => {
                     onReset={reset}
                     currentHistoryId={currentHistoryId}
                   />
+                ) : (
+                  <div style={{ padding: '4rem', textAlign: 'center', background: 'var(--bg-card)', borderRadius: '32px', border: '1px solid var(--border-color)' }}>
+                    <h3 style={{ color: 'var(--text-primary)', marginBottom: '1rem', fontSize: '1.5rem', fontWeight: 'bold' }}>Processing Failed</h3>
+                    <p style={{ color: 'var(--text-secondary)', marginBottom: '2rem' }}>{error || 'An error occurred during processing.'}</p>
+                    <button onClick={reset} className="btn btn-gradient" style={{ padding: '0.75rem 2rem', borderRadius: '12px', fontWeight: 'bold' }}>Try Again</button>
+                  </div>
                 )}
               </div>
             )}

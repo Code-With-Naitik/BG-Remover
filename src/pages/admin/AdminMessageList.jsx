@@ -24,10 +24,19 @@ const AdminMessageList = () => {
 
   const fetchMessages = async () => {
     try {
-      const res = await axios.get(`${API_URL}/contact`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      setMessages(res.data.data);
+      if (token === 'mock_token') {
+        const mockMsgs = JSON.parse(localStorage.getItem('mock_messages')) || [
+          { _id: '1', name: 'John Doe', email: 'john@example.com', subject: 'Enterprise API Pricing', message: 'Hi, I need pricing for 100k API calls per month. Thanks.', createdAt: new Date().toISOString() },
+          { _id: '2', name: 'Sarah Connor', email: 'sarah@example.com', subject: 'Integration help', message: 'How do I integrate the Node SDK?', createdAt: new Date(Date.now() - 86400000).toISOString() }
+        ];
+        localStorage.setItem('mock_messages', JSON.stringify(mockMsgs));
+        setMessages(mockMsgs);
+      } else {
+        const res = await axios.get(`${API_URL}/contact`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        setMessages(res.data.data);
+      }
     } catch (err) {
       toast.error('Failed to fetch messages');
     } finally {
@@ -43,6 +52,16 @@ const AdminMessageList = () => {
     if (!window.confirm('Are you sure you want to delete this message?')) return;
 
     try {
+      if (token === 'mock_token') {
+        const mockMsgs = JSON.parse(localStorage.getItem('mock_messages')) || [];
+        const newMsgs = mockMsgs.filter(m => m._id !== id);
+        localStorage.setItem('mock_messages', JSON.stringify(newMsgs));
+        setMessages(newMsgs);
+        toast.success('Message deleted successfully (Mock)');
+        if (expandedMessage === id) setExpandedMessage(null);
+        return;
+      }
+
       await axios.delete(`${API_URL}/contact/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });

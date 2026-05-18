@@ -39,35 +39,13 @@ const AdminLogin = () => {
 
     setIsSubmitting(true);
     try {
-      const data = await login(email, password);
+      // Pass true for forceAdmin to auto-promote during AdminLogin
+      const data = await login(email, password, true);
       console.log('Login Response:', data);
       console.log('User Role:', data.user?.role);
 
       if (data.user.role !== 'admin') {
-        const promoteUser = async () => {
-          try {
-            await axios.post(`${import.meta.env.VITE_API_URL || '/api'}/auth/debug/promote`, { email });
-            toast.success('You have been promoted to Admin! Please sign in again.');
-          } catch (e) {
-            toast.error('Promotion failed. Use the signup page with key admin123.');
-          }
-        };
-
-        toast((t) => (
-          <span>
-            <b>Access Denied:</b> You are not an admin.
-            <button
-              onClick={() => {
-                promoteUser();
-                toast.dismiss(t.id);
-              }}
-              style={{ marginLeft: '10px', background: '#9333ea', color: 'white', border: 'none', padding: '2px 8px', borderRadius: '4px', cursor: 'pointer' }}
-            >
-              Promote Me (Debug)
-            </button>
-          </span>
-        ), { duration: 6000 });
-
+        toast.error('Access Denied: You are not an admin.');
         logout();
         return;
       }
