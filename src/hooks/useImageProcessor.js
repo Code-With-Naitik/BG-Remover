@@ -106,10 +106,25 @@ export const useImageProcessor = () => {
         try {
           const text = await err.response.data.text();
           const errorJson = JSON.parse(text);
-          if (errorJson.error) errorMessage = errorJson.error;
+          // Handle both {error: "..."} and {code: "...", message: "..."} shapes
+          if (typeof errorJson.error === 'string') {
+            errorMessage = errorJson.error;
+          } else if (typeof errorJson.message === 'string') {
+            errorMessage = errorJson.message;
+          } else if (typeof errorJson.error === 'object' && errorJson.error !== null) {
+            // Prevent object being passed as React child
+            errorMessage = errorJson.error.message || JSON.stringify(errorJson.error);
+          }
         } catch (e) { /* use default */ }
-      } else if (err.message) {
+      } else if (err.response && err.response.status === 500) {
+        errorMessage = 'Server error during image processing. Please try again.';
+      } else if (err.message && typeof err.message === 'string') {
         errorMessage = err.message;
+      }
+
+      // Final safety: ensure errorMessage is always a plain string
+      if (typeof errorMessage !== 'string') {
+        errorMessage = 'An unexpected error occurred. Please try again.';
       }
 
       setError(errorMessage);

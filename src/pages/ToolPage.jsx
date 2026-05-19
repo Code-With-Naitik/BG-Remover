@@ -97,7 +97,7 @@ const ToolPage = () => {
                 ) : (
                   <div style={{ padding: '4rem', textAlign: 'center', background: 'var(--bg-card)', borderRadius: '32px', border: '1px solid var(--border-color)' }}>
                     <h3 style={{ color: 'var(--text-primary)', marginBottom: '1rem', fontSize: '1.5rem', fontWeight: 'bold' }}>Processing Failed</h3>
-                    <p style={{ color: 'var(--text-secondary)', marginBottom: '2rem' }}>{error || 'An error occurred during processing.'}</p>
+                    <p style={{ color: 'var(--text-secondary)', marginBottom: '2rem' }}>{typeof error === 'string' ? error : error ? String(error) : 'An error occurred during processing.'}</p>
                     <button onClick={reset} className="btn btn-gradient" style={{ padding: '0.75rem 2rem', borderRadius: '12px', fontWeight: 'bold' }}>Try Again</button>
                   </div>
                 )}
