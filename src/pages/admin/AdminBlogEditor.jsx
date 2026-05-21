@@ -36,11 +36,22 @@ const AdminBlogEditor = () => {
     if (isEdit) {
       const fetchBlog = async () => {
         try {
-          // Note: we need a special route to get post by ID, or use slug. 
-          // Let's assume we can get by ID for admin.
-          // Wait, I didn't add a "get by ID" route. Let's add it to the backend or use the slug if we have it.
-          // Actually, let's just use the admin-all and find the one. 
-          // Or better, let's use the ID in the backend. I added PUT /:id, let's add GET /post/:id.
+          if (token === 'mock_token') {
+            const mockBlogs = JSON.parse(localStorage.getItem('mock_blogs')) || [];
+            const blog = mockBlogs.find(b => b._id === id);
+            if (blog) {
+              setFormData({
+                ...blog,
+                tags: (blog.tags || []).join(', ')
+              });
+            } else {
+              toast.error('Blog post not found');
+              navigate('/admin/blogs');
+            }
+            setLoading(false);
+            return;
+          }
+
           const res = await axios.get(`${API_URL}/blog/admin-all`, {
             headers: { Authorization: `Bearer ${token}` }
           });
@@ -90,6 +101,21 @@ const AdminBlogEditor = () => {
     };
 
     try {
+      if (token === 'mock_token') {
+        let mockBlogs = JSON.parse(localStorage.getItem('mock_blogs')) || [];
+        if (isEdit) {
+           mockBlogs = mockBlogs.map(b => b._id === id ? { ...b, ...payload, updatedAt: new Date().toISOString() } : b);
+           toast.success('Blog updated successfully (Mock)');
+        } else {
+           const newId = Date.now().toString();
+           mockBlogs.push({ _id: newId, ...payload, createdAt: new Date().toISOString() });
+           toast.success('Blog created successfully (Mock)');
+        }
+        localStorage.setItem('mock_blogs', JSON.stringify(mockBlogs));
+        navigate('/admin/blogs');
+        return;
+      }
+
       if (isEdit) {
         await axios.put(`${API_URL}/blog/${id}`, payload, {
           headers: { Authorization: `Bearer ${token}` }
@@ -118,6 +144,14 @@ const AdminBlogEditor = () => {
 
     const toastId = toast.loading('Uploading image...');
     try {
+      if (token === 'mock_token') {
+        setTimeout(() => {
+           setFormData(prev => ({ ...prev, featuredImage: 'https://res.cloudinary.com/demo/image/upload/sample.jpg' }));
+           toast.success('Mock image uploaded', { id: toastId });
+        }, 800);
+        return;
+      }
+
       const res = await axios.post(`${API_URL}/upload`, formDataUpload, {
         headers: { 
           'Content-Type': 'multipart/form-data',

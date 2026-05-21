@@ -2,60 +2,103 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 
 const Section = ({ title, children }) => (
-  <section style={{ marginBottom: '3rem' }}>
-    <h2 style={{ fontSize: '1.375rem', marginBottom: '1rem', paddingBottom: '0.75rem', borderBottom: '1px solid var(--border-color)' }}>{title}</h2>
-    <div style={{ color: 'var(--text-secondary)', lineHeight: 1.8, fontSize: '0.9375rem' }}>{children}</div>
+  <section style={{ marginBottom: '3.5rem' }}>
+    <h2 style={{ fontSize: '1.75rem', fontWeight: 800, marginBottom: '1.25rem', color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>{title}</h2>
+    <div style={{ color: 'var(--text-secondary)', lineHeight: 1.8, fontSize: '1.125rem' }}>{children}</div>
   </section>
 );
 
 const TermsPage = () => (
-  <>
+  <div style={{ background: 'var(--bg-primary)', minHeight: '100vh', paddingTop: '6rem', paddingBottom: '6rem' }}>
     <Helmet>
-      <title>Terms of Service — BGRemover Pro</title>
-      <meta name="description" content="Read the Terms of Service for BGRemover Pro. By using our service you agree to these terms." />
+      <title>Terms and Conditions — Snaplix AI Photo Editor</title>
+      <meta name="description" content="Read the Terms and Conditions for using Snaplix AI. Learn about our usage policies, background removal API guidelines, and service agreements." />
     </Helmet>
-    <div className="container" style={{ maxWidth: '780px', padding: '4rem 1.5rem' }}>
-      <h1 style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>Terms of Service</h1>
-      <p style={{ color: 'var(--text-muted)', marginBottom: '3rem', fontSize: '0.9rem' }}>Last updated: April 27, 2026</p>
+    <div className="container" style={{ maxWidth: '850px' }}>
+      <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+        <p style={{ color: 'var(--accent)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '1rem' }}>Legal Agreement</p>
+        <h1 style={{ fontSize: 'clamp(2.5rem, 5vw, 3.5rem)', fontWeight: 900, marginBottom: '1rem', letterSpacing: '-0.03em', color: 'var(--text-primary)' }}>Terms and Conditions</h1>
+        <p style={{ color: 'var(--text-muted)', fontSize: '1.125rem' }}>Last updated: May 18, 2026</p>
+      </div>
 
-      <Section title="1. Acceptance of Terms">
-        <p>By accessing or using BGRemover Pro ("the Service"), you agree to be bound by these Terms of Service. If you do not agree, please do not use the Service.</p>
-      </Section>
+      <div style={{ background: 'var(--bg-card)', padding: '3.5rem', borderRadius: '2rem', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
+        <Section title="1. Acceptance of Terms">
+          <p>
+            Welcome to <strong>Snaplix AI</strong>. By accessing or using our website, our automated background removal tool, API, or any related services (collectively, "the Service"), you agree to be bound by these Terms and Conditions. If you do not agree with any part of these terms, you must not use our Service.
+          </p>
+        </Section>
 
-      <Section title="2. Use of the Service">
-        <ul style={{ paddingLeft: '1.5rem' }}>
-          <li>You must be at least 13 years old to use the Service.</li>
-          <li>Free plan usage is limited to 5 background removals per day per IP address.</li>
-          <li>You may not use the Service for illegal, abusive, or harmful purposes.</li>
-          <li>You may not attempt to reverse-engineer or circumvent any rate-limiting mechanisms.</li>
-        </ul>
-      </Section>
+        <Section title="2. Description of Service">
+          <p style={{ marginBottom: '1.5rem' }}>
+            Snaplix AI provides state-of-the-art visual AI automation. Our primary service involves using artificial intelligence to instantly remove backgrounds from images, generate transparent PNGs, and enhance photos.
+          </p>
+          <p>
+            We offer both a free tier for individual users and premium subscription plans for professionals and enterprises requiring high-volume processing and API access.
+          </p>
+        </Section>
 
-      <Section title="3. Content Ownership">
-        <p>You retain full ownership of any images you upload. By uploading an image you grant us a temporary, limited license to process the image solely for the purpose of providing the Service.</p>
-      </Section>
+        <Section title="3. User Conduct and Restrictions">
+          <p style={{ marginBottom: '1.5rem' }}>When using Snaplix AI, you agree that you will <strong>not</strong>:</p>
+          <ul style={{ paddingLeft: '1.5rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+            <li>Upload images that contain illegal, explicit, or highly offensive material.</li>
+            <li>Attempt to reverse-engineer, decompile, or extract the source code of our AI models or web applications.</li>
+            <li>Use automated scripts, bots, or scraping tools to bypass our rate limits or abuse the free tier.</li>
+            <li>Resell or redistribute access to our API without an explicit enterprise partnership agreement.</li>
+          </ul>
+        </Section>
 
-      <Section title="4. Free vs. Premium">
-        <p>The free plan is provided as-is with no uptime guarantee. Premium subscriptions are billed monthly and may be cancelled at any time, with access continuing until the end of the current billing period.</p>
-      </Section>
+        <Section title="4. Copyright and Content Ownership">
+          <p style={{ marginBottom: '1.5rem' }}>
+            <strong>You own your content.</strong> We claim no intellectual property rights over the images you upload to Snaplix AI. You retain full copyright ownership of both your original images and the edited outputs generated by our software.
+          </p>
+          <p>
+            By uploading an image, you grant Snaplix AI a temporary, highly restricted license solely for the purpose of analyzing the image and applying the requested edits (like background removal). As stated in our Privacy Policy, these images are not stored permanently.
+          </p>
+        </Section>
 
-      <Section title="5. Disclaimer of Warranties">
-        <p>The Service is provided "as is" without warranty of any kind. We do not guarantee that the AI will produce perfect results for every image. Processing accuracy may vary.</p>
-      </Section>
+        <Section title="5. Subscriptions, API Usage, and Billing">
+          <p style={{ marginBottom: '1.5rem' }}>
+            Premium accounts are billed on a subscription or pay-as-you-go basis depending on your selected plan. 
+          </p>
+          <ul style={{ paddingLeft: '1.5rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+            <li><strong>Credits:</strong> API and bulk processing usage consumes credits. Credits roll over according to the specific terms of your purchased plan.</li>
+            <li><strong>Refunds:</strong> We offer a 7-day money-back guarantee if you are unsatisfied with the quality of our AI rendering, provided you have used less than 50 processing credits.</li>
+            <li><strong>Cancellations:</strong> You may cancel your subscription at any time. You will retain access to your premium features until the end of your current billing cycle.</li>
+          </ul>
+        </Section>
 
-      <Section title="6. Limitation of Liability">
-        <p>To the maximum extent permitted by law, BGRemover Pro shall not be liable for any indirect, incidental, or consequential damages arising from use of the Service.</p>
-      </Section>
+        <Section title="6. Disclaimer of Warranties">
+          <p style={{ marginBottom: '1.5rem' }}>
+            While we strive for pixel-perfect accuracy, artificial intelligence is an evolving technology. The Service is provided on an "AS IS" and "AS AVAILABLE" basis.
+          </p>
+          <p>
+            Snaplix AI makes no guarantees that the background removal will be 100% flawless for every single image, particularly for highly complex textures, low-resolution files, or images lacking contrast. We disclaim all warranties, express or implied, including fitness for a particular purpose.
+          </p>
+        </Section>
 
-      <Section title="7. Changes to Terms">
-        <p>We may update these Terms at any time. Continued use of the Service after changes constitutes acceptance of the new Terms.</p>
-      </Section>
+        <Section title="7. Limitation of Liability">
+          <p>
+            To the maximum extent permitted by applicable law, Netflairs Technology Pvt. Ltd (the operator of Snaplix AI) shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including loss of profits, data, or business opportunities, arising from your use of or inability to use the Service.
+          </p>
+        </Section>
 
-      <Section title="8. Contact">
-        <p>Questions about these Terms? Email <a href="mailto:legal@bgremoverpro.com">legal@bgremoverpro.com</a>.</p>
-      </Section>
+        <Section title="8. Modifications to Terms">
+          <p>
+            We reserve the right to modify or replace these Terms at any time to reflect updates in our technology or legal requirements. We will notify registered users of significant changes via email. Your continued use of Snaplix AI after changes take effect constitutes your acceptance of the revised Terms.
+          </p>
+        </Section>
+
+        <Section title="9. Contact Information">
+          <p>
+            If you have any questions, concerns, or legal inquiries regarding these Terms and Conditions, please contact us at:
+          </p>
+          <p style={{ marginTop: '1rem' }}>
+            <a href="mailto:legal@snaplix.ai" style={{ color: 'var(--accent)', fontWeight: 700, textDecoration: 'none' }}>legal@snaplix.ai</a>
+          </p>
+        </Section>
+      </div>
     </div>
-  </>
+  </div>
 );
 
 export default TermsPage;

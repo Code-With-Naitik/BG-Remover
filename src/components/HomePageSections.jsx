@@ -190,16 +190,26 @@ export const BeforeAfterSlider = ({ gallery = [], showTabs = true, fixedIndex = 
               onClick={() => setActive(i)}
               style={{
                 padding: '0.65rem 1.25rem',
+<<<<<<< HEAD
                 background: active === i ? '#2563EB' : 'rgba(255,255,255,0.8)',
                 border: active === i ? '1px solid #2563EB' : '1px solid #e2e8f0',
                 color: active === i ? '#fff' : '#64748b',
+=======
+                background: active === i ? 'var(--accent)' : 'var(--bg-secondary)',
+                border: active === i ? '1px solid var(--accent)' : '1px solid var(--border-color)',
+                color: active === i ? '#fff' : 'var(--text-secondary)',
+>>>>>>> ff6b109db6e0b35b906720cc9e2e15da16b58e31
                 borderRadius: '100px',
                 fontWeight: 700,
                 fontSize: '0.8125rem',
                 cursor: 'pointer',
                 transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                 whiteSpace: 'nowrap',
+<<<<<<< HEAD
                 boxShadow: active === i ? '0 10px 25px rgba(37,99,235,0.25)' : '0 4px 12px rgba(0,0,0,0.03)',
+=======
+                boxShadow: active === i ? '0 10px 25px rgba(37,99,235,0.25)' : 'none',
+>>>>>>> ff6b109db6e0b35b906720cc9e2e15da16b58e31
                 backdropFilter: 'blur(8px)'
               }}
             >
@@ -213,9 +223,15 @@ export const BeforeAfterSlider = ({ gallery = [], showTabs = true, fixedIndex = 
           position: 'relative', 
           borderRadius: '28px', 
           overflow: 'hidden', 
+<<<<<<< HEAD
           boxShadow: '0 40px 100px rgba(0,0,0,0.15)', 
           border: '1px solid rgba(255,255,255,0.4)',
           background: '#fff',
+=======
+          boxShadow: 'var(--shadow-xl)', 
+          border: '1px solid var(--border-color)',
+          background: 'var(--bg-card)',
+>>>>>>> ff6b109db6e0b35b906720cc9e2e15da16b58e31
           padding: '8px' // "Frame" effect
         }}
         onMouseEnter={() => setShowHint(false)}
@@ -261,6 +277,7 @@ export const BeforeAfterSlider = ({ gallery = [], showTabs = true, fixedIndex = 
 
 export const BeforeAfterSection = ({ gallery = [] }) => {
   return (
+<<<<<<< HEAD
     <section style={{ padding: '7rem 0', background: '#fff' }}>
       <div className="container">
         <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
@@ -268,6 +285,15 @@ export const BeforeAfterSection = ({ gallery = [] }) => {
             High quality cutouts
           </h2>
           <p style={{ color: '#64748b', fontSize: '1.0625rem' }}>Drag the slider to compare — precision in every pixel, for any subject.</p>
+=======
+    <section style={{ padding: '7rem 0', background: 'var(--bg-primary)' }}>
+      <div className="container">
+        <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
+          <h2 style={{ fontSize: 'clamp(1.875rem,4vw,3rem)', fontWeight: 900, color: 'var(--text-primary)', letterSpacing: '-0.03em', marginBottom: '0.75rem' }}>
+            High quality cutouts
+          </h2>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '1.0625rem' }}>Drag the slider to compare — precision in every pixel, for any subject.</p>
+>>>>>>> ff6b109db6e0b35b906720cc9e2e15da16b58e31
         </div>
 
         <div style={{ maxWidth: '820px', margin: '0 auto 2.5rem' }}>
@@ -290,10 +316,17 @@ export const BeforeAfterSection = ({ gallery = [] }) => {
 
 /* ─── AI FEATURES SECTION ────────────────────────────────── */
 const AI_FEATS = [
+<<<<<<< HEAD
   { badge: 'AI Background', title: 'Replace Backgrounds Instantly', desc: 'Professional studios cost $$$. Our AI generates realistic backgrounds in seconds — no fancy gear needed.', emoji: '🏙️', color: '#2563EB', bg: 'linear-gradient(135deg,#eff6ff,#dbeafe)' },
   { badge: 'AI Enhance', title: 'Fix Blurry & Dull Photos', desc: 'Blurry selfies? Dull colors? One click fixes it all. 90% of users say their photos look professionally edited.', emoji: '✨', color: '#8B5CF6', bg: 'linear-gradient(135deg,#f5f3ff,#ede9fe)' },
   { badge: 'AI Shadow', title: 'Realistic Product Shadows', desc: 'Natural-looking shadows make products POP. Boost your Shopify conversions with pro-quality visuals in seconds.', emoji: '🪄', color: '#06B6D4', bg: 'linear-gradient(135deg,#ecfeff,#cffafe)' },
   { badge: 'HD Download', title: 'Crystal-Clear HD Output', desc: 'Download pixel-perfect transparent PNGs at full resolution. No compression, no watermarks, ready for anything.', emoji: '🖼️', color: '#10B981', bg: 'linear-gradient(135deg,#ecfdf5,#d1fae5)' },
+=======
+  { badge: 'AI Background', title: 'Replace Backgrounds Instantly', desc: 'Professional studios cost $$$. Our AI generates realistic backgrounds in seconds — no fancy gear needed.', img: '/ai_bg_replace.png', color: '#2563EB', bg: 'linear-gradient(135deg,#eff6ff,#dbeafe)' },
+  { badge: 'AI Enhance', title: 'Fix Blurry & Dull Photos', desc: 'Blurry selfies? Dull colors? One click fixes it all. 90% of users say their photos look professionally edited.', img: '/ai_photo_enhance.png', color: '#8B5CF6', bg: 'linear-gradient(135deg,#f5f3ff,#ede9fe)' },
+  { badge: 'AI Shadow', title: 'Realistic Product Shadows', desc: 'Natural-looking shadows make products POP. Boost your Shopify conversions with pro-quality visuals in seconds.', img: '/ai_product_shadow.png', color: '#06B6D4', bg: 'linear-gradient(135deg,#ecfeff,#cffafe)' },
+  { badge: 'HD Download', title: 'Crystal-Clear HD Output', desc: 'Download pixel-perfect transparent PNGs at full resolution. No compression, no watermarks, ready for anything.', img: '/ai_hd_output.png', color: '#10B981', bg: 'linear-gradient(135deg,#ecfdf5,#d1fae5)' },
+>>>>>>> ff6b109db6e0b35b906720cc9e2e15da16b58e31
 ];
 
 export const AIFeaturesSection = () => (
@@ -321,8 +354,13 @@ export const AIFeaturesSection = () => (
             </div>
             {/* Visual */}
             <div style={{ order: i % 2 === 0 ? 2 : 1 }}>
+<<<<<<< HEAD
               <div style={{ background: f.bg, borderRadius: '28px', aspectRatio: '4/3', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '6rem', border: `1px solid ${f.color}20`, boxShadow: `0 20px 60px ${f.color}10` }}>
                 {f.emoji}
+=======
+              <div style={{ background: f.bg, borderRadius: '28px', aspectRatio: '4/3', display: 'flex', alignItems: 'center', justifyContent: 'center', border: `1px solid ${f.color}20`, boxShadow: `0 20px 60px ${f.color}10`, overflow: 'hidden', padding: '1rem' }}>
+                <img src={f.img} alt={f.title} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '20px', boxShadow: 'var(--shadow-md)' }} />
+>>>>>>> ff6b109db6e0b35b906720cc9e2e15da16b58e31
               </div>
             </div>
           </div>

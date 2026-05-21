@@ -267,19 +267,26 @@ const HomePage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [galleryRes, statsRes] = await Promise.all([
-          axios.get('/api/gallery'),
-          axios.get('/api/admin/public-stats')
-        ]);
-        setGallery(galleryRes.data.data);
-        if (statsRes.data.success) {
-          const s = statsRes.data.data;
-          setStats({
-            totalRemovals: s.totalRemovals > 1000 ? (s.totalRemovals / 1000).toFixed(1) + 'k+' : s.totalRemovals,
-            totalHappyUsers: s.totalHappyUsers > 1000 ? (s.totalHappyUsers / 1000).toFixed(1) + 'k+' : s.totalHappyUsers,
-            totalGallery: s.totalGallery
-          });
+        let galleryData = [];
+        try {
+          const galleryRes = await axios.get('/api/gallery', { timeout: 2000 });
+          galleryData = galleryRes.data.data;
+        } catch (e) {
+          galleryData = JSON.parse(localStorage.getItem('mock_gallery')) || [];
         }
+        setGallery(galleryData);
+
+        try {
+          const statsRes = await axios.get('/api/admin/public-stats', { timeout: 2000 });
+          if (statsRes.data.success) {
+            const s = statsRes.data.data;
+            setStats({
+              totalRemovals: s.totalRemovals > 1000 ? (s.totalRemovals / 1000).toFixed(1) + 'k+' : s.totalRemovals,
+              totalHappyUsers: s.totalHappyUsers > 1000 ? (s.totalHappyUsers / 1000).toFixed(1) + 'k+' : s.totalHappyUsers,
+              totalGallery: s.totalGallery
+            });
+          }
+        } catch (e) {}
       } catch (err) {
         console.error(err);
       }
@@ -301,7 +308,11 @@ const HomePage = () => {
       <section style={{ 
         position: 'relative', 
         padding: 'clamp(5rem, 10vw, 8rem) 0', 
+<<<<<<< HEAD
         background: '#fff', 
+=======
+        background: 'var(--bg-primary)', 
+>>>>>>> ff6b109db6e0b35b906720cc9e2e15da16b58e31
         overflow: 'hidden',
       }}>
         {/* Decorative Background Elements */}
@@ -329,7 +340,11 @@ const HomePage = () => {
               <h1 style={{ 
                 fontSize: 'clamp(2.75rem, 6vw, 4.5rem)', 
                 fontWeight: 900, 
+<<<<<<< HEAD
                 color: '#1e293b', 
+=======
+                color: 'var(--text-primary)', 
+>>>>>>> ff6b109db6e0b35b906720cc9e2e15da16b58e31
                 lineHeight: 1.05, 
                 marginBottom: '1.75rem',
                 letterSpacing: '-0.04em'
@@ -340,7 +355,11 @@ const HomePage = () => {
               
               <p style={{ 
                 fontSize: 'clamp(1.125rem, 2vw, 1.375rem)', 
+<<<<<<< HEAD
                 color: '#64748b', 
+=======
+                color: 'var(--text-secondary)', 
+>>>>>>> ff6b109db6e0b35b906720cc9e2e15da16b58e31
                 fontWeight: 500, 
                 marginBottom: '3rem',
                 lineHeight: 1.6,
@@ -376,7 +395,11 @@ const HomePage = () => {
                     <UploadCloud size={24} strokeWidth={2.5} /> Upload Image
                   </label>
                   
+<<<<<<< HEAD
                   <Link to="/tool" style={{ color: '#1e293b', fontWeight: 800, fontSize: '1rem', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '1rem' }} className="hover-link">
+=======
+                  <Link to="/tool" style={{ color: 'var(--text-primary)', fontWeight: 800, fontSize: '1rem', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '1rem' }} className="hover-link">
+>>>>>>> ff6b109db6e0b35b906720cc9e2e15da16b58e31
                     Try For Free <ArrowRight size={18} />
                   </Link>
                 </div>
@@ -410,6 +433,7 @@ const HomePage = () => {
                   position: 'absolute', 
                   top: '-1.5rem', 
                   right: '-1.5rem', 
+<<<<<<< HEAD
                   background: 'rgba(255,255,255,0.9)', 
                   padding: '0.75rem 1.25rem', 
                   borderRadius: '18px', 
@@ -418,6 +442,16 @@ const HomePage = () => {
                   alignItems: 'center', 
                   gap: '0.75rem',
                   border: '1px solid #f1f5f9',
+=======
+                  background: 'var(--glass-bg)', 
+                  padding: '0.75rem 1.25rem', 
+                  borderRadius: '18px', 
+                  boxShadow: 'var(--shadow-md)', 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  gap: '0.75rem',
+                  border: '1px solid var(--border-color)',
+>>>>>>> ff6b109db6e0b35b906720cc9e2e15da16b58e31
                   backdropFilter: 'blur(10px)',
                   animation: 'float 6s ease-in-out infinite'
                 }}>
@@ -425,8 +459,13 @@ const HomePage = () => {
                     <Zap size={18} fill="currentColor" />
                   </div>
                   <div>
+<<<<<<< HEAD
                     <div style={{ fontSize: '0.8125rem', fontWeight: 800, color: '#1e293b' }}>Lightning Fast</div>
                     <div style={{ fontSize: '0.65rem', fontWeight: 600, color: '#94a3b8' }}>&lt; 3s Processing</div>
+=======
+                    <div style={{ fontSize: '0.8125rem', fontWeight: 800, color: 'var(--text-primary)' }}>Lightning Fast</div>
+                    <div style={{ fontSize: '0.65rem', fontWeight: 600, color: 'var(--text-secondary)' }}>&lt; 3s Processing</div>
+>>>>>>> ff6b109db6e0b35b906720cc9e2e15da16b58e31
                   </div>
                 </div>
 
@@ -435,6 +474,7 @@ const HomePage = () => {
                   position: 'absolute', 
                   bottom: '-1rem', 
                   left: '-1rem', 
+<<<<<<< HEAD
                   background: 'rgba(255,255,255,0.9)', 
                   padding: '0.75rem 1.25rem', 
                   borderRadius: '18px', 
@@ -443,6 +483,16 @@ const HomePage = () => {
                   alignItems: 'center', 
                   gap: '0.75rem',
                   border: '1px solid #f1f5f9',
+=======
+                  background: 'var(--glass-bg)', 
+                  padding: '0.75rem 1.25rem', 
+                  borderRadius: '18px', 
+                  boxShadow: 'var(--shadow-md)', 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  gap: '0.75rem',
+                  border: '1px solid var(--border-color)',
+>>>>>>> ff6b109db6e0b35b906720cc9e2e15da16b58e31
                   backdropFilter: 'blur(10px)',
                   animation: 'float 6s ease-in-out infinite reverse'
                 }}>
@@ -450,8 +500,13 @@ const HomePage = () => {
                     <Shield size={18} fill="currentColor" />
                   </div>
                   <div>
+<<<<<<< HEAD
                     <div style={{ fontSize: '0.8125rem', fontWeight: 800, color: '#1e293b' }}>Pro Precision</div>
                     <div style={{ fontSize: '0.65rem', fontWeight: 600, color: '#94a3b8' }}>99.9% Edge Accuracy</div>
+=======
+                    <div style={{ fontSize: '0.8125rem', fontWeight: 800, color: 'var(--text-primary)' }}>Pro Precision</div>
+                    <div style={{ fontSize: '0.65rem', fontWeight: 600, color: 'var(--text-secondary)' }}>99.9% Edge Accuracy</div>
+>>>>>>> ff6b109db6e0b35b906720cc9e2e15da16b58e31
                   </div>
                 </div>
               </div>

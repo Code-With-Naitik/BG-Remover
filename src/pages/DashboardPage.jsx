@@ -26,6 +26,13 @@ import {
 } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 
+const MOCK_HISTORY = [
+  { id: 1, name: 'portrait_final.png', url: 'https://raw.githubusercontent.com/danielgatis/rembg/main/examples/girl-2.out.png', time: '2 hours ago', size: '1.4MB' },
+  { id: 2, name: 'product_shoe.png', url: 'https://res.cloudinary.com/demo/image/upload/shoes.png', time: '5 hours ago', size: '2.1MB' },
+  { id: 3, name: 'car_transparent.png', url: 'https://raw.githubusercontent.com/danielgatis/rembg/main/examples/car-1.out.png', time: '1 day ago', size: '3.5MB' },
+  { id: 4, name: 'animal_cutout.png', url: 'https://raw.githubusercontent.com/danielgatis/rembg/main/examples/animal-1.out.png', time: '2 days ago', size: '1.8MB' }
+];
+
 const DashboardPage = () => {
   const { user, logout, loading } = useAuth();
   const navigate = useNavigate();
@@ -245,20 +252,23 @@ const DashboardPage = () => {
                 </div>
 
                 <div className="work-grid">
-                  {[1, 2, 3, 4].map(i => (
-                    <div key={i} className="work-item group">
-                      <div className="work-preview">
-                        <div className="preview-placeholder">
-                          <ImageIcon size={32} className="text-slate-200" />
-                        </div>
+                  {MOCK_HISTORY.map(item => (
+                    <div key={item.id} className="work-item group">
+                      <div className="work-preview" style={{ 
+                        backgroundImage: 'linear-gradient(45deg,#d1d5db 25%,transparent 25%),linear-gradient(-45deg,#d1d5db 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#d1d5db 75%),linear-gradient(-45deg,transparent 75%,#d1d5db 75%)', 
+                        backgroundSize: '10px 10px', 
+                        backgroundPosition: '0 0,0 5px,5px -5px,-5px 0', 
+                        backgroundColor: '#f1f5f9' 
+                      }}>
+                        <img src={item.url} alt={item.name} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                         <div className="preview-overlay">
                           <button className="preview-btn"><Download size={16} /></button>
                           <button className="preview-btn"><ExternalLink size={16} /></button>
                         </div>
                       </div>
-                      <div className="work-details">
-                        <span className="work-name">removal_output_{i}.png</span>
-                        <span className="work-meta">2 days ago • 1.2MB</span>
+                      <div className="work-details" style={{ padding: '0.25rem 0' }}>
+                        <span className="work-name" style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--text-primary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', display: 'block', marginBottom: '0.25rem' }}>{item.name}</span>
+                        <span className="work-meta" style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{item.time} • {item.size}</span>
                       </div>
                       <button className="work-more"><MoreVertical size={16} /></button>
                     </div>

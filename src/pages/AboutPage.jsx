@@ -1,9 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Sparkles, Target, Users, Globe, Zap, Shield, Heart, ArrowRight, CheckCircle } from 'lucide-react';
+import { Sparkles, Target, Users, Globe, Zap, Shield, Heart, ArrowRight, CheckCircle, Mail, MapPin, Building, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
-
-
 
 const VALUES = [
   { icon: Target, title: 'Precision First', desc: 'We obsess over edge quality. Every pixel matters when your product photos need to be perfect.', color: 'var(--accent)' },
@@ -28,8 +26,8 @@ const STORY = [
 const AboutPage = () => (
   <div className="about-page">
     <Helmet>
-      <title>About Us — Snaplix AI</title>
-      <meta name="description" content="Learn about the team behind Snaplix AI and our mission to make AI-powered image editing accessible to everyone." />
+      <title>About Us — Snaplix AI | The Ultimate AI Photo Editing Platform</title>
+      <meta name="description" content="Discover the story behind Snaplix AI, our mission to democratize state-of-the-art AI photo editing, and how we are empowering businesses globally with automated background removal technology." />
     </Helmet>
 
     {/* Hero Section */}
@@ -39,18 +37,18 @@ const AboutPage = () => (
         <div className="hero-orb orb-secondary"></div>
       </div>
 
-      <div className="container hero-container">
-        <div className="hero-badge">
+      <div className="container hero-container text-center">
+        <div className="hero-badge animate-slide-up">
           <Globe size={14} /> Global Remote Team
         </div>
-        <h1 className="hero-title">
+        <h1 className="hero-title animate-slide-up delay-100">
           We're making pixel-perfect <br />
           <span className="gradient-text">editing effortless.</span>
         </h1>
-        <p className="hero-subtitle">
-          Snaplix AI was founded to democratize high-end graphic design. What used to take 15 minutes of careful masking in Photoshop now takes 3 seconds, entirely in your browser.
+        <p className="hero-subtitle animate-slide-up delay-200">
+          Snaplix AI was founded to democratize high-end graphic design. What used to take 15 minutes of careful masking in Photoshop now takes 3 seconds, entirely in your browser. Our vision is to empower creators, developers, and businesses to focus on what truly matters: creation, not tedious preparation.
         </p>
-        <div className="hero-actions">
+        <div className="hero-actions animate-slide-up delay-300">
           <Link to="/tool" className="btn btn-primary btn-xl hero-btn">
             Try the Tool Free <ArrowRight size={20} />
           </Link>
@@ -59,7 +57,7 @@ const AboutPage = () => (
     </section>
 
     {/* Floating Stats Bar */}
-    <section className="stats-section animate-slide-up">
+    <section className="stats-section animate-slide-up delay-300">
       <div className="container">
         <div className="stats-glass-panel">
           {STATS.map(({ value, label, icon: Icon }) => (
@@ -75,17 +73,59 @@ const AboutPage = () => (
       </div>
     </section>
 
+    {/* Massive SEO Content Block 1: Our Mission */}
+    <section className="content-section" style={{ background: 'var(--bg-primary)', padding: '6rem 0' }}>
+      <div className="container" style={{ maxWidth: '900px' }}>
+        <div className="content-block animate-slide-up">
+          <div className="block-label">Our Mission</div>
+          <h2 className="block-title">Artificial Intelligence for All</h2>
+          <div className="block-text">
+            <p>
+              The digital landscape is evolving at an unprecedented pace. With the recent development in Visual AI, we have developed a proprietary algorithm designed to make complicated tech simple, accessible, and remarkably easy to use. From independent freelancers and solo entrepreneurs to small local businesses and sprawling Fortune 500 companies, everyone is starting to notice the undeniable power of our automated background removal software.
+            </p>
+            <p>
+              We at Snaplix AI are not only revolutionizing the photo editing workflow to dramatically increase productivity, but we are also actively helping organizations and individuals to completely rethink design and photography in general. By eliminating the most tedious, repetitive aspects of graphic design—such as manually outlining complex subjects like hair, fur, or transparent glass—we unlock thousands of hours of creative potential.
+            </p>
+            <p>
+              Furthermore, we provide an enterprise-grade REST API so that other developers, agencies, and SaaS platforms can seamlessly integrate our background removal solution into their own ecosystems, effectively building top-notch products tailored for the AI era without having to reinvent the wheel.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* Massive SEO Content Block 2: Our Aim */}
+    <section className="content-section" style={{ background: 'var(--bg-secondary)', padding: '6rem 0', borderTop: '1px solid var(--border-color)', borderBottom: '1px solid var(--border-color)' }}>
+      <div className="container" style={{ maxWidth: '900px' }}>
+        <div className="content-block animate-slide-up">
+          <div className="block-label">Our Aim</div>
+          <h2 className="block-title">Powering Your Creative Ideas</h2>
+          <div className="block-text">
+            <p>
+              Snaplix AI stands as the best solution for automated background removal on the web today, offering unmatched accuracy and unparalleled pricing. Removing the background of an image has been a major bottleneck for e-commerce vendors, marketers, and photographers for a long time, but that is no longer the case. 
+            </p>
+            <p>
+              We are here to assist all designers—from novices using Canva to seasoned professionals in Adobe Photoshop—to produce amazing, high-converting art pieces and product listings without any worries about ragged edges or artificial-looking cutouts. We are deeply committed to providing professionals and large businesses with the infrastructure, stability, and support required to create a truly inspired, frictionless workflow at scale.
+            </p>
+            <p>
+              In addition to all that, Snaplix AI is here to channel raw computational power to developers globally, enabling them to build the apps, CRM systems, and e-commerce platforms of the next generation. Our products are meticulously engineered for the new digital world. Our AI provides the horsepower needed to excel in modern design and can be utilized by every single person and business online. The possibilities are truly endless with Snaplix AI.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     {/* Our Story / Timeline Layout */}
-    <section className="story-section">
-      <div className="container story-container">
-        <div className="story-header text-center">
+    <section className="story-section" style={{ padding: '8rem 0' }}>
+      <div className="container story-container" style={{ maxWidth: '800px', margin: '0 auto' }}>
+        <div className="story-header text-center" style={{ marginBottom: '4rem' }}>
           <h2 className="section-title">Our Story</h2>
-          <p className="section-subtitle">How a weekend hackathon project became a global tool.</p>
+          <p className="section-subtitle">How a weekend hackathon project became a globally recognized tool.</p>
         </div>
 
         <div className="timeline-container">
           {STORY.map((item, index) => (
-            <div key={item.year} className="timeline-item">
+            <div key={item.year} className="timeline-item animate-slide-up" style={{ animationDelay: `${index * 100}ms` }}>
               <div className="timeline-marker">
                 <div className="marker-dot"></div>
                 {index !== STORY.length - 1 && <div className="marker-line"></div>}
@@ -102,72 +142,25 @@ const AboutPage = () => (
     </section>
 
     {/* Values / Premium Grid */}
-    <section className="values-section">
+    <section className="values-section" style={{ background: 'var(--bg-secondary)', padding: '8rem 0', borderTop: '1px solid var(--border-color)' }}>
       <div className="container">
-        <div className="values-header text-center">
+        <div className="values-header text-center" style={{ marginBottom: '4rem' }}>
           <h2 className="section-title">Our Core Values</h2>
-          <p className="section-subtitle">The principles that guide every line of code we write.</p>
+          <p className="section-subtitle">The fundamental principles that guide every single line of code we write.</p>
         </div>
 
         <div className="values-grid">
-          {VALUES.map(({ icon: Icon, title, desc, color }) => (
-            <div key={title} className="value-card">
+          {VALUES.map(({ icon: Icon, title, desc, color }, index) => (
+            <div key={title} className="value-card animate-slide-up" style={{ animationDelay: `${index * 100}ms` }}>
               <div className="value-icon-wrapper" style={{ color: color, background: `${color}15`, borderColor: `${color}30` }}>
                 <Icon size={28} />
               </div>
               <div className="value-content">
-                <h3>{title}</h3>
-                <p>{desc}</p>
+                <h3 style={{ fontSize: '1.375rem', fontWeight: 800, marginBottom: '0.75rem', color: 'var(--text-primary)' }}>{title}</h3>
+                <p style={{ color: 'var(--text-secondary)', lineHeight: 1.6, fontSize: '1.0625rem' }}>{desc}</p>
               </div>
             </div>
           ))}
-        </div>
-      </div>
-    </section>
-
-    {/* Website Integrations / API Section */}
-    <section className="integrations-section">
-      <div className="container">
-        <div className="integrations-header text-center">
-          <h2 className="section-title">Integrate with Your Website</h2>
-          <p className="section-subtitle">Add instant background removal to your own platform with our simple REST API.</p>
-        </div>
-        
-        <div className="integrations-content">
-          <div className="code-window">
-            <div className="code-header">
-              <div className="dot red"></div>
-              <div className="dot yellow"></div>
-              <div className="dot green"></div>
-              <span className="code-title">POST /v1/remove-background</span>
-            </div>
-            <pre><code>{`fetch('https://api.snaplix.ai/v1/remove-background', {
-  method: 'POST',
-  headers: {
-    'X-API-Key': 'your_live_key',
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify({
-    image_url: 'https://example.com/product.jpg',
-    format: 'png',
-    bg_color: 'transparent'
-  })
-})
-.then(response => response.json())
-.then(data => console.log(data.result_url));`}</code></pre>
-          </div>
-          
-          <div className="integrations-text">
-            <h3>Developer-Friendly Architecture</h3>
-            <p>Our API is built for high-throughput enterprise applications. From e-commerce platforms to mobile apps, integration takes less than 5 minutes.</p>
-            <ul className="api-features">
-              <li><CheckCircle size={18} className="feature-check" /> <span>Webhook support for async processing</span></li>
-              <li><CheckCircle size={18} className="feature-check" /> <span>99.99% guaranteed uptime SLA</span></li>
-              <li><CheckCircle size={18} className="feature-check" /> <span>Automatic image resizing and compression</span></li>
-              <li><CheckCircle size={18} className="feature-check" /> <span>Multi-region global CDN delivery</span></li>
-            </ul>
-            <Link to="/pricing" className="btn btn-primary" style={{ marginTop: '1.5rem', padding: '1rem 2rem', borderRadius: '1rem' }}>Get API Key</Link>
-          </div>
         </div>
       </div>
     </section>
@@ -181,17 +174,19 @@ const AboutPage = () => (
 
       /* Typography Utilities */
       .section-title {
-        font-size: clamp(2rem, 4vw, 3rem);
+        font-size: clamp(2.5rem, 5vw, 3.5rem);
         font-weight: 900;
         margin-bottom: 1rem;
         letter-spacing: -0.02em;
+        color: var(--text-primary);
       }
       
       .section-subtitle {
-        font-size: 1.125rem;
+        font-size: 1.1875rem;
         color: var(--text-secondary);
         font-weight: 500;
-        margin-bottom: 4rem;
+        margin-bottom: 2rem;
+        line-height: 1.6;
       }
       
       .text-center { text-align: center; }
@@ -233,7 +228,8 @@ const AboutPage = () => (
       .hero-container {
         position: relative;
         z-index: 10;
-        max-width: 800px;
+        max-width: 900px;
+        margin: 0 auto;
       }
 
       .hero-badge {
@@ -259,6 +255,7 @@ const AboutPage = () => (
         margin-bottom: 1.5rem;
         font-weight: 900;
         letter-spacing: -0.03em;
+        color: var(--text-primary);
       }
 
       .hero-subtitle {
@@ -267,6 +264,14 @@ const AboutPage = () => (
         margin-bottom: 3rem;
         line-height: 1.6;
         font-weight: 500;
+        max-width: 750px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .hero-actions {
+        display: flex;
+        justify-content: center;
       }
 
       .hero-btn {
@@ -284,7 +289,6 @@ const AboutPage = () => (
         position: relative;
         z-index: 20;
         margin-top: -6rem;
-        padding-bottom: 6rem;
       }
 
       .stats-glass-panel {
@@ -343,23 +347,47 @@ const AboutPage = () => (
         letter-spacing: 0.1em;
       }
 
-      /* Story / Timeline Section */
-      .story-section {
-        padding: 6rem 0;
-        background: var(--bg-secondary);
-        border-top: 1px solid var(--border-color);
-        border-bottom: 1px solid var(--border-color);
+      /* Content Blocks */
+      .content-block {
+        background: transparent;
+      }
+      
+      .block-label {
+        font-size: 1rem;
+        font-weight: 800;
+        color: var(--accent);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 1rem;
       }
 
-      .story-container {
-        max-width: 800px;
+      .block-title {
+        font-size: clamp(2.25rem, 4vw, 3rem);
+        font-weight: 900;
+        margin-bottom: 2rem;
+        color: var(--text-primary);
+        line-height: 1.2;
+        letter-spacing: -0.02em;
       }
 
+      .block-text {
+        font-size: 1.1875rem;
+        color: var(--text-secondary);
+        line-height: 1.8;
+      }
+
+      .block-text p {
+        margin-bottom: 1.75rem;
+      }
+      .block-text p:last-child {
+        margin-bottom: 0;
+      }
+
+      /* Story / Timeline */
       .timeline-container {
         display: flex;
         flex-direction: column;
         gap: 0;
-        margin-top: 2rem;
       }
 
       .timeline-item {
@@ -402,15 +430,15 @@ const AboutPage = () => (
         font-size: 1.25rem;
         font-weight: 900;
         color: var(--accent);
-        margin-bottom: 0.5rem;
+        margin-bottom: 0.75rem;
         display: inline-block;
-        padding: 0.25rem 1rem;
+        padding: 0.25rem 1.25rem;
         background: var(--accent-light);
         border-radius: 100px;
       }
 
       .timeline-title {
-        font-size: 1.75rem;
+        font-size: 1.875rem;
         font-weight: 800;
         margin-bottom: 1rem;
         color: var(--text-primary);
@@ -422,11 +450,7 @@ const AboutPage = () => (
         line-height: 1.7;
       }
 
-      /* Values Section */
-      .values-section {
-        padding: 8rem 0;
-      }
-
+      /* Values Grid */
       .values-grid {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
@@ -436,7 +460,7 @@ const AboutPage = () => (
       .value-card {
         background: var(--bg-card);
         border: 1px solid var(--border-color);
-        padding: 2.5rem;
+        padding: 3rem;
         border-radius: 2rem;
         display: flex;
         gap: 1.5rem;
@@ -458,117 +482,10 @@ const AboutPage = () => (
         border: 1px solid;
       }
 
-      .value-content h3 {
-        font-size: 1.375rem;
-        font-weight: 800;
-        margin-bottom: 0.75rem;
-      }
-
-      .value-content p {
-        color: var(--text-secondary);
-        line-height: 1.6;
-        font-size: 1rem;
-      }
-
-      /* Integrations Section */
-      .integrations-section {
-        padding: 6rem 0 10rem;
-        background: var(--bg-secondary);
-        border-top: 1px solid var(--border-color);
-      }
-
-      .integrations-content {
-        display: grid;
-        grid-template-columns: 1.2fr 1fr;
-        gap: 4rem;
-        align-items: center;
-      }
-
-      .code-window {
-        background: #0f172a;
-        border-radius: 1.5rem;
-        overflow: hidden;
-        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-        border: 1px solid rgba(255,255,255,0.1);
-      }
-
-      .code-header {
-        background: #1e293b;
-        padding: 1rem 1.5rem;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        border-bottom: 1px solid rgba(255,255,255,0.05);
-      }
-
-      .dot { width: 12px; height: 12px; border-radius: 50%; }
-      .dot.red { background: #ef4444; }
-      .dot.yellow { background: #f59e0b; }
-      .dot.green { background: #10b981; }
-
-      .code-title {
-        color: #94a3b8;
-        font-family: monospace;
-        font-size: 0.875rem;
-        margin-left: 1rem;
-      }
-
-      .code-window pre {
-        margin: 0;
-        padding: 2rem;
-        overflow-x: auto;
-      }
-
-      .code-window code {
-        font-family: 'Fira Code', monospace;
-        font-size: 0.9375rem;
-        color: #38bdf8;
-        line-height: 1.6;
-      }
-
-      .integrations-text h3 {
-        font-size: 2rem;
-        font-weight: 900;
-        margin-bottom: 1.25rem;
-        color: var(--text-primary);
-        letter-spacing: -0.02em;
-      }
-
-      .integrations-text p {
-        font-size: 1.125rem;
-        color: var(--text-secondary);
-        line-height: 1.7;
-        margin-bottom: 2rem;
-      }
-
-      .api-features {
-        list-style: none;
-        padding: 0;
-        margin: 0 0 2rem;
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-      }
-
-      .api-features li {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        font-size: 1rem;
-        font-weight: 600;
-        color: var(--text-primary);
-      }
-
-      .feature-check {
-        color: var(--accent);
-        flex-shrink: 0;
-      }
-
       /* Responsive Design */
       @media (max-width: 1024px) {
         .stats-glass-panel { grid-template-columns: repeat(2, 1fr); }
         .values-grid { grid-template-columns: 1fr; }
-        .integrations-content { grid-template-columns: 1fr; gap: 3rem; }
       }
 
       @media (max-width: 768px) {
@@ -577,8 +494,6 @@ const AboutPage = () => (
         .stats-glass-panel { grid-template-columns: 1fr; gap: 3rem; }
         .timeline-item { gap: 1.5rem; }
         .value-card { flex-direction: column; align-items: center; text-align: center; }
-        .code-window pre { padding: 1.5rem; font-size: 0.8rem; }
-        .integrations-text h3 { font-size: 1.75rem; }
       }
     `}</style>
   </div>

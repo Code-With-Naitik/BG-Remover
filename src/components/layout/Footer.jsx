@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Sparkles, ArrowUp, Mail, CheckCircle } from 'lucide-react';
+import { Sparkles, Mail, CheckCircle } from 'lucide-react';
 
 const TwitterIcon = ({ size = 16 }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
@@ -66,7 +66,7 @@ const Footer = () => {
     if (email.trim()) { setSubscribed(true); setEmail(''); }
   };
 
-  const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+
 
   return (
     <footer style={{ background: 'var(--bg-secondary)', borderTop: '1px solid var(--border-color)', marginTop: 'auto', position: 'relative', overflow: 'hidden' }}>
@@ -76,50 +76,7 @@ const Footer = () => {
       {/* Subtle background decoration */}
       <div style={{ position: 'absolute', bottom: 0, right: '-5%', width: '35vw', height: '35vw', background: 'radial-gradient(circle, var(--accent-light) 0%, transparent 65%)', filter: 'blur(80px)', pointerEvents: 'none', opacity: 0.5 }} />
 
-      <div className="container" style={{ position: 'relative', zIndex: 1 }}>
-
-        {/* ── Newsletter Banner ── */}
-        <div style={{
-          display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '2rem', flexWrap: 'wrap',
-          padding: '2.5rem 2.5rem', margin: '3rem 0',
-          background: 'var(--bg-card)', borderRadius: '20px',
-          border: '1px solid var(--border-color)',
-          boxShadow: 'var(--shadow-sm)',
-        }}>
-          <div style={{ maxWidth: '420px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.4rem' }}>
-              <Mail size={18} color="var(--accent)" />
-              <span style={{ fontWeight: 800, fontSize: '1.0625rem', color: 'var(--text-primary)' }}>Stay in the loop</span>
-            </div>
-            <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', margin: 0, lineHeight: 1.6 }}>
-              Get tips, new features, and exclusive offers delivered to your inbox. No spam, ever.
-            </p>
-          </div>
-          {subscribed ? (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#10B981', fontWeight: 700, fontSize: '0.9375rem' }}>
-              <CheckCircle size={20} /> You're subscribed! 🎉
-            </div>
-          ) : (
-            <form onSubmit={handleSubscribe} style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
-              <input
-                type="email" required placeholder="Enter your email"
-                value={email} onChange={e => setEmail(e.target.value)}
-                style={{
-                  padding: '0.7rem 1.25rem', borderRadius: '12px', border: '1.5px solid var(--border-color)',
-                  background: 'var(--bg-primary)', color: 'var(--text-primary)', fontSize: '0.9375rem',
-                  outline: 'none', minWidth: '240px', fontFamily: 'inherit',
-                  transition: 'border-color 0.2s',
-                }}
-                onFocus={e => e.target.style.borderColor = 'var(--accent)'}
-                onBlur={e => e.target.style.borderColor = 'var(--border-color)'}
-              />
-              <button type="submit" className="btn btn-primary" style={{ borderRadius: '12px', padding: '0.7rem 1.5rem', fontWeight: 700, whiteSpace: 'nowrap' }}>
-                Subscribe
-              </button>
-            </form>
-          )}
-        </div>
-
+      <div className="container" style={{ position: 'relative', zIndex: 1, paddingTop: '4rem' }}>
         {/* ── Main Link Grid ── */}
         <div style={{ display: 'grid', gridTemplateColumns: '1.5fr repeat(4, 1fr)', gap: '2.5rem 3rem', marginBottom: '3rem' }}>
 
@@ -184,15 +141,6 @@ const Footer = () => {
               <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#10B981', display: 'inline-block', boxShadow: '0 0 6px #10B981' }} />
               99.9% Uptime
             </span>
-            <span style={{ color: 'var(--border-color)' }}>|</span>
-            <button onClick={scrollToTop}
-              style={{ width: '36px', height: '36px', borderRadius: '10px', background: 'var(--bg-card)', border: '1px solid var(--border-color)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-secondary)', cursor: 'pointer', transition: 'all 0.2s' }}
-              onMouseEnter={e => { e.currentTarget.style.background = 'var(--accent)'; e.currentTarget.style.color = '#fff'; e.currentTarget.style.borderColor = 'var(--accent)'; }}
-              onMouseLeave={e => { e.currentTarget.style.background = 'var(--bg-card)'; e.currentTarget.style.color = 'var(--text-secondary)'; e.currentTarget.style.borderColor = 'var(--border-color)'; }}
-              aria-label="Back to top"
-            >
-              <ArrowUp size={15} />
-            </button>
           </div>
         </div>
       </div>

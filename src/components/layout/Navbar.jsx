@@ -12,8 +12,11 @@ const NAV_LINKS = [
 
 const FEATURE_LINKS = [
   { to: '/tool', label: '✂️ Remove Background', desc: 'One-click AI background removal' },
+<<<<<<< HEAD
   { to: '/tool', label: '🔍 HD Quality', desc: 'Full resolution transparent PNGs' },
   { to: '/tool', label: '⚡ Instant Results', desc: 'Background removed in under 3s' },
+=======
+>>>>>>> ff6b109db6e0b35b906720cc9e2e15da16b58e31
   { to: '/pricing', label: '💎 Pricing Plans', desc: 'Free plan + premium upgrades' },
 ];
 
@@ -176,9 +179,15 @@ const Navbar = () => {
           {/* Actions */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.625rem' }}>
             {/* Remove BG Prominent Button */}
+<<<<<<< HEAD
             <Link to="/tool" className="hide-mobile btn btn-gradient btn-sm" style={{ borderRadius: '10px', padding: '0.55rem 1.1rem', fontSize: '0.875rem', fontWeight: 700 }}>
               ✂️ Remove BG
             </Link>
+=======
+            {/* <Link to="/tool" className="hide-mobile btn btn-gradient btn-sm" style={{ borderRadius: '10px', padding: '0.55rem 1.1rem', fontSize: '0.875rem', fontWeight: 700 }}>
+              ✂️ Remove BG
+            </Link> */}
+>>>>>>> ff6b109db6e0b35b906720cc9e2e15da16b58e31
             {/* Theme Toggle */}
             <button
               onClick={toggleTheme}
@@ -216,21 +225,28 @@ const Navbar = () => {
                 {isProfileOpen && (
                   <div className="profile-dropdown glass animate-fade-in">
                     <div className="dropdown-header">
-                      <p className="user-name-display">{user.name}</p>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.125rem' }}>
+                        <p className="user-name-display" style={{ margin: 0 }}>{user.name}</p>
+                        {user.role === 'admin' && (
+                          <span style={{ fontSize: '0.65rem', fontWeight: 800, background: 'var(--accent-light)', color: 'var(--accent)', padding: '0.1rem 0.4rem', borderRadius: '4px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                            Admin
+                          </span>
+                        )}
+                      </div>
                       <p className="user-email-display">{user.email}</p>
                     </div>
 
                     <div className="dropdown-divider"></div>
 
                     <div className="dropdown-links">
-                      {user.role === 'admin' && (
+                      {/* {user.role === 'admin' && (
                         <Link to="/admin" className="dropdown-item">
                           <div className="item-icon bg-purple-50 text-purple-600">
                             <ShieldCheck size={16} />
                           </div>
                           <span>Admin Panel</span>
                         </Link>
-                      )}
+                      )} */}
                       <Link to="/dashboard" className="dropdown-item">
                         <div className="item-icon bg-indigo-50 text-indigo-600">
                           <LayoutDashboard size={16} />
@@ -356,6 +372,11 @@ const Navbar = () => {
           )}
           {user && (
             <div style={{ marginTop: '0.75rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+              {user.role === 'admin' && (
+                <Link to="/admin" className="btn btn-outline" style={{ width: '100%', borderColor: 'var(--accent)', color: 'var(--accent)' }}>
+                  Admin Panel
+                </Link>
+              )}
               <Link to="/dashboard" className="btn btn-secondary" style={{ width: '100%' }}>
                 Dashboard
               </Link>

@@ -128,8 +128,18 @@ const AdminGalleryManager = () => {
   // ── Fetch gallery ──
   const fetchItems = async () => {
     try {
+<<<<<<< HEAD
       const res = await axios.get(`${API_URL}/gallery`);
       setItems(res.data.data || []);
+=======
+      if (token === 'mock_token') {
+        const mockGallery = JSON.parse(localStorage.getItem('mock_gallery')) || [];
+        setItems(mockGallery);
+      } else {
+        const res = await axios.get(`${API_URL}/gallery`);
+        setItems(res.data.data || []);
+      }
+>>>>>>> ff6b109db6e0b35b906720cc9e2e15da16b58e31
     } catch {
       toast.error('Failed to load gallery');
     } finally {
@@ -137,6 +147,7 @@ const AdminGalleryManager = () => {
     }
   };
 
+<<<<<<< HEAD
   useEffect(() => { fetchItems(); }, []);
 
   // ── Upload a single image file, return URL ──
@@ -144,6 +155,23 @@ const AdminGalleryManager = () => {
     const formData = new FormData();
     formData.append(field, file);
 
+=======
+  useEffect(() => { fetchItems(); }, [token]);
+
+  // ── Upload a single image file, return URL ──
+  const uploadImage = async (file, field) => {
+    if (token === 'mock_token') {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result);
+        reader.readAsDataURL(file);
+      });
+    }
+
+    const formData = new FormData();
+    formData.append(field, file);
+
+>>>>>>> ff6b109db6e0b35b906720cc9e2e15da16b58e31
     const res = await axios.post(`${API_URL}/gallery/upload-images`, formData, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -235,6 +263,7 @@ const AdminGalleryManager = () => {
     };
 
     try {
+<<<<<<< HEAD
       if (currentItem) {
         await axios.put(`${API_URL}/gallery/${currentItem._id}`, payload, {
           headers: { Authorization: `Bearer ${token}` },
@@ -245,6 +274,34 @@ const AdminGalleryManager = () => {
           headers: { Authorization: `Bearer ${token}` },
         });
         toast.success('Gallery item added!');
+=======
+      if (token === 'mock_token') {
+        let mockGallery = JSON.parse(localStorage.getItem('mock_gallery')) || [];
+        if (currentItem) {
+          mockGallery = mockGallery.map(item => item._id === currentItem._id ? { ...item, ...payload } : item);
+          toast.success('Gallery item updated! (Mock)');
+        } else {
+          mockGallery.push({ _id: Date.now().toString(), ...payload });
+          toast.success('Gallery item added! (Mock)');
+        }
+        try {
+          localStorage.setItem('mock_gallery', JSON.stringify(mockGallery));
+        } catch (e) {
+          toast.error('Local storage quota exceeded. Images may be too large.');
+        }
+      } else {
+        if (currentItem) {
+          await axios.put(`${API_URL}/gallery/${currentItem._id}`, payload, {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          toast.success('Gallery item updated!');
+        } else {
+          await axios.post(`${API_URL}/gallery`, payload, {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          toast.success('Gallery item added!');
+        }
+>>>>>>> ff6b109db6e0b35b906720cc9e2e15da16b58e31
       }
       await fetchItems();
       resetForm();
@@ -259,10 +316,24 @@ const AdminGalleryManager = () => {
   const handleDelete = async (id) => {
     if (!window.confirm('Delete this gallery item?')) return;
     try {
+<<<<<<< HEAD
       await axios.delete(`${API_URL}/gallery/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       toast.success('Deleted successfully');
+=======
+      if (token === 'mock_token') {
+        const mockGallery = JSON.parse(localStorage.getItem('mock_gallery')) || [];
+        const newGallery = mockGallery.filter(item => item._id !== id);
+        localStorage.setItem('mock_gallery', JSON.stringify(newGallery));
+        toast.success('Deleted successfully (Mock)');
+      } else {
+        await axios.delete(`${API_URL}/gallery/${id}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        toast.success('Deleted successfully');
+      }
+>>>>>>> ff6b109db6e0b35b906720cc9e2e15da16b58e31
       fetchItems();
     } catch {
       toast.error('Delete failed');

@@ -66,11 +66,37 @@ export const useImageProcessor = () => {
         const reader = new FileReader();
         reader.readAsDataURL(response.data);
         reader.onloadend = () => {
-          const id = saveToHistory(localUrl, reader.result);
+          const processedBase64 = reader.result;
+          const id = saveToHistory(localUrl, processedBase64);
           setCurrentHistoryId(id);
+          
+          // Auto-save to mock_gallery for Admin demo
+          try {
+             const originalReader = new FileReader();
+             originalReader.readAsDataURL(fileList[0]);
+             originalReader.onloadend = () => {
+                const originalBase64 = originalReader.result;
+                const mockGallery = JSON.parse(localStorage.getItem('mock_gallery')) || [];
+                mockGallery.push({
+                   _id: Date.now().toString(),
+                   title: 'Auto ' + Date.now().toString().slice(-4),
+                   category: 'People',
+                   beforeImage: originalBase64,
+                   afterImage: processedBase64,
+                   order: 0
+                });
+                try {
+                  localStorage.setItem('mock_gallery', JSON.stringify(mockGallery));
+                } catch(quotaErr) {
+                  console.warn('Local storage full, cannot save to mock gallery');
+                }
+             }
+          } catch(e) {
+             console.error('Failed to save to mock gallery', e);
+          }
         };
 
-        toast.success('Background removed!');
+        toast.success('Background removed! Saved to Gallery.');
       }
     } catch (err) {
       console.error('Image Processing Error:', err);
@@ -80,10 +106,25 @@ export const useImageProcessor = () => {
         try {
           const text = await err.response.data.text();
           const errorJson = JSON.parse(text);
-          if (errorJson.error) errorMessage = errorJson.error;
+          // Handle both {error: "..."} and {code: "...", message: "..."} shapes
+          if (typeof errorJson.error === 'string') {
+            errorMessage = errorJson.error;
+          } else if (typeof errorJson.message === 'string') {
+            errorMessage = errorJson.message;
+          } else if (typeof errorJson.error === 'object' && errorJson.error !== null) {
+            // Prevent object being passed as React child
+            errorMessage = errorJson.error.message || JSON.stringify(errorJson.error);
+          }
         } catch (e) { /* use default */ }
-      } else if (err.message) {
+      } else if (err.response && err.response.status === 500) {
+        errorMessage = 'Server error during image processing. Please try again.';
+      } else if (err.message && typeof err.message === 'string') {
         errorMessage = err.message;
+      }
+
+      // Final safety: ensure errorMessage is always a plain string
+      if (typeof errorMessage !== 'string') {
+        errorMessage = 'An unexpected error occurred. Please try again.';
       }
 
       setError(errorMessage);

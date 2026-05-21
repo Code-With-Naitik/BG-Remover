@@ -1,24 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { BLOG_POSTS } from '../data/blogData';
 import { Calendar, ArrowRight, Search, Clock } from 'lucide-react';
 
 const getReadingTime = (content) => {
+  if (!content) return '1 min read';
   const words = content.replace(/<[^>]*>?/gm, '').split(/\s+/).length;
   return Math.max(1, Math.ceil(words / 200)) + ' min read';
 };
 
-const CATEGORIES = ['All', ...Array.from(new Set(BLOG_POSTS.map(p => p.category)))];
-
 const BlogListPage = () => {
+  const [blogs, setBlogs] = useState(BLOG_POSTS);
   const [activeCategory, setActiveCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
 
-  const filteredPosts = BLOG_POSTS.filter(post => {
-    const matchesCategory = activeCategory === 'All' || post.category === activeCategory;
-    const matchesSearch = post.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                          post.description.toLowerCase().includes(searchQuery.toLowerCase());
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem('mock_blogs');
+      if (stored) {
+        setBlogs(JSON.parse(stored).filter(b => b.published));
+      }
+    } catch (e) {
+      console.error('Error loading mock blogs', e);
+    }
+  }, []);
+
+  const categories = ['All', ...Array.from(new Set(blogs.map(p => (p.tags && p.tags.length > 0) ? p.tags[0] : p.category).filter(Boolean)))];
+
+  const filteredPosts = blogs.filter(post => {
+    const postCategory = (post.tags && post.tags.length > 0) ? post.tags[0] : post.category;
+    const matchesCategory = activeCategory === 'All' || postCategory === activeCategory;
+    const matchesSearch = post.title?.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                          post.description?.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
   });
 
@@ -75,7 +89,7 @@ const BlogListPage = () => {
 
             {/* Categories */}
             <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', justifyContent: 'center' }}>
-              {CATEGORIES.map(cat => (
+              {categories.map(cat => (
                 <button 
                   key={cat} 
                   onClick={() => setActiveCategory(cat)}
@@ -110,11 +124,11 @@ const BlogListPage = () => {
                 style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '0', background: 'var(--bg-card)', borderRadius: '32px', border: '1px solid var(--border-color)', overflow: 'hidden', boxShadow: 'var(--shadow-lg)' }}
               >
                 <Link to={`/blog/${featuredPost.slug}`} style={{ display: 'block', overflow: 'hidden', minHeight: '350px' }}>
-                  <img src={featuredPost.image} alt={featuredPost.title} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)' }} onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.05)'} onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'} />
+                  <img src={featuredPost.featuredImage || featuredPost.image} alt={featuredPost.title} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)' }} onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.05)'} onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'} />
                 </Link>
                 <div style={{ padding: '3.5rem 3rem', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                   <div style={{ display: 'flex', gap: '1rem', marginBottom: '1.25rem' }}>
-                    <span style={{ fontSize: '0.875rem', fontWeight: 800, color: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{featuredPost.category}</span>
+                    <span style={{ fontSize: '0.875rem', fontWeight: 800, color: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{(featuredPost.tags && featuredPost.tags[0]) || featuredPost.category}</span>
                   </div>
                   <h2 style={{ fontSize: '2rem', fontWeight: 900, marginBottom: '1.25rem', lineHeight: 1.2 }}>
                     <Link to={`/blog/${featuredPost.slug}`} style={{ color: 'var(--text-primary)', textDecoration: 'none' }} onMouseEnter={e => e.currentTarget.style.color = 'var(--accent)'} onMouseLeave={e => e.currentTarget.style.color = 'var(--text-primary)'}>
@@ -126,7 +140,7 @@ const BlogListPage = () => {
                   </p>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 'auto', paddingTop: '2rem', borderTop: '1px solid var(--border-color)' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', fontSize: '0.9375rem', color: 'var(--text-muted)', fontWeight: 600 }}>
-                      <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><Calendar size={16} /> {new Date(featuredPost.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+                      <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><Calendar size={16} /> {new Date(featuredPost.createdAt || featuredPost.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
                       <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><Clock size={16} /> {getReadingTime(featuredPost.content)}</span>
                     </div>
                     <Link to={`/blog/${featuredPost.slug}`} className="btn btn-primary" style={{ padding: '0.75rem 1.5rem', borderRadius: '12px', fontWeight: 700 }}>
@@ -149,11 +163,11 @@ const BlogListPage = () => {
                 {regularPosts.map((post) => (
                   <article key={post.slug} className="card-hover" style={{ display: 'flex', flexDirection: 'column', height: '100%', background: 'var(--bg-card)', borderRadius: '24px', border: '1px solid var(--border-color)', overflow: 'hidden' }}>
                     <Link to={`/blog/${post.slug}`} style={{ display: 'block', height: '220px', overflow: 'hidden' }}>
-                      <img src={post.image} alt={post.title} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.6s' }} onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.05)'} onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'} />
+                      <img src={post.featuredImage || post.image} alt={post.title} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.6s' }} onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.05)'} onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'} />
                     </Link>
                     <div style={{ padding: '2rem', display: 'flex', flexDirection: 'column', flex: 1 }}>
                       <div style={{ display: 'flex', gap: '1rem', marginBottom: '1rem', fontSize: '0.75rem', fontWeight: 800, color: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                        <span>{post.category}</span>
+                        <span>{(post.tags && post.tags[0]) || post.category}</span>
                       </div>
                       <h2 style={{ fontSize: '1.375rem', fontWeight: 800, marginBottom: '1rem', lineHeight: 1.3 }}>
                         <Link to={`/blog/${post.slug}`} style={{ color: 'var(--text-primary)', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={e => e.currentTarget.style.color = 'var(--accent)'} onMouseLeave={e => e.currentTarget.style.color = 'var(--text-primary)'}>
@@ -165,7 +179,7 @@ const BlogListPage = () => {
                       </p>
                       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 'auto', paddingTop: '1.5rem', borderTop: '1px solid var(--border-color)' }}>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem', fontSize: '0.8125rem', color: 'var(--text-muted)', fontWeight: 600 }}>
-                          <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><Calendar size={13} /> {new Date(post.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+                          <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><Calendar size={13} /> {new Date(post.createdAt || post.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
                           <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><Clock size={13} /> {getReadingTime(post.content)}</span>
                         </div>
                         <Link to={`/blog/${post.slug}`} className="btn btn-ghost" style={{ width: '40px', height: '40px', padding: 0, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid var(--border-color)' }}>
