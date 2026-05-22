@@ -39,6 +39,8 @@ export const useImageProcessor = () => {
         headers: token ? { Authorization: `Bearer ${token}` } : {}
       });
 
+      const isFallback = response.headers && response.headers['x-fallback-processed'] === 'true';
+
       // Handle JSON response (Batch or Error)
       if (response.data.type === 'application/json') {
         const text = await response.data.text();
@@ -57,7 +59,20 @@ export const useImageProcessor = () => {
         });
         setCurrentHistoryId(firstId);
         setProcessedImage(results[0].data);
-        toast.success(`${results.length} images processed!`);
+
+        if (isFallback) {
+          toast('⚠️ Using low-quality fallback. API keys are depleted of credits.', {
+            duration: 7000,
+            icon: '⚠️',
+            style: {
+              border: '1px solid #F59E0B',
+              padding: '16px',
+              color: '#D97706',
+            }
+          });
+        } else {
+          toast.success(`${results.length} images processed!`);
+        }
       } else {
         // Handle Image Blob (Single result)
         const processedUrl = URL.createObjectURL(response.data);
@@ -69,34 +84,46 @@ export const useImageProcessor = () => {
           const processedBase64 = reader.result;
           const id = saveToHistory(localUrl, processedBase64);
           setCurrentHistoryId(id);
-          
+
           // Auto-save to mock_gallery for Admin demo
           try {
-             const originalReader = new FileReader();
-             originalReader.readAsDataURL(fileList[0]);
-             originalReader.onloadend = () => {
-                const originalBase64 = originalReader.result;
-                const mockGallery = JSON.parse(localStorage.getItem('mock_gallery')) || [];
-                mockGallery.push({
-                   _id: Date.now().toString(),
-                   title: 'Auto ' + Date.now().toString().slice(-4),
-                   category: 'People',
-                   beforeImage: originalBase64,
-                   afterImage: processedBase64,
-                   order: 0
-                });
-                try {
-                  localStorage.setItem('mock_gallery', JSON.stringify(mockGallery));
-                } catch(quotaErr) {
-                  console.warn('Local storage full, cannot save to mock gallery');
-                }
-             }
-          } catch(e) {
-             console.error('Failed to save to mock gallery', e);
+            const originalReader = new FileReader();
+            originalReader.readAsDataURL(fileList[0]);
+            originalReader.onloadend = () => {
+              const originalBase64 = originalReader.result;
+              const mockGallery = JSON.parse(localStorage.getItem('mock_gallery')) || [];
+              mockGallery.push({
+                _id: Date.now().toString(),
+                title: 'Auto ' + Date.now().toString().slice(-4),
+                category: 'People',
+                beforeImage: originalBase64,
+                afterImage: processedBase64,
+                order: 0
+              });
+              try {
+                localStorage.setItem('mock_gallery', JSON.stringify(mockGallery));
+              } catch (quotaErr) {
+                console.warn('Local storage full, cannot save to mock gallery');
+              }
+            }
+          } catch (e) {
+            console.error('Failed to save to mock gallery', e);
           }
         };
 
-        toast.success('Background removed! Saved to Gallery.');
+        if (isFallback) {
+          toast('⚠️ Using low-quality fallback. API keys are depleted of credits.', {
+            duration: 7000,
+            icon: '⚠️',
+            style: {
+              border: '1px solid #F59E0B',
+              padding: '16px',
+              color: '#D97706',
+            }
+          });
+        } else {
+          toast.success('Background removed! Saved to Gallery.');
+        }
       }
     } catch (err) {
       console.error('Image Processing Error:', err);
