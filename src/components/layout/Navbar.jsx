@@ -12,11 +12,8 @@ const NAV_LINKS = [
 
 const FEATURE_LINKS = [
   { to: '/tool', label: '✂️ Remove Background', desc: 'One-click AI background removal' },
-<<<<<<< HEAD
   { to: '/tool', label: '🔍 HD Quality', desc: 'Full resolution transparent PNGs' },
   { to: '/tool', label: '⚡ Instant Results', desc: 'Background removed in under 3s' },
-=======
->>>>>>> ff6b109db6e0b35b906720cc9e2e15da16b58e31
   { to: '/pricing', label: '💎 Pricing Plans', desc: 'Free plan + premium upgrades' },
 ];
 
@@ -179,15 +176,9 @@ const Navbar = () => {
           {/* Actions */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.625rem' }}>
             {/* Remove BG Prominent Button */}
-<<<<<<< HEAD
             <Link to="/tool" className="hide-mobile btn btn-gradient btn-sm" style={{ borderRadius: '10px', padding: '0.55rem 1.1rem', fontSize: '0.875rem', fontWeight: 700 }}>
               ✂️ Remove BG
             </Link>
-=======
-            {/* <Link to="/tool" className="hide-mobile btn btn-gradient btn-sm" style={{ borderRadius: '10px', padding: '0.55rem 1.1rem', fontSize: '0.875rem', fontWeight: 700 }}>
-              ✂️ Remove BG
-            </Link> */}
->>>>>>> ff6b109db6e0b35b906720cc9e2e15da16b58e31
             {/* Theme Toggle */}
             <button
               onClick={toggleTheme}
