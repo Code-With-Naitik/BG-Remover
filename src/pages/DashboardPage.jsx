@@ -89,6 +89,7 @@ const DashboardPage = () => {
           <button 
             className="sidebar-close lg:hidden"
             onClick={() => setIsSidebarOpen(false)}
+            aria-label="Close sidebar"
           >
             <X size={24} />
           </button>
@@ -139,7 +140,7 @@ const DashboardPage = () => {
               <span className="user-name">{user.name.split(' ')[0]}</span>
               <span className="user-plan">{user.isPremium ? 'Pro' : 'Free'} Plan</span>
             </div>
-            <button onClick={logout} className="logout-btn-minimal" title="Logout">
+            <button onClick={logout} className="logout-btn-minimal" title="Logout" aria-label="Logout">
               <LogOut size={18} />
             </button>
           </div>
@@ -154,6 +155,7 @@ const DashboardPage = () => {
             <button 
               className="menu-toggle lg:hidden"
               onClick={() => setIsSidebarOpen(true)}
+              aria-label="Open sidebar menu"
             >
               <Menu size={24} />
             </button>
@@ -163,7 +165,7 @@ const DashboardPage = () => {
             </div>
           </div>
           <div className="header-actions">
-            <button className="icon-btn">
+            <button className="icon-btn" aria-label="View notifications">
               <Bell size={20} />
               <span className="notification-dot"></span>
             </button>
@@ -262,15 +264,15 @@ const DashboardPage = () => {
                       }}>
                         <img src={item.url} alt={item.name} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                         <div className="preview-overlay">
-                          <button className="preview-btn"><Download size={16} /></button>
-                          <button className="preview-btn"><ExternalLink size={16} /></button>
+                          <button className="preview-btn" aria-label="Download image"><Download size={16} /></button>
+                          <button className="preview-btn" aria-label="View image details"><ExternalLink size={16} /></button>
                         </div>
                       </div>
                       <div className="work-details" style={{ padding: '0.25rem 0' }}>
                         <span className="work-name" style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--text-primary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', display: 'block', marginBottom: '0.25rem' }}>{item.name}</span>
                         <span className="work-meta" style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{item.time} • {item.size}</span>
                       </div>
-                      <button className="work-more"><MoreVertical size={16} /></button>
+                      <button className="work-more" aria-label="More options"><MoreVertical size={16} /></button>
                     </div>
                   ))}
                 </div>
@@ -417,7 +419,7 @@ const DashboardPage = () => {
 
         .nav-item.active {
           background: var(--accent-light);
-          color: var(--accent);
+          color: var(--accent-dark);
         }
 
         .sidebar-footer {
@@ -707,7 +709,7 @@ const DashboardPage = () => {
           gap: 0.5rem;
           font-size: 0.875rem;
           font-weight: 700;
-          color: var(--accent);
+          color: var(--accent-dark);
           text-decoration: none;
         }
 
@@ -722,7 +724,7 @@ const DashboardPage = () => {
           text-transform: uppercase;
         }
 
-        .stat-badge.success { background: var(--emerald-light); color: var(--emerald); }
+        .stat-badge.success { background: rgba(16, 185, 129, 0.1); color: var(--success-dark); }
 
         /* Content Grid */
         .content-grid {
@@ -756,7 +758,7 @@ const DashboardPage = () => {
         .text-btn {
           background: none;
           border: none;
-          color: var(--accent);
+          color: var(--accent-dark);
           font-weight: 700;
           font-size: 0.875rem;
           cursor: pointer;

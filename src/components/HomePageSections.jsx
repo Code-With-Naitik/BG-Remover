@@ -38,7 +38,7 @@ export const AnnouncementBanner = () => {
     <div style={{ background: 'linear-gradient(90deg,#2563EB 0%,#06B6D4 100%)', color: '#fff', padding: '0.55rem 1rem', textAlign: 'center', fontSize: '0.875rem', fontWeight: 600, position: 'relative', zIndex: 90 }}>
       <span style={{ opacity: 0.92 }}>{text} </span>
       <Link to={href} style={{ color: '#fff', fontWeight: 800, textDecoration: 'underline', textUnderlineOffset: '3px' }}>{cta} →</Link>
-      <button onClick={() => setVisible(false)} style={{ position: 'absolute', right: '1rem', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', color: 'rgba(255,255,255,0.75)', cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
+      <button onClick={() => setVisible(false)} aria-label="Dismiss announcement" style={{ position: 'absolute', right: '1rem', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', color: 'rgba(255,255,255,0.75)', cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
         <X size={15} />
       </button>
     </div>
@@ -290,17 +290,17 @@ export const BeforeAfterSection = ({ gallery = [] }) => {
 
 /* ─── AI FEATURES SECTION ────────────────────────────────── */
 const AI_FEATS = [
-  { badge: 'AI Background', title: 'Replace Backgrounds Instantly', desc: 'Professional studios cost $$$. Our AI generates realistic backgrounds in seconds — no fancy gear needed.', img: '/ai_bg_replace.png', color: '#2563EB', bg: 'linear-gradient(135deg,#eff6ff,#dbeafe)' },
-  { badge: 'AI Enhance', title: 'Fix Blurry & Dull Photos', desc: 'Blurry selfies? Dull colors? One click fixes it all. 90% of users say their photos look professionally edited.', img: '/ai_photo_enhance.png', color: '#8B5CF6', bg: 'linear-gradient(135deg,#f5f3ff,#ede9fe)' },
-  { badge: 'AI Shadow', title: 'Realistic Product Shadows', desc: 'Natural-looking shadows make products POP. Boost your Shopify conversions with pro-quality visuals in seconds.', img: '/ai_product_shadow.png', color: '#06B6D4', bg: 'linear-gradient(135deg,#ecfeff,#cffafe)' },
-  { badge: 'HD Download', title: 'Crystal-Clear HD Output', desc: 'Download pixel-perfect transparent PNGs at full resolution. No compression, no watermarks, ready for anything.', img: '/ai_hd_output.png', color: '#10B981', bg: 'linear-gradient(135deg,#ecfdf5,#d1fae5)' },
+  { badge: 'AI Background', title: 'Replace Backgrounds Instantly', desc: 'Professional studios cost $$$. Our AI generates realistic backgrounds in seconds — no fancy gear needed.', img: '/ai_bg_replace.png', color: '#2563EB', colorDark: 'var(--accent-dark)', textColor: '#ffffff', bg: 'linear-gradient(135deg,#eff6ff,#dbeafe)' },
+  { badge: 'AI Enhance', title: 'Fix Blurry & Dull Photos', desc: 'Blurry selfies? Dull colors? One click fixes it all. 90% of users say their photos look professionally edited.', img: '/ai_photo_enhance.png', color: '#8B5CF6', colorDark: 'var(--purple-dark)', textColor: '#ffffff', bg: 'linear-gradient(135deg,#f5f3ff,#ede9fe)' },
+  { badge: 'AI Shadow', title: 'Realistic Product Shadows', desc: 'Natural-looking shadows make products POP. Boost your Shopify conversions with pro-quality visuals in seconds.', img: '/ai_product_shadow.png', color: '#06B6D4', colorDark: 'var(--cyan-dark)', textColor: '#111827', bg: 'linear-gradient(135deg,#ecfeff,#cffafe)' },
+  { badge: 'HD Download', title: 'Crystal-Clear HD Output', desc: 'Download pixel-perfect transparent PNGs at full resolution. No compression, no watermarks, ready for anything.', img: '/ai_hd_output.png', color: '#10B981', colorDark: 'var(--success-dark)', textColor: '#111827', bg: 'linear-gradient(135deg,#ecfdf5,#d1fae5)' },
 ];
 
 export const AIFeaturesSection = () => (
   <section style={{ padding: '7rem 0', background: 'var(--bg-primary)' }}>
     <div className="container">
       <div style={{ textAlign: 'center', marginBottom: '4.5rem' }}>
-        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(37,99,235,0.08)', padding: '0.4rem 1.1rem', borderRadius: '100px', color: '#2563EB', fontWeight: 700, fontSize: '0.8rem', marginBottom: '1rem', textTransform: 'uppercase', letterSpacing: '0.08em' }}>⚡ Powerful AI Tools</div>
+        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(37,99,235,0.08)', padding: '0.4rem 1.1rem', borderRadius: '100px', color: 'var(--accent-dark)', fontWeight: 700, fontSize: '0.8rem', marginBottom: '1rem', textTransform: 'uppercase', letterSpacing: '0.08em' }}>⚡ Powerful AI Tools</div>
         <h2 style={{ fontSize: 'clamp(1.875rem,4vw,3rem)', fontWeight: 900, color: 'var(--text-primary)', letterSpacing: '-0.03em', marginBottom: '0.75rem' }}>More Than Background Removal</h2>
         <p style={{ color: 'var(--text-secondary)', fontSize: '1.0625rem', maxWidth: '520px', margin: '0 auto', lineHeight: 1.7 }}>A full suite of AI tools to take your images to the next level.</p>
       </div>
@@ -310,11 +310,11 @@ export const AIFeaturesSection = () => (
           <div key={f.badge} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem', alignItems: 'center' }}>
             {/* Text — swap order on odd rows */}
             <div style={{ order: i % 2 === 0 ? 1 : 2 }}>
-              <span style={{ display: 'inline-block', background: `${f.color}18`, color: f.color, border: `1px solid ${f.color}30`, padding: '0.3rem 1rem', borderRadius: '100px', fontSize: '0.8rem', fontWeight: 800, marginBottom: '1.25rem' }}>{f.badge}</span>
+              <span style={{ display: 'inline-block', background: `${f.color}18`, color: f.colorDark, border: `1px solid ${f.color}30`, padding: '0.3rem 1rem', borderRadius: '100px', fontSize: '0.8rem', fontWeight: 800, marginBottom: '1.25rem' }}>{f.badge}</span>
               <h3 style={{ fontSize: 'clamp(1.5rem,3vw,2.25rem)', fontWeight: 900, color: 'var(--text-primary)', marginBottom: '1rem', letterSpacing: '-0.02em' }}>{f.title}</h3>
               <p style={{ color: 'var(--text-secondary)', fontSize: '1.0625rem', lineHeight: 1.75, marginBottom: '1.75rem' }}>{f.desc}</p>
               <Link to="/tool"
-                style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: f.color, color: '#fff', padding: '0.875rem 1.75rem', borderRadius: '12px', fontWeight: 700, fontSize: '0.9375rem', textDecoration: 'none', transition: 'all 0.25s', boxShadow: `0 8px 24px ${f.color}35` }}
+                style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: f.color, color: f.textColor || '#fff', padding: '0.875rem 1.75rem', borderRadius: '12px', fontWeight: 700, fontSize: '0.9375rem', textDecoration: 'none', transition: 'all 0.25s', boxShadow: `0 8px 24px ${f.color}35` }}
                 onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = `0 14px 32px ${f.color}55`; }}
                 onMouseLeave={e => { e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = `0 8px 24px ${f.color}35`; }}
               >Try {f.badge} <ArrowRight size={16} /></Link>
@@ -335,17 +335,17 @@ export const AIFeaturesSection = () => (
 
 /* ─── USE-CASE TABS ──────────────────────────────────────── */
 const CASES = [
-  { Icon: Users, label: 'Individuals', color: '#2563EB', desc: 'Perfect your selfies and portraits in seconds. Snap, upload, and share — our AI handles the rest automatically.' },
-  { Icon: Camera, label: 'Photographers', color: '#8B5CF6', desc: 'Batch process hundreds of images instantly. Remove backgrounds, fix shadows, and refine details without slowing your shoot.' },
-  { Icon: Megaphone, label: 'Marketers', color: '#EC4899', desc: 'Produce on-brand visuals at scale. Convert raw product shots into polished, campaign-ready images in seconds.' },
-  { Icon: Code2, label: 'Developers', color: '#06B6D4', desc: 'Integrate our REST API with a few lines of code and automate background removal for thousands of images at scale.' },
-  { Icon: ShoppingCart, label: 'Ecommerce', color: '#10B981', desc: 'Transform product photos into crisp, conversion-boosting visuals. Bulk-edit your entire catalog with one click.' },
-  { Icon: Building2, label: 'Enterprise', color: '#F59E0B', desc: 'Scale across your entire organization. Bulk process thousands of photos via API, on-premise, or custom solution.' },
+  { Icon: Users, label: 'Individuals', color: '#2563EB', textColor: '#ffffff', desc: 'Perfect your selfies and portraits in seconds. Snap, upload, and share — our AI handles the rest automatically.' },
+  { Icon: Camera, label: 'Photographers', color: '#8B5CF6', textColor: '#ffffff', desc: 'Batch process hundreds of images instantly. Remove backgrounds, fix shadows, and refine details without slowing your shoot.' },
+  { Icon: Megaphone, label: 'Marketers', color: '#EC4899', textColor: '#ffffff', desc: 'Produce on-brand visuals at scale. Convert raw product shots into polished, campaign-ready images in seconds.' },
+  { Icon: Code2, label: 'Developers', color: '#06B6D4', textColor: '#111827', desc: 'Integrate our REST API with a few lines of code and automate background removal for thousands of images at scale.' },
+  { Icon: ShoppingCart, label: 'Ecommerce', color: '#10B981', textColor: '#111827', desc: 'Transform product photos into crisp, conversion-boosting visuals. Bulk-edit your entire catalog with one click.' },
+  { Icon: Building2, label: 'Enterprise', color: '#F59E0B', textColor: '#111827', desc: 'Scale across your entire organization. Bulk process thousands of photos via API, on-premise, or custom solution.' },
 ];
 
 export const UseCaseTabs = () => {
   const [active, setActive] = useState(0);
-  const { Icon, label, color, desc } = CASES[active];
+  const { Icon, label, color, textColor, desc } = CASES[active];
 
   return (
     <section style={{ padding: '7rem 0', background: 'var(--bg-secondary)' }}>
@@ -357,8 +357,8 @@ export const UseCaseTabs = () => {
 
         {/* Tab pills */}
         <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '2.5rem' }}>
-          {CASES.map(({ Icon: Ic, label: lbl, color: col }, i) => (
-            <button key={lbl} onClick={() => setActive(i)} style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', padding: '0.6rem 1.25rem', borderRadius: '100px', background: active === i ? col : 'var(--bg-card)', color: active === i ? '#fff' : 'var(--text-secondary)', border: active === i ? 'none' : '1px solid var(--border-color)', fontWeight: 700, fontSize: '0.875rem', cursor: 'pointer', transition: 'all 0.25s', boxShadow: active === i ? `0 6px 20px ${col}40` : 'none' }}>
+          {CASES.map(({ Icon: Ic, label: lbl, color: col, textColor: tc }, i) => (
+            <button key={lbl} onClick={() => setActive(i)} style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', padding: '0.6rem 1.25rem', borderRadius: '100px', background: active === i ? col : 'var(--bg-card)', color: active === i ? tc : 'var(--text-secondary)', border: active === i ? 'none' : '1px solid var(--border-color)', fontWeight: 700, fontSize: '0.875rem', cursor: 'pointer', transition: 'all 0.25s', boxShadow: active === i ? `0 6px 20px ${col}40` : 'none' }}>
               <Ic size={14} /> {lbl}
             </button>
           ))}
@@ -372,7 +372,7 @@ export const UseCaseTabs = () => {
           <h3 style={{ fontSize: '1.625rem', fontWeight: 900, color: 'var(--text-primary)', marginBottom: '1rem' }}>{label}</h3>
           <p style={{ color: 'var(--text-secondary)', fontSize: '1.0625rem', lineHeight: 1.75, marginBottom: '2rem' }}>{desc}</p>
           <Link to="/tool"
-            style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: color, color: '#fff', padding: '0.875rem 2rem', borderRadius: '12px', fontWeight: 700, fontSize: '0.9375rem', textDecoration: 'none', transition: 'all 0.25s', boxShadow: `0 8px 24px ${color}35` }}
+            style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: color, color: textColor || '#fff', padding: '0.875rem 2rem', borderRadius: '12px', fontWeight: 700, fontSize: '0.9375rem', textDecoration: 'none', transition: 'all 0.25s', boxShadow: `0 8px 24px ${color}35` }}
             onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; }}
             onMouseLeave={e => { e.currentTarget.style.transform = ''; }}
           >

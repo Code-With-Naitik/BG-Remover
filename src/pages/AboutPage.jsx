@@ -355,7 +355,7 @@ const AboutPage = () => (
       .block-label {
         font-size: 1rem;
         font-weight: 800;
-        color: var(--accent);
+        color: var(--accent-dark);
         text-transform: uppercase;
         letter-spacing: 0.1em;
         margin-bottom: 1rem;
@@ -429,7 +429,7 @@ const AboutPage = () => (
       .timeline-year {
         font-size: 1.25rem;
         font-weight: 900;
-        color: var(--accent);
+        color: var(--accent-dark);
         margin-bottom: 0.75rem;
         display: inline-block;
         padding: 0.25rem 1.25rem;

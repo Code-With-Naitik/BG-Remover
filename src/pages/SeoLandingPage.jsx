@@ -366,7 +366,7 @@ const SeoLandingPage = ({ title, keyword }) => {
                 <details key={q} className="card" style={{ padding: '1.25rem 1.5rem', cursor: 'pointer' }}>
                   <summary style={{ fontWeight: 600, fontSize: '1rem', listStyle: 'none', display: 'flex', justifyContent: 'space-between', gap: '1rem' }}>
                     {q}
-                    <span style={{ color: 'var(--accent)', fontSize: '1.25rem', flexShrink: 0 }}>+</span>
+                    <span style={{ color: 'var(--accent-dark)', fontSize: '1.25rem', flexShrink: 0 }}>+</span>
                   </summary>
                   <p style={{ marginTop: '0.875rem', color: 'var(--text-secondary)', lineHeight: 1.7, fontSize: '0.9375rem' }}>{a}</p>
                 </details>

@@ -278,7 +278,7 @@ const LoginPage = () => {
 
         .forgot-link {
           font-size: 0.75rem; font-weight: 700;
-          color: var(--accent); text-decoration: none;
+          color: var(--accent-dark); text-decoration: none;
         }
 
         .checkbox-container {
@@ -306,7 +306,7 @@ const LoginPage = () => {
           margin: 1.5rem 0;
         }
 
-        .auth-footer a { color: var(--accent); font-weight: 800; text-decoration: none; }
+        .auth-footer a { color: var(--accent-dark); font-weight: 800; text-decoration: none; }
 
         .auth-trust {
           padding-top: 1.25rem;

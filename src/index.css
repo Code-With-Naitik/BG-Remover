@@ -31,6 +31,12 @@
   --warning: #F59E0B;
   --danger: #EF4444;
 
+  /* High Contrast Colors for Light Mode Badges (WCAG AA Compliant) */
+  --accent-dark: #1E40AF;
+  --success-dark: #065F46;
+  --purple-dark: #6B21A8;
+  --cyan-dark: #155E75;
+
   /* Premium SaaS Shadows */
   --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.06);
@@ -89,6 +95,12 @@
 
   --glass-bg: rgba(17, 24, 39, 0.85);
   --glass-border: rgba(255, 255, 255, 0.1);
+
+  /* High Contrast Colors for Dark Mode Badges */
+  --accent-dark: #93C5FD;
+  --success-dark: #A7F3D0;
+  --purple-dark: #E9D5FF;
+  --cyan-dark: #99F6E4;
 }
 
 /* ── Reset ── */

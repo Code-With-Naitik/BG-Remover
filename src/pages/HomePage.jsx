@@ -146,7 +146,7 @@ const UploadZone = () => {
 
       <div className="container" style={{ maxWidth: '860px', position: 'relative', zIndex: 1 }}>
         <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'var(--accent-light)', padding: '0.4rem 1.1rem', borderRadius: '100px', color: 'var(--accent)', fontWeight: 700, fontSize: '0.8rem', marginBottom: '1.25rem', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'var(--accent-light)', padding: '0.4rem 1.1rem', borderRadius: '100px', color: 'var(--accent-dark)', fontWeight: 700, fontSize: '0.8rem', marginBottom: '1.25rem', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
             <UploadCloud size={14} /> Upload & Remove
           </div>
           <h2 style={{ fontSize: 'clamp(2rem, 4vw, 2.75rem)', fontWeight: 900, marginBottom: '0.75rem', color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>
@@ -211,7 +211,7 @@ const UploadZone = () => {
                 </div>
               </div>
               <div>
-                <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', background: 'rgba(16,185,129,0.12)', color: '#10B981', padding: '0.3rem 0.85rem', borderRadius: '100px', fontSize: '0.8rem', fontWeight: 700, marginBottom: '1rem' }}>
+                <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', background: 'rgba(16,185,129,0.12)', color: 'var(--success-dark)', padding: '0.3rem 0.85rem', borderRadius: '100px', fontSize: '0.8rem', fontWeight: 700, marginBottom: '1rem' }}>
                   <CheckCircle size={13} /> Image Ready
                 </div>
                 <h4 style={{ fontSize: '1.125rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '0.35rem', wordBreak: 'break-all' }}>{fileInfo?.name}</h4>
@@ -329,7 +329,7 @@ const HomePage = () => {
             {/* Left Content: Value Prop & Primary CTA */}
             <div className="animate-slide-up hero-content">
               {/* "New" Badge */}
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(37,99,235,0.08)', padding: '0.45rem 1rem', borderRadius: '100px', color: '#2563EB', fontWeight: 800, fontSize: '0.75rem', marginBottom: '1.75rem', textTransform: 'uppercase', letterSpacing: '0.08em', border: '1px solid rgba(37,99,235,0.15)' }}>
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(37,99,235,0.08)', padding: '0.45rem 1rem', borderRadius: '100px', color: 'var(--accent-dark)', fontWeight: 800, fontSize: '0.75rem', marginBottom: '1.75rem', textTransform: 'uppercase', letterSpacing: '0.08em', border: '1px solid rgba(37,99,235,0.15)' }}>
                 <Sparkles size={14} fill="currentColor" /> Powered by Advanced AI
               </div>
 
@@ -497,7 +497,7 @@ const HomePage = () => {
         <div className="container" style={{ position: 'relative', zIndex: 1 }}>
           {/* Section Header */}
           <div style={{ textAlign: 'center', marginBottom: '5rem' }}>
-            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'var(--accent-light)', padding: '0.5rem 1.25rem', borderRadius: '100px', color: 'var(--accent)', fontWeight: 700, fontSize: '0.8125rem', marginBottom: '1.5rem', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'var(--accent-light)', padding: '0.5rem 1.25rem', borderRadius: '100px', color: 'var(--accent-dark)', fontWeight: 700, fontSize: '0.8125rem', marginBottom: '1.5rem', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
               <Sparkles size={14} /> Simple 3-Step Process
             </div>
             <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 900, marginBottom: '1.25rem', letterSpacing: '-0.02em', color: 'var(--text-primary)' }}>
@@ -521,12 +521,12 @@ const HomePage = () => {
               <div style={{ width: '72px', height: '72px', borderRadius: '50%', background: 'var(--accent-gradient)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '2rem', boxShadow: '0 8px 24px rgba(37,99,235,0.35)' }}>
                 <UploadCloud size={32} color="#fff" />
               </div>
-              <div style={{ position: 'absolute', top: '2rem', right: '2rem', fontSize: '4rem', fontWeight: 900, color: 'var(--border-color)', lineHeight: 1, fontFamily: 'Plus Jakarta Sans, sans-serif' }}>01</div>
+              <div aria-hidden="true" style={{ position: 'absolute', top: '2rem', right: '2rem', fontSize: '4rem', fontWeight: 900, color: 'var(--text-muted)', opacity: 0.15, lineHeight: 1, fontFamily: 'Plus Jakarta Sans, sans-serif' }}>01</div>
               <h3 style={{ fontSize: '1.375rem', fontWeight: 800, marginBottom: '0.75rem', color: 'var(--text-primary)' }}>Upload Your Image</h3>
               <p style={{ color: 'var(--text-secondary)', lineHeight: 1.65, fontSize: '0.9875rem', margin: 0 }}>
                 Drag & drop or click to upload any JPG, PNG, or WebP image. Supports up to 25MP resolution for crystal-clear results.
               </p>
-              <div style={{ marginTop: '1.5rem', display: 'inline-flex', alignItems: 'center', gap: '0.5rem', color: 'var(--accent)', fontWeight: 700, fontSize: '0.875rem' }}>
+              <div style={{ marginTop: '1.5rem', display: 'inline-flex', alignItems: 'center', gap: '0.5rem', color: 'var(--accent-dark)', fontWeight: 700, fontSize: '0.875rem' }}>
                 <CheckCircle size={16} /> JPG, PNG, WebP supported
               </div>
             </div>
@@ -538,12 +538,12 @@ const HomePage = () => {
               <div style={{ width: '72px', height: '72px', borderRadius: '50%', background: 'linear-gradient(135deg, #8B5CF6 0%, #06B6D4 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '2rem', boxShadow: '0 8px 24px rgba(139,92,246,0.35)' }}>
                 <Zap size={32} color="#fff" />
               </div>
-              <div style={{ position: 'absolute', top: '2rem', right: '2rem', fontSize: '4rem', fontWeight: 900, color: 'var(--border-color)', lineHeight: 1, fontFamily: 'Plus Jakarta Sans, sans-serif' }}>02</div>
+              <div aria-hidden="true" style={{ position: 'absolute', top: '2rem', right: '2rem', fontSize: '4rem', fontWeight: 900, color: 'var(--text-muted)', opacity: 0.15, lineHeight: 1, fontFamily: 'Plus Jakarta Sans, sans-serif' }}>02</div>
               <h3 style={{ fontSize: '1.375rem', fontWeight: 800, marginBottom: '0.75rem', color: 'var(--text-primary)' }}>AI Removes Background</h3>
               <p style={{ color: 'var(--text-secondary)', lineHeight: 1.65, fontSize: '0.9875rem', margin: 0 }}>
                 Our neural network detects every strand of hair, fur, and fine edge — delivering a flawless cutout in under 3 seconds.
               </p>
-              <div style={{ marginTop: '1.5rem', display: 'inline-flex', alignItems: 'center', gap: '0.5rem', color: '#8B5CF6', fontWeight: 700, fontSize: '0.875rem' }}>
+              <div style={{ marginTop: '1.5rem', display: 'inline-flex', alignItems: 'center', gap: '0.5rem', color: 'var(--purple-dark)', fontWeight: 700, fontSize: '0.875rem' }}>
                 <Zap size={16} /> Processing in &lt;3 seconds
               </div>
             </div>
@@ -555,12 +555,12 @@ const HomePage = () => {
               <div style={{ width: '72px', height: '72px', borderRadius: '50%', background: 'linear-gradient(135deg, #10B981 0%, #06B6D4 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '2rem', boxShadow: '0 8px 24px rgba(16,185,129,0.35)' }}>
                 <Download size={32} color="#fff" />
               </div>
-              <div style={{ position: 'absolute', top: '2rem', right: '2rem', fontSize: '4rem', fontWeight: 900, color: 'var(--border-color)', lineHeight: 1, fontFamily: 'Plus Jakarta Sans, sans-serif' }}>03</div>
+              <div aria-hidden="true" style={{ position: 'absolute', top: '2rem', right: '2rem', fontSize: '4rem', fontWeight: 900, color: 'var(--text-muted)', opacity: 0.15, lineHeight: 1, fontFamily: 'Plus Jakarta Sans, sans-serif' }}>03</div>
               <h3 style={{ fontSize: '1.375rem', fontWeight: 800, marginBottom: '0.75rem', color: 'var(--text-primary)' }}>Download & Use</h3>
               <p style={{ color: 'var(--text-secondary)', lineHeight: 1.65, fontSize: '0.9875rem', margin: 0 }}>
                 Download your transparent PNG instantly. Use it for e-commerce, social media, presentations, or any creative project.
               </p>
-              <div style={{ marginTop: '1.5rem', display: 'inline-flex', alignItems: 'center', gap: '0.5rem', color: '#10B981', fontWeight: 700, fontSize: '0.875rem' }}>
+              <div style={{ marginTop: '1.5rem', display: 'inline-flex', alignItems: 'center', gap: '0.5rem', color: 'var(--success-dark)', fontWeight: 700, fontSize: '0.875rem' }}>
                 <Download size={16} /> Free HD PNG download
               </div>
             </div>
@@ -588,7 +588,7 @@ const HomePage = () => {
           {/* Section Header */}
           <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', alignItems: 'flex-end', gap: '2rem', marginBottom: '4rem' }}>
             <div>
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'var(--accent-light)', padding: '0.4rem 1rem', borderRadius: '100px', color: 'var(--accent)', fontWeight: 700, fontSize: '0.8rem', marginBottom: '1rem', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'var(--accent-light)', padding: '0.4rem 1rem', borderRadius: '100px', color: 'var(--accent-dark)', fontWeight: 700, fontSize: '0.8rem', marginBottom: '1rem', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
                 <Star size={13} fill="currentColor" /> Why Snaplix AI
               </div>
               <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 900, letterSpacing: '-0.02em', color: 'var(--text-primary)', marginBottom: '0.75rem' }}>

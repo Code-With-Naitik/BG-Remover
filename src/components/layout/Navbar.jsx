@@ -130,7 +130,7 @@ const Navbar = () => {
             <div style={{ position: 'relative' }} ref={featuresRef}>
               <button
                 onClick={() => setFeaturesOpen(o => !o)}
-                style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', padding: '0.5rem 0.875rem', borderRadius: 'var(--radius-full)', fontSize: '0.9375rem', fontWeight: 500, color: featuresOpen ? 'var(--accent)' : 'var(--text-secondary)', background: featuresOpen ? 'var(--accent-light)' : 'transparent', border: 'none', cursor: 'pointer', transition: 'all 0.2s' }}
+                style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', padding: '0.5rem 0.875rem', borderRadius: 'var(--radius-full)', fontSize: '0.9375rem', fontWeight: 500, color: featuresOpen ? 'var(--accent-dark)' : 'var(--text-secondary)', background: featuresOpen ? 'var(--accent-light)' : 'transparent', border: 'none', cursor: 'pointer', transition: 'all 0.2s' }}
               >
                 Features <ChevronDown size={14} style={{ transition: 'transform 0.2s', transform: featuresOpen ? 'rotate(180deg)' : 'rotate(0deg)' }} />
               </button>
@@ -162,7 +162,7 @@ const Navbar = () => {
                   borderRadius: 'var(--radius-full)',
                   fontSize: '0.9375rem',
                   fontWeight: 500,
-                  color: isActive(to) ? 'var(--accent)' : 'var(--text-secondary)',
+                  color: isActive(to) ? 'var(--accent-dark)' : 'var(--text-secondary)',
                   background: isActive(to) ? 'var(--accent-light)' : 'transparent',
                   transition: 'all 0.2s',
                   textDecoration: 'none',
@@ -220,7 +220,7 @@ const Navbar = () => {
                       <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.125rem' }}>
                         <p className="user-name-display" style={{ margin: 0 }}>{user.name}</p>
                         {user.role === 'admin' && (
-                          <span style={{ fontSize: '0.65rem', fontWeight: 800, background: 'var(--accent-light)', color: 'var(--accent)', padding: '0.1rem 0.4rem', borderRadius: '4px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                          <span style={{ fontSize: '0.65rem', fontWeight: 800, background: 'var(--accent-light)', color: 'var(--accent-dark)', padding: '0.1rem 0.4rem', borderRadius: '4px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                             Admin
                           </span>
                         )}
@@ -344,7 +344,7 @@ const Navbar = () => {
                 borderRadius: 'var(--radius-md)',
                 fontWeight: 500,
                 fontSize: '1rem',
-                color: isActive(to) ? 'var(--accent)' : 'var(--text-primary)',
+                color: isActive(to) ? 'var(--accent-dark)' : 'var(--text-primary)',
                 background: isActive(to) ? 'var(--accent-light)' : 'transparent',
                 textDecoration: 'none',
                 marginBottom: '0.25rem',

@@ -569,7 +569,7 @@ const PricingPage = () => {
           display: inline-block;
           padding: 0.4rem 1.25rem;
           background: var(--bg-secondary);
-          color: var(--accent);
+          color: var(--accent-dark);
           border: 1px solid var(--border-color);
           border-radius: 100px;
           font-size: 0.8125rem;

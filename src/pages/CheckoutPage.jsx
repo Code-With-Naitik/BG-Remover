@@ -31,9 +31,31 @@ const CheckoutPage = () => {
 
   const selectedPlan = planDetails[planId] || planDetails.monthly;
 
+  const loadScript = (src) => {
+    return new Promise((resolve) => {
+      if (document.querySelector(`script[src="${src}"]`)) {
+        return resolve(true);
+      }
+      const script = document.createElement('script');
+      script.src = src;
+      script.onload = () => resolve(true);
+      script.onerror = () => resolve(false);
+      document.body.appendChild(script);
+    });
+  };
+
   const handlePayment = async () => {
     try {
       setIsProcessing(true);
+
+      // Load Razorpay dynamically
+      if (!window.Razorpay) {
+        const loaded = await loadScript('https://checkout.razorpay.com/v1/checkout.js');
+        if (!loaded) {
+          toast.error('Failed to load payment gateway. Please check your internet connection.');
+          return;
+        }
+      }
 
       // 1. Create Order on Backend
       const { data: orderData } = await axios.post(`${API_URL}/payment/create-order`, 
