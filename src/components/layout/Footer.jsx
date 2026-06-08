@@ -91,7 +91,7 @@ const Footer = () => {
               </span>
             </Link>
 
-            <p style={{ color: 'var(--text-secondary)', fontSize: '0.9375rem', lineHeight: 1.75, marginBottom: '1.75rem', maxWidth: '280px' }}>
+            <p style={{ color: 'var(--text-secondary-on-gray)', fontSize: '0.9375rem', lineHeight: 1.75, marginBottom: '1.75rem', maxWidth: '280px' }}>
               The fastest AI background remover on the web. Pixel-perfect transparent PNGs in seconds — no sign‑up required.
             </p>
 
@@ -99,9 +99,9 @@ const Footer = () => {
             <div style={{ display: 'flex', gap: '0.625rem' }}>
               {SOCIALS.map(({ Icon, label }) => (
                 <a key={label} href="#" aria-label={label}
-                  style={{ width: '38px', height: '38px', borderRadius: '10px', background: 'var(--bg-primary)', border: '1px solid var(--border-color)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-secondary)', transition: 'all 0.2s', textDecoration: 'none' }}
+                  style={{ width: '38px', height: '38px', borderRadius: '10px', background: 'var(--bg-primary)', border: '1px solid var(--border-color)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-secondary-on-gray)', transition: 'all 0.2s', textDecoration: 'none' }}
                   onMouseEnter={e => { e.currentTarget.style.background = 'var(--accent-light)'; e.currentTarget.style.color = 'var(--accent)'; e.currentTarget.style.borderColor = 'var(--accent)'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
-                  onMouseLeave={e => { e.currentTarget.style.background = 'var(--bg-primary)'; e.currentTarget.style.color = 'var(--text-secondary)'; e.currentTarget.style.borderColor = 'var(--border-color)'; e.currentTarget.style.transform = 'translateY(0)'; }}
+                  onMouseLeave={e => { e.currentTarget.style.background = 'var(--bg-primary)'; e.currentTarget.style.color = 'var(--text-secondary-on-gray)'; e.currentTarget.style.borderColor = 'var(--border-color)'; e.currentTarget.style.transform = 'translateY(0)'; }}
                 >
                   <Icon size={15} />
                 </a>
@@ -118,9 +118,9 @@ const Footer = () => {
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                 {links.map(({ label, to }) => (
                   <Link key={label} to={to}
-                    style={{ color: 'var(--text-secondary)', fontSize: '0.9375rem', textDecoration: 'none', fontWeight: 500, transition: 'all 0.2s', display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}
+                    style={{ color: 'var(--text-secondary-on-gray)', fontSize: '0.9375rem', textDecoration: 'none', fontWeight: 500, transition: 'all 0.2s', display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}
                     onMouseEnter={e => { e.currentTarget.style.color = 'var(--accent)'; e.currentTarget.style.paddingLeft = '4px'; }}
-                    onMouseLeave={e => { e.currentTarget.style.color = 'var(--text-secondary)'; e.currentTarget.style.paddingLeft = '0'; }}
+                    onMouseLeave={e => { e.currentTarget.style.color = 'var(--text-secondary-on-gray)'; e.currentTarget.style.paddingLeft = '0'; }}
                   >
                     {label}
                   </Link>
@@ -132,12 +132,12 @@ const Footer = () => {
 
         {/* ── Bottom Bar ── */}
         <div style={{ borderTop: '1px solid var(--border-color)', paddingTop: '1.5rem', paddingBottom: '2rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
-          <p style={{ color: 'var(--text-muted)', fontSize: '0.875rem', margin: 0 }}>
-            © {new Date().getFullYear()} <strong style={{ color: 'var(--text-secondary)' }}>Snaplix AI</strong>. All rights reserved. Built with ❤️ for creators worldwide.
+          <p style={{ color: 'var(--text-muted-on-gray)', fontSize: '0.875rem', margin: 0 }}>
+            © {new Date().getFullYear()} <strong style={{ color: 'var(--text-secondary-on-gray)' }}>Snaplix AI</strong>. All rights reserved. Built with ❤️ for creators worldwide.
           </p>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
-            <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.8125rem', color: 'var(--text-muted)', fontWeight: 600 }}>
+            <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.8125rem', color: 'var(--text-muted-on-gray)', fontWeight: 600 }}>
               <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#10B981', display: 'inline-block', boxShadow: '0 0 6px #10B981' }} />
               99.9% Uptime
             </span>

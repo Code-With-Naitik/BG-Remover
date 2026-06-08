@@ -13,6 +13,11 @@ export default defineConfig({
     },
   },
   build: {
+    modulePreload: {
+      resolveDependencies: (filename, deps, { hostId }) => {
+        return [];
+      }
+    },
     rollupOptions: {
       output: {
         manualChunks(id) {

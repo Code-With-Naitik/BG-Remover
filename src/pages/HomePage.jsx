@@ -93,7 +93,7 @@ const StatItem = ({ target, suffix, label, isDecimal }) => {
       <div style={{ fontSize: '2.25rem', fontWeight: 900, color: 'var(--text-primary)', marginBottom: '0.25rem', fontFamily: 'Plus Jakarta Sans, sans-serif' }}>
         {display}{suffix}
       </div>
-      <div style={{ fontSize: '0.875rem', color: 'var(--text-muted)', fontWeight: 600 }}>{label}</div>
+      <div style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', fontWeight: 600 }}>{label}</div>
     </div>
   );
 };
@@ -193,9 +193,9 @@ const UploadZone = () => {
               </p>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '2rem' }}>
                 {['JPG', 'PNG', 'WebP', 'GIF'].map(f => (
-                  <span key={f} style={{ padding: '0.3rem 0.85rem', background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', borderRadius: '100px', fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-secondary)' }}>{f}</span>
+                  <span key={f} style={{ padding: '0.3rem 0.85rem', background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', borderRadius: '100px', fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-primary)' }}>{f}</span>
                 ))}
-                <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', fontWeight: 500 }}>· Max 20MB</span>
+                <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', fontWeight: 500 }}>· Max 20MB</span>
               </div>
               <button className="btn btn-gradient btn-xl" style={{ borderRadius: '16px', padding: '1rem 3rem', fontSize: '1.0625rem', pointerEvents: 'none' }}>
                 <UploadCloud size={20} /> Choose Image
@@ -521,7 +521,7 @@ const HomePage = () => {
               <div style={{ width: '72px', height: '72px', borderRadius: '50%', background: 'var(--accent-gradient)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '2rem', boxShadow: '0 8px 24px rgba(37,99,235,0.35)' }}>
                 <UploadCloud size={32} color="#fff" />
               </div>
-              <div aria-hidden="true" style={{ position: 'absolute', top: '2rem', right: '2rem', fontSize: '4rem', fontWeight: 900, color: 'var(--text-muted)', opacity: 0.15, lineHeight: 1, fontFamily: 'Plus Jakarta Sans, sans-serif' }}>01</div>
+              <div aria-hidden="true" style={{ position: 'absolute', top: '2rem', right: '2rem', width: '80px', height: '80px', pointerEvents: 'none', backgroundImage: 'url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPSc4MCcgaGVpZ2h0PSc4MCc+PHRleHQgeD0nNTAlJyB5PSc1NSUnIGRvbWluYW50LWJhc2VsaW5lPSdtaWRkbGUnIHRleHQtYW5jaG9yPSdtaWRkbGUnIGZvbnQtc2l6ZT0nNjQnIGZvbnQtd2VpZ2h0PSc5MDAnIGZpbGw9J3JnYmEoMTU2LDE2MywxNzUsMC4xNSknIGZvbnQtZmFtaWx5PSdzYW5zLXNlcmlmJz4wMTwvdGV4dD48L3N2Zz4=")', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }} />
               <h3 style={{ fontSize: '1.375rem', fontWeight: 800, marginBottom: '0.75rem', color: 'var(--text-primary)' }}>Upload Your Image</h3>
               <p style={{ color: 'var(--text-secondary)', lineHeight: 1.65, fontSize: '0.9875rem', margin: 0 }}>
                 Drag & drop or click to upload any JPG, PNG, or WebP image. Supports up to 25MP resolution for crystal-clear results.
@@ -538,7 +538,7 @@ const HomePage = () => {
               <div style={{ width: '72px', height: '72px', borderRadius: '50%', background: 'linear-gradient(135deg, #8B5CF6 0%, #06B6D4 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '2rem', boxShadow: '0 8px 24px rgba(139,92,246,0.35)' }}>
                 <Zap size={32} color="#fff" />
               </div>
-              <div aria-hidden="true" style={{ position: 'absolute', top: '2rem', right: '2rem', fontSize: '4rem', fontWeight: 900, color: 'var(--text-muted)', opacity: 0.15, lineHeight: 1, fontFamily: 'Plus Jakarta Sans, sans-serif' }}>02</div>
+              <div aria-hidden="true" style={{ position: 'absolute', top: '2rem', right: '2rem', width: '80px', height: '80px', pointerEvents: 'none', backgroundImage: 'url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPSc4MCcgaGVpZ2h0PSc4MCc+PHRleHQgeD0nNTAlJyB5PSc1NSUnIGRvbWluYW50LWJhc2VsaW5lPSdtaWRkbGUnIHRleHQtYW5jaG9yPSdtaWRkbGUnIGZvbnQtc2l6ZT0nNjQnIGZvbnQtd2VpZ2h0PSc5MDAnIGZpbGw9J3JnYmEoMTU2LDE2MywxNzUsMC4xNSknIGZvbnQtZmFtaWx5PSdzYW5zLXNlcmlmJz4wMjwvdGV4dD48L3N2Zz4=")', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }} />
               <h3 style={{ fontSize: '1.375rem', fontWeight: 800, marginBottom: '0.75rem', color: 'var(--text-primary)' }}>AI Removes Background</h3>
               <p style={{ color: 'var(--text-secondary)', lineHeight: 1.65, fontSize: '0.9875rem', margin: 0 }}>
                 Our neural network detects every strand of hair, fur, and fine edge — delivering a flawless cutout in under 3 seconds.
@@ -555,7 +555,7 @@ const HomePage = () => {
               <div style={{ width: '72px', height: '72px', borderRadius: '50%', background: 'linear-gradient(135deg, #10B981 0%, #06B6D4 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '2rem', boxShadow: '0 8px 24px rgba(16,185,129,0.35)' }}>
                 <Download size={32} color="#fff" />
               </div>
-              <div aria-hidden="true" style={{ position: 'absolute', top: '2rem', right: '2rem', fontSize: '4rem', fontWeight: 900, color: 'var(--text-muted)', opacity: 0.15, lineHeight: 1, fontFamily: 'Plus Jakarta Sans, sans-serif' }}>03</div>
+              <div aria-hidden="true" style={{ position: 'absolute', top: '2rem', right: '2rem', width: '80px', height: '80px', pointerEvents: 'none', backgroundImage: 'url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPSc4MCcgaGVpZ2h0PSc4MCc+PHRleHQgeD0nNTAlJyB5PSc1NSUnIGRvbWluYW50LWJhc2VsaW5lPSdtaWRkbGUnIHRleHQtYW5jaG9yPSdtaWRkbGUnIGZvbnQtc2l6ZT0nNjQnIGZvbnQtd2VpZ2h0PSc5MDAnIGZpbGw9J3JnYmEoMTU2LDE2MywxNzUsMC4xNSknIGZvbnQtZmFtaWx5PSdzYW5zLXNlcmlmJz4wMzwvdGV4dD48L3N2Zz4=")', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }} />
               <h3 style={{ fontSize: '1.375rem', fontWeight: 800, marginBottom: '0.75rem', color: 'var(--text-primary)' }}>Download & Use</h3>
               <p style={{ color: 'var(--text-secondary)', lineHeight: 1.65, fontSize: '0.9875rem', margin: 0 }}>
                 Download your transparent PNG instantly. Use it for e-commerce, social media, presentations, or any creative project.
@@ -565,13 +565,12 @@ const HomePage = () => {
               </div>
             </div>
           </div>
-
           {/* Bottom CTA strip */}
           <div style={{ marginTop: '4rem', textAlign: 'center' }}>
             <Link to="/tool" className="btn btn-gradient btn-xl" style={{ borderRadius: '16px', padding: '1rem 3rem', fontSize: '1.0625rem' }}>
               Try It Free Now <ArrowRight size={20} />
             </Link>
-            <p style={{ marginTop: '1rem', color: 'var(--text-muted)', fontSize: '0.875rem' }}>No account required · 100% free to start</p>
+            <p style={{ marginTop: '1rem', color: 'var(--text-secondary)', fontSize: '0.875rem' }}>No account required · 100% free to start</p>
           </div>
         </div>
       </section>
@@ -678,7 +677,7 @@ const HomePage = () => {
             <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 900, marginBottom: '1rem', letterSpacing: '-0.02em', color: 'var(--text-primary)' }}>
               What Our Users Are Saying
             </h2>
-            <p style={{ fontSize: '1.0625rem', color: 'var(--text-secondary)', maxWidth: '520px', margin: '0 auto', lineHeight: 1.7 }}>
+            <p style={{ fontSize: '1.0625rem', color: 'var(--text-primary)', maxWidth: '520px', margin: '0 auto', lineHeight: 1.7 }}>
               Thousands of creators, sellers, and designers trust Snaplix AI every single day.
             </p>
           </div>
@@ -686,9 +685,9 @@ const HomePage = () => {
           {/* Cards */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem' }}>
             {[
-              { role: 'E-commerce Seller', badge: '#2563EB', text: 'This tool saved me hours of manual clipping. The edge detection is scary good, even for complex hair and fine details!' },
-              { role: 'Graphic Designer', badge: '#8B5CF6', text: 'The HD quality is actually HD. No artifacts, no fringing — just clean transparent backgrounds. My new go-to tool.' },
-              { role: 'Social Media Manager', badge: '#10B981', text: 'Processing 20+ product images a day used to be a chore. Now it takes me seconds. Highly recommended!' },
+              { role: 'E-commerce Seller', badge: '#2563EB', textColor: 'var(--accent-dark)', text: 'This tool saved me hours of manual clipping. The edge detection is scary good, even for complex hair and fine details!' },
+              { role: 'Graphic Designer', badge: '#8B5CF6', textColor: 'var(--purple-dark)', text: 'The HD quality is actually HD. No artifacts, no fringing — just clean transparent backgrounds. My new go-to tool.' },
+              { role: 'Social Media Manager', badge: '#10B981', textColor: 'var(--success-dark)', text: 'Processing 20+ product images a day used to be a chore. Now it takes me seconds. Highly recommended!' },
             ].map((t, i) => (
               <div key={i} style={{
                 background: 'var(--bg-card)',
@@ -718,7 +717,7 @@ const HomePage = () => {
                 {/* Role badge only — no name */}
                 <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.35rem 0.9rem', borderRadius: '100px', background: t.badge + '18', border: `1px solid ${t.badge}30` }}>
                   <div style={{ width: '7px', height: '7px', borderRadius: '50%', background: t.badge, flexShrink: 0 }} />
-                  <span style={{ fontSize: '0.8125rem', fontWeight: 700, color: t.badge }}>{t.role}</span>
+                  <span style={{ fontSize: '0.8125rem', fontWeight: 700, color: t.textColor }}>{t.role}</span>
                 </div>
               </div>
             ))}

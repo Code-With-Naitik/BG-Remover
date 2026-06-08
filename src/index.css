@@ -16,6 +16,10 @@
   --text-primary: #111827;
   --text-secondary: #6B7280;
   --text-muted: #9CA3AF;
+  
+  /* Contrast-compliant colors for secondary (gray) backgrounds */
+  --text-secondary-on-gray: #374151;
+  --text-muted-on-gray: #475569;
 
   --border-color: #E5E7EB;
   --border-hover: #D1D5DB;
@@ -70,6 +74,10 @@
   --text-primary: #f9fafb;
   --text-secondary: #d1d5db;
   --text-muted: #9ca3af;
+
+  /* Contrast-compliant colors for secondary backgrounds on dark theme */
+  --text-secondary-on-gray: #d1d5db;
+  --text-muted-on-gray: #cbd5e1;
 
   --border-color: rgba(255, 255, 255, 0.1);
   --border-hover: rgba(255, 255, 255, 0.15);

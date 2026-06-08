@@ -192,7 +192,7 @@ export const BeforeAfterSlider = ({ gallery = [], showTabs = true, fixedIndex = 
                 padding: '0.65rem 1.25rem',
                 background: active === i ? 'var(--accent)' : 'var(--bg-secondary)',
                 border: active === i ? '1px solid var(--accent)' : '1px solid var(--border-color)',
-                color: active === i ? '#fff' : 'var(--text-secondary)',
+                color: active === i ? '#fff' : 'var(--text-primary)',
                 borderRadius: '100px',
                 fontWeight: 700,
                 fontSize: '0.8125rem',
@@ -291,7 +291,7 @@ export const BeforeAfterSection = ({ gallery = [] }) => {
 /* ─── AI FEATURES SECTION ────────────────────────────────── */
 const AI_FEATS = [
   { badge: 'AI Background', title: 'Replace Backgrounds Instantly', desc: 'Professional studios cost $$$. Our AI generates realistic backgrounds in seconds — no fancy gear needed.', img: '/ai_bg_replace.jpg', color: '#2563EB', colorDark: 'var(--accent-dark)', textColor: '#ffffff', bg: 'linear-gradient(135deg,#eff6ff,#dbeafe)' },
-  { badge: 'AI Enhance', title: 'Fix Blurry & Dull Photos', desc: 'Blurry selfies? Dull colors? One click fixes it all. 90% of users say their photos look professionally edited.', img: '/ai_photo_enhance.jpg', color: '#8B5CF6', colorDark: 'var(--purple-dark)', textColor: '#ffffff', bg: 'linear-gradient(135deg,#f5f3ff,#ede9fe)' },
+  { badge: 'AI Enhance', title: 'Fix Blurry & Dull Photos', desc: 'Blurry selfies? Dull colors? One click fixes it all. 90% of users say their photos look professionally edited.', img: '/ai_photo_enhance.jpg', color: '#7C3AED', colorDark: 'var(--purple-dark)', textColor: '#ffffff', bg: 'linear-gradient(135deg,#f5f3ff,#ede9fe)' },
   { badge: 'AI Shadow', title: 'Realistic Product Shadows', desc: 'Natural-looking shadows make products POP. Boost your Shopify conversions with pro-quality visuals in seconds.', img: '/ai_product_shadow.jpg', color: '#06B6D4', colorDark: 'var(--cyan-dark)', textColor: '#111827', bg: 'linear-gradient(135deg,#ecfeff,#cffafe)' },
   { badge: 'HD Download', title: 'Crystal-Clear HD Output', desc: 'Download pixel-perfect transparent PNGs at full resolution. No compression, no watermarks, ready for anything.', img: '/ai_hd_output.jpg', color: '#10B981', colorDark: 'var(--success-dark)', textColor: '#111827', bg: 'linear-gradient(135deg,#ecfdf5,#d1fae5)' },
 ];
@@ -352,7 +352,7 @@ export const UseCaseTabs = () => {
       <div className="container">
         <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
           <h2 style={{ fontSize: 'clamp(1.875rem,4vw,3rem)', fontWeight: 900, color: 'var(--text-primary)', letterSpacing: '-0.03em', marginBottom: '0.75rem' }}>Built For Everyone</h2>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '1.0625rem' }}>Whether you're a creator, seller, or developer — we have the perfect workflow for you.</p>
+          <p style={{ color: 'var(--text-primary)', fontSize: '1.0625rem' }}>Whether you're a creator, seller, or developer — we have the perfect workflow for you.</p>
         </div>
 
         {/* Tab pills */}
