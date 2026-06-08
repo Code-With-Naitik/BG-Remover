@@ -25,7 +25,6 @@ export default defineConfig({
             if (id.includes('react')) return 'vendor-react';
             if (id.includes('lucide')) return 'vendor-icons';
             if (id.includes('recharts')) return 'vendor-charts';
-            return 'vendor';
           }
         },
       },

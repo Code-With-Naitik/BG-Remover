@@ -51,23 +51,23 @@ export const AnnouncementBanner = () => {
 const FALLBACK = [
   {
     category: 'People',
-    before: '/examples/girl-2.jpg',
-    after: '/examples/girl-2.out.png',
+    before: '/examples/girl-2.webp',
+    after: '/examples/girl-2.out.webp',
   },
   {
     category: 'Product',
-    before: '/examples/shoes.jpg',
-    after: '/examples/shoes.png',
+    before: '/examples/shoes.webp',
+    after: '/examples/shoes.out.webp',
   },
   {
     category: 'Car',
-    before: '/examples/car-1.jpg',
-    after: '/examples/car-1.out.png',
+    before: '/examples/car-1.webp',
+    after: '/examples/car-1.out.webp',
   },
   {
     category: 'Animals',
-    before: '/examples/animal-1.jpg',
-    after: '/examples/animal-1.out.png',
+    before: '/examples/animal-1.webp',
+    after: '/examples/animal-1.out.webp',
   },
   {
     category: 'Graphics',
@@ -174,7 +174,7 @@ export const BeforeAfterSlider = ({ gallery = [], showTabs = true, fixedIndex = 
     if (match) return { before: resolveImg(match.beforeImage), after: resolveImg(match.afterImage), isBackendImage: true };
 
     const fallback = FALLBACK[idx];
-    const isPng = fallback.after.toLowerCase().endsWith('.png') || fallback.after.includes('.out.png');
+    const isPng = fallback.after.toLowerCase().endsWith('.png') || fallback.after.toLowerCase().endsWith('.webp') || fallback.after.includes('.out.');
     return { before: fallback.before, after: fallback.after, isBackendImage: isPng };
   };
 
@@ -290,10 +290,10 @@ export const BeforeAfterSection = ({ gallery = [] }) => {
 
 /* ─── AI FEATURES SECTION ────────────────────────────────── */
 const AI_FEATS = [
-  { badge: 'AI Background', title: 'Replace Backgrounds Instantly', desc: 'Professional studios cost $$$. Our AI generates realistic backgrounds in seconds — no fancy gear needed.', img: '/ai_bg_replace.jpg', color: '#2563EB', colorDark: 'var(--accent-dark)', textColor: '#ffffff', bg: 'linear-gradient(135deg,#eff6ff,#dbeafe)' },
-  { badge: 'AI Enhance', title: 'Fix Blurry & Dull Photos', desc: 'Blurry selfies? Dull colors? One click fixes it all. 90% of users say their photos look professionally edited.', img: '/ai_photo_enhance.jpg', color: '#7C3AED', colorDark: 'var(--purple-dark)', textColor: '#ffffff', bg: 'linear-gradient(135deg,#f5f3ff,#ede9fe)' },
-  { badge: 'AI Shadow', title: 'Realistic Product Shadows', desc: 'Natural-looking shadows make products POP. Boost your Shopify conversions with pro-quality visuals in seconds.', img: '/ai_product_shadow.jpg', color: '#06B6D4', colorDark: 'var(--cyan-dark)', textColor: '#111827', bg: 'linear-gradient(135deg,#ecfeff,#cffafe)' },
-  { badge: 'HD Download', title: 'Crystal-Clear HD Output', desc: 'Download pixel-perfect transparent PNGs at full resolution. No compression, no watermarks, ready for anything.', img: '/ai_hd_output.jpg', color: '#10B981', colorDark: 'var(--success-dark)', textColor: '#111827', bg: 'linear-gradient(135deg,#ecfdf5,#d1fae5)' },
+  { badge: 'AI Background', title: 'Replace Backgrounds Instantly', desc: 'Professional studios cost $$$. Our AI generates realistic backgrounds in seconds — no fancy gear needed.', img: '/ai_bg_replace.webp', color: '#2563EB', colorDark: 'var(--accent-dark)', textColor: '#ffffff', bg: 'linear-gradient(135deg,#eff6ff,#dbeafe)' },
+  { badge: 'AI Enhance', title: 'Fix Blurry & Dull Photos', desc: 'Blurry selfies? Dull colors? One click fixes it all. 90% of users say their photos look professionally edited.', img: '/ai_photo_enhance.webp', color: '#7C3AED', colorDark: 'var(--purple-dark)', textColor: '#ffffff', bg: 'linear-gradient(135deg,#f5f3ff,#ede9fe)' },
+  { badge: 'AI Shadow', title: 'Realistic Product Shadows', desc: 'Natural-looking shadows make products POP. Boost your Shopify conversions with pro-quality visuals in seconds.', img: '/ai_product_shadow.webp', color: '#06B6D4', colorDark: 'var(--cyan-dark)', textColor: '#111827', bg: 'linear-gradient(135deg,#ecfeff,#cffafe)' },
+  { badge: 'HD Download', title: 'Crystal-Clear HD Output', desc: 'Download pixel-perfect transparent PNGs at full resolution. No compression, no watermarks, ready for anything.', img: '/ai_hd_output.webp', color: '#10B981', colorDark: 'var(--success-dark)', textColor: '#111827', bg: 'linear-gradient(135deg,#ecfdf5,#d1fae5)' },
 ];
 
 export const AIFeaturesSection = () => (
