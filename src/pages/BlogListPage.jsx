@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { BLOG_POSTS } from '../data/blogData';
 import { Calendar, ArrowRight, Search, Clock } from 'lucide-react';
+import axios from 'axios';
+
+const API_URL = import.meta.env.VITE_API_URL || '/api';
 
 const getReadingTime = (content) => {
   if (!content) return '1 min read';
@@ -14,16 +17,29 @@ const BlogListPage = () => {
   const [blogs, setBlogs] = useState(BLOG_POSTS);
   const [activeCategory, setActiveCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    try {
-      const stored = localStorage.getItem('mock_blogs');
-      if (stored) {
-        setBlogs(JSON.parse(stored).filter(b => b.published));
+    const fetchBlogs = async () => {
+      try {
+        const res = await axios.get(`${API_URL}/blog`, { timeout: 8000 });
+        if (res.data?.success && res.data.data?.length > 0) {
+          setBlogs(res.data.data);
+        } else {
+          const stored = localStorage.getItem('mock_blogs');
+          if (stored) setBlogs(JSON.parse(stored).filter(b => b.published));
+        }
+      } catch (err) {
+        console.warn('Blog API failed, using local data:', err.message);
+        try {
+          const stored = localStorage.getItem('mock_blogs');
+          if (stored) setBlogs(JSON.parse(stored).filter(b => b.published));
+        } catch (e) { }
+      } finally {
+        setLoading(false);
       }
-    } catch (e) {
-      console.error('Error loading mock blogs', e);
-    }
+    };
+    fetchBlogs();
   }, []);
 
   const categories = ['All', ...Array.from(new Set(blogs.map(p => (p.tags && p.tags.length > 0) ? p.tags[0] : p.category).filter(Boolean)))];
@@ -31,8 +47,8 @@ const BlogListPage = () => {
   const filteredPosts = blogs.filter(post => {
     const postCategory = (post.tags && post.tags.length > 0) ? post.tags[0] : post.category;
     const matchesCategory = activeCategory === 'All' || postCategory === activeCategory;
-    const matchesSearch = post.title?.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                          post.description?.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesSearch = post.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      post.description?.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
   });
 
@@ -41,15 +57,23 @@ const BlogListPage = () => {
 
   return (
     <>
-      <Helmet>
-        <title>Blog — Tips, Tricks & Design Guides | Snaplix AI</title>
-        <meta name="description" content="Learn how to master background removal, product photography, and digital design with the Snaplix AI blog." />
-      </Helmet>
+      {loading && (
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '60vh' }}>
+          <div style={{ width: '48px', height: '48px', border: '4px solid var(--border-color)', borderTopColor: 'var(--accent)', borderRadius: '50%', animation: 'spin 0.8s linear infinite' }} />
+          <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+        </div>
+      )}
+      {!loading && (
+        <>
+          <Helmet>
+            <title>Blog — Tips, Tricks & Design Guides | Snaplix AI</title>
+            <meta name="description" content="Learn how to master background removal, product photography, and digital design with the Snaplix AI blog." />
+          </Helmet>
 
       {/* Hero Section */}
       <section style={{ padding: '6rem 0 4rem', background: 'var(--bg-secondary)', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', top: '-50%', left: '50%', transform: 'translateX(-50%)', width: '80vw', height: '60vh', background: 'radial-gradient(ellipse, var(--accent-light) 0%, transparent 70%)', pointerEvents: 'none' }} />
-        
+
         <div className="container" style={{ position: 'relative', zIndex: 1 }}>
           <div style={{ textAlign: 'center', marginBottom: '4rem', maxWidth: '800px', margin: '0 auto 4rem' }}>
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'var(--accent-light)', border: '1px solid var(--accent)', padding: '0.4rem 1rem', borderRadius: '100px', color: 'var(--accent)', fontWeight: 800, fontSize: '0.8rem', marginBottom: '1.5rem', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
@@ -70,15 +94,15 @@ const BlogListPage = () => {
               <div style={{ position: 'absolute', top: '50%', left: '1.25rem', transform: 'translateY(-50%)', color: 'var(--text-muted)' }}>
                 <Search size={20} />
               </div>
-              <input 
-                type="text" 
-                placeholder="Search articles..." 
+              <input
+                type="text"
+                placeholder="Search articles..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                style={{ 
-                  width: '100%', padding: '1.125rem 1.25rem 1.125rem 3.5rem', 
-                  borderRadius: '16px', border: '1.5px solid var(--border-color)', 
-                  background: 'var(--bg-card)', color: 'var(--text-primary)', 
+                style={{
+                  width: '100%', padding: '1.125rem 1.25rem 1.125rem 3.5rem',
+                  borderRadius: '16px', border: '1.5px solid var(--border-color)',
+                  background: 'var(--bg-card)', color: 'var(--text-primary)',
                   fontSize: '1rem', fontWeight: 500, fontFamily: 'inherit',
                   boxShadow: 'var(--shadow-sm)', transition: 'border-color 0.2s', outline: 'none'
                 }}
@@ -90,10 +114,10 @@ const BlogListPage = () => {
             {/* Categories */}
             <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', justifyContent: 'center' }}>
               {categories.map(cat => (
-                <button 
-                  key={cat} 
+                <button
+                  key={cat}
                   onClick={() => setActiveCategory(cat)}
-                  style={{ 
+                  style={{
                     padding: '0.6rem 1.25rem', borderRadius: '100px', fontSize: '0.9375rem', fontWeight: 700,
                     cursor: 'pointer', transition: 'all 0.2s',
                     background: activeCategory === cat ? 'var(--accent)' : 'var(--bg-card)',
@@ -119,8 +143,8 @@ const BlogListPage = () => {
                 <div style={{ flex: 1, height: '1px', background: 'var(--border-color)' }} />
               </div>
 
-              <article 
-                className="card-hover" 
+              <article
+                className="card-hover"
                 style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '0', background: 'var(--bg-card)', borderRadius: '32px', border: '1px solid var(--border-color)', overflow: 'hidden', boxShadow: 'var(--shadow-lg)' }}
               >
                 <Link to={`/blog/${featuredPost.slug}`} style={{ display: 'block', overflow: 'hidden', minHeight: '350px' }}>
@@ -205,6 +229,8 @@ const BlogListPage = () => {
           )}
         </div>
       </section>
+        </>
+      )}
     </>
   );
 };

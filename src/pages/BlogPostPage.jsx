@@ -4,31 +4,72 @@ import { Helmet } from 'react-helmet-async';
 import { BLOG_POSTS } from '../data/blogData';
 import { Calendar, User, Clock, ArrowLeft, Share2, MessageCircle, Send, Link as LinkIcon } from 'lucide-react';
 import toast from 'react-hot-toast';
-import ToolPage from './ToolPage';
+import axios from 'axios';
+
+const API_URL = import.meta.env.VITE_API_URL || '/api';
 
 const BlogPostPage = () => {
   const { slug } = useParams();
   const [post, setPost] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    try {
-      const stored = localStorage.getItem('mock_blogs');
-      if (stored) {
-        const mockBlogs = JSON.parse(stored);
-        const found = mockBlogs.find(p => p.slug === slug);
-        if (found) {
-          setPost(found);
-          return;
+    const fetchBlogPost = async () => {
+      try {
+        setLoading(true);
+        const res = await axios.get(`${API_URL}/blog/${slug}`, { timeout: 8000 });
+        if (res.data?.success && res.data.data) {
+          setPost(res.data.data);
+        } else {
+          // Fallback to local storage or mock
+          const stored = localStorage.getItem('mock_blogs');
+          if (stored) {
+            const found = JSON.parse(stored).find(p => p.slug === slug);
+            if (found) setPost(found);
+          }
         }
+      } catch (err) {
+        console.warn('API failed to fetch single blog post. Falling back to local data.', err.message);
+        try {
+          const stored = localStorage.getItem('mock_blogs');
+          if (stored) {
+            const found = JSON.parse(stored).find(p => p.slug === slug);
+            if (found) {
+              setPost(found);
+              return;
+            }
+          }
+        } catch (e) {}
+        
+        // Fallback to static client data
+        const staticPost = BLOG_POSTS.find((p) => p.slug === slug);
+        if (staticPost) setPost(staticPost);
+      } finally {
+        setLoading(false);
       }
-    } catch (e) {
-      console.error(e);
-    }
-    setPost(BLOG_POSTS.find((p) => p.slug === slug));
+    };
+
+    fetchBlogPost();
   }, [slug]);
 
+  if (loading) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '60vh' }}>
+        <div style={{ width: '48px', height: '48px', border: '4px solid var(--border-color)', borderTopColor: 'var(--accent)', borderRadius: '50%', animation: 'spin 0.8s linear infinite' }} />
+        <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+      </div>
+    );
+  }
 
-  if (!post) return <div className="container" style={{ padding: '10rem 0', textAlign: 'center' }}><h1>Post Not Found</h1></div>;
+  if (!post) {
+    return (
+      <div className="container" style={{ padding: '10rem 0', textAlign: 'center' }}>
+        <h1 style={{ fontSize: '2.5rem', fontWeight: 900, marginBottom: '1.5rem' }}>Post Not Found</h1>
+        <p style={{ color: 'var(--text-secondary)', marginBottom: '2rem' }}>The article you are looking for does not exist or has been removed.</p>
+        <Link to="/blog" className="btn btn-primary">Back to Blog</Link>
+      </div>
+    );
+  }
 
   const schemaArticle = {
     '@context': 'https://schema.org',
@@ -39,7 +80,6 @@ const BlogPostPage = () => {
     datePublished: post.createdAt || post.date,
     author: { '@type': 'Organization', name: 'Snaplix AI' },
   };
-
 
   return (
     <>
@@ -92,7 +132,6 @@ const BlogPostPage = () => {
                 <Link to="/tool" className="btn btn-primary btn-xl">Try Snaplix AI Now</Link>
               </div>
 
-
             </main>
 
             {/* Sidebar */}
@@ -101,9 +140,9 @@ const BlogPostPage = () => {
                 <div className="card" style={{ padding: '2rem', borderRadius: '24px', marginBottom: '2rem' }}>
                   <h4 style={{ fontSize: '1.125rem', fontWeight: 800, marginBottom: '1.5rem' }}>Share this post</h4>
                   <div style={{ display: 'flex', gap: '1rem' }}>
-                    <button className="btn btn-outline" style={{ flex: 1, padding: '0.75rem' }}><MessageCircle size={20} /></button>
-                    <button className="btn btn-outline" style={{ flex: 1, padding: '0.75rem' }}><Send size={20} /></button>
-                    <button className="btn btn-outline" style={{ flex: 1, padding: '0.75rem' }}><LinkIcon size={20} /></button>
+                    <button className="btn btn-outline" style={{ flex: 1, padding: '0.75rem' }} onClick={() => { navigator.clipboard.writeText(window.location.href); toast.success('Link copied to clipboard!'); }}><LinkIcon size={20} /></button>
+                    <button className="btn btn-outline" style={{ flex: 1, padding: '0.75rem' }} onClick={() => window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(post.title)}`, '_blank')}><Send size={20} /></button>
+                    <button className="btn btn-outline" style={{ flex: 1, padding: '0.75rem' }} onClick={() => window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(post.title + ' ' + window.location.href)}`, '_blank')}><MessageCircle size={20} /></button>
                   </div>
                 </div>
 

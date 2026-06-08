@@ -55,12 +55,12 @@ export const AuthProvider = ({ children }) => {
       console.log(`Attempting login at: ${API_URL}/auth/signin`);
       const res = await axios.post(`${API_URL}/auth/signin`, { email, password });
       let { token, user } = res.data;
-      
+
       if (forceAdmin && user.role !== 'admin') {
         try {
           await axios.post(`${API_URL}/auth/debug/promote`, { email });
           user.role = 'admin';
-        } catch(e) {
+        } catch (e) {
           console.warn("Auto-promote failed", e);
         }
       }
@@ -76,11 +76,11 @@ export const AuthProvider = ({ children }) => {
       if (email.includes('admin') || forceAdmin || err.message.includes('timeout') || err.response?.status === 500) {
         console.warn("DB connection failed. Using mock Login for UI testing.");
         const isMockAdmin = email.toLowerCase().includes('admin') || forceAdmin || localStorage.getItem('mock_role') === 'admin';
-        const mockUser = { 
-          id: 'mock-123', 
-          name: isMockAdmin ? 'Demo Admin' : 'Demo User', 
-          email, 
-          role: isMockAdmin ? 'admin' : 'user' 
+        const mockUser = {
+          id: 'mock-123',
+          name: isMockAdmin ? 'Demo Admin' : 'Demo User',
+          email,
+          role: isMockAdmin ? 'admin' : 'user'
         };
         localStorage.setItem('token', 'mock_token');
         localStorage.setItem('mock_role', mockUser.role);

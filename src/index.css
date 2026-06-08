@@ -750,8 +750,14 @@ textarea.input {
   margin-bottom: 1.5rem;
 }
 
-.blog-content ul,
+.blog-content ul {
+  list-style-type: disc !important;
+  padding-left: 1.75rem;
+  margin-bottom: 1.5rem;
+}
+
 .blog-content ol {
+  list-style-type: decimal !important;
   padding-left: 1.75rem;
   margin-bottom: 1.5rem;
 }

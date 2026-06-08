@@ -35,7 +35,7 @@ const AdminBlogList = () => {
           published: true,
           createdAt: new Date(blog.date).toISOString()
         }));
-        
+
         let mockBlogs = JSON.parse(localStorage.getItem('mock_blogs'));
         if (!mockBlogs || mockBlogs.length === 0 || mockBlogs[0]._id === '1') {
           mockBlogs = initialMockBlogs;

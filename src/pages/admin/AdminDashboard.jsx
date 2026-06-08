@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from '../../context/AuthContext';
-import { 
-  Users, 
-  FileText, 
-  MessageSquare, 
-  TrendingUp, 
-  Clock, 
+import {
+  Users,
+  FileText,
+  MessageSquare,
+  TrendingUp,
+  Clock,
   ArrowUpRight,
   ImageIcon
 } from 'lucide-react';
@@ -25,7 +25,7 @@ const AdminDashboard = () => {
           const messages = JSON.parse(localStorage.getItem('mock_messages')) || [];
           const gallery = JSON.parse(localStorage.getItem('mock_gallery')) || [];
           const history = JSON.parse(localStorage.getItem('bgremover_history')) || [];
-          
+
           const recentRemovals = gallery.slice(-5).reverse().map((item, idx) => ({
             _id: item._id,
             ip: '192.168.1.' + (idx + 42),
@@ -77,7 +77,7 @@ const AdminDashboard = () => {
   ];
 
   return (
-    <div style={{display: 'flex', flexDirection: 'column', gap: '2rem'}}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
       <div>
         <h1 className="text-white">Dashboard Overview</h1>
         <p className="text-slate-400 mt-1">Welcome back to the BG Remover control center.</p>
@@ -91,7 +91,7 @@ const AdminDashboard = () => {
               <p>{stat.name}</p>
               <h3>{stat.value}</h3>
             </div>
-            <div className="stat-icon-box" style={{backgroundColor: stat.color === 'bg-blue-500' ? '#3b82f6' : stat.color === 'bg-purple-500' ? '#a855f7' : stat.color === 'bg-emerald-500' ? '#10b981' : '#f97316'}}>
+            <div className="stat-icon-box" style={{ backgroundColor: stat.color === 'bg-blue-500' ? '#3b82f6' : stat.color === 'bg-purple-500' ? '#a855f7' : stat.color === 'bg-emerald-500' ? '#10b981' : '#f97316' }}>
               <stat.icon size={24} />
             </div>
           </div>
@@ -102,8 +102,8 @@ const AdminDashboard = () => {
         {/* Recent Messages */}
         <div className="section-card">
           <div className="section-header">
-            <h2 className="text-white" style={{display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '1.25rem'}}>
-              <MessageSquare size={20} style={{color: '#10b981'}} />
+            <h2 className="text-white" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '1.25rem' }}>
+              <MessageSquare size={20} style={{ color: '#10b981' }} />
               Recent Messages
             </h2>
             <button className="btn btn-ghost btn-sm">View All</button>
@@ -113,16 +113,16 @@ const AdminDashboard = () => {
               stats.recentActivity.messages.map((msg) => (
                 <div key={msg._id} className="activity-item">
                   <div>
-                    <p style={{fontWeight: 600, color: '#f1f5f9', margin: 0}}>{msg.name}</p>
-                    <p style={{fontSize: '0.875rem', color: '#94a3b8', margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical'}}>{msg.message}</p>
+                    <p style={{ fontWeight: 600, color: '#f1f5f9', margin: 0 }}>{msg.name}</p>
+                    <p style={{ fontSize: '0.875rem', color: '#94a3b8', margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical' }}>{msg.message}</p>
                   </div>
-                  <span style={{fontSize: '0.75rem', color: '#64748b', whiteSpace: 'nowrap'}}>
+                  <span style={{ fontSize: '0.75rem', color: '#64748b', whiteSpace: 'nowrap' }}>
                     {new Date(msg.createdAt).toLocaleDateString()}
                   </span>
                 </div>
               ))
             ) : (
-              <div style={{padding: '2rem', textAlign: 'center', color: '#64748b', fontStyle: 'italic'}}>No recent messages</div>
+              <div style={{ padding: '2rem', textAlign: 'center', color: '#64748b', fontStyle: 'italic' }}>No recent messages</div>
             )}
           </div>
         </div>
@@ -130,8 +130,8 @@ const AdminDashboard = () => {
         {/* Recent Removals Activity */}
         <div className="section-card">
           <div className="section-header">
-            <h2 className="text-white" style={{display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '1.25rem'}}>
-              <TrendingUp size={20} style={{color: '#3b82f6'}} />
+            <h2 className="text-white" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '1.25rem' }}>
+              <TrendingUp size={20} style={{ color: '#3b82f6' }} />
               Usage Activity
             </h2>
             <button className="btn btn-ghost btn-sm">Analytics</button>
@@ -140,23 +140,23 @@ const AdminDashboard = () => {
             {stats?.recentActivity?.removals?.length > 0 ? (
               stats.recentActivity.removals.map((log) => (
                 <div key={log._id} className="activity-item">
-                  <div style={{display: 'flex', alignItems: 'center', gap: '1rem'}}>
-                    <div style={{width: '36px', height: '36px', borderRadius: '8px', background: '#1e293b', display: 'flex', alignItems: 'center', justifyCenter: 'center', color: '#3b82f6'}}>
-                      <ImageIcon size={18} style={{margin: '0 auto'}}/>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                    <div style={{ width: '36px', height: '36px', borderRadius: '8px', background: '#1e293b', display: 'flex', alignItems: 'center', justifyCenter: 'center', color: '#3b82f6' }}>
+                      <ImageIcon size={18} style={{ margin: '0 auto' }} />
                     </div>
                     <div>
-                      <p style={{fontWeight: 600, color: '#f1f5f9', margin: 0}}>Image Processed</p>
-                      <p style={{fontSize: '0.75rem', color: '#64748b', margin: 0}}>IP: {log.ip.replace(/\d+$/, '***')}</p>
+                      <p style={{ fontWeight: 600, color: '#f1f5f9', margin: 0 }}>Image Processed</p>
+                      <p style={{ fontSize: '0.75rem', color: '#64748b', margin: 0 }}>IP: {log.ip.replace(/\d+$/, '***')}</p>
                     </div>
                   </div>
-                  <div style={{textAlign: 'right'}}>
-                    <p style={{fontSize: '0.875rem', fontWeight: 700, color: '#fff', margin: 0}}>{log.count} reqs</p>
-                    <p style={{fontSize: '0.75rem', color: '#64748b', margin: 0}}>{log.date}</p>
+                  <div style={{ textAlign: 'right' }}>
+                    <p style={{ fontSize: '0.875rem', fontWeight: 700, color: '#fff', margin: 0 }}>{log.count} reqs</p>
+                    <p style={{ fontSize: '0.75rem', color: '#64748b', margin: 0 }}>{log.date}</p>
                   </div>
                 </div>
               ))
             ) : (
-              <div style={{padding: '2rem', textAlign: 'center', color: '#64748b', fontStyle: 'italic'}}>No recent usage activity</div>
+              <div style={{ padding: '2rem', textAlign: 'center', color: '#64748b', fontStyle: 'italic' }}>No recent usage activity</div>
             )}
           </div>
         </div>
