@@ -51,23 +51,23 @@ export const AnnouncementBanner = () => {
 const FALLBACK = [
   {
     category: 'People',
-    before: 'https://raw.githubusercontent.com/danielgatis/rembg/main/examples/girl-2.jpg',
-    after: 'https://raw.githubusercontent.com/danielgatis/rembg/main/examples/girl-2.out.png',
+    before: '/examples/girl-2.jpg',
+    after: '/examples/girl-2.out.png',
   },
   {
     category: 'Product',
-    before: 'https://res.cloudinary.com/demo/image/upload/shoes.jpg',
-    after: 'https://res.cloudinary.com/demo/image/upload/shoes.png',
+    before: '/examples/shoes.jpg',
+    after: '/examples/shoes.png',
   },
   {
     category: 'Car',
-    before: 'https://raw.githubusercontent.com/danielgatis/rembg/main/examples/car-1.jpg',
-    after: 'https://raw.githubusercontent.com/danielgatis/rembg/main/examples/car-1.out.png',
+    before: '/examples/car-1.jpg',
+    after: '/examples/car-1.out.png',
   },
   {
     category: 'Animals',
-    before: 'https://raw.githubusercontent.com/danielgatis/rembg/main/examples/animal-1.jpg',
-    after: 'https://raw.githubusercontent.com/danielgatis/rembg/main/examples/animal-1.out.png',
+    before: '/examples/animal-1.jpg',
+    after: '/examples/animal-1.out.png',
   },
   {
     category: 'Graphics',
@@ -276,9 +276,9 @@ export const BeforeAfterSection = ({ gallery = [] }) => {
 
         <div style={{ textAlign: 'center' }}>
           <Link to="/sample"
-            style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', color: '#2563EB', fontWeight: 800, background: 'rgba(37,99,235,0.08)', padding: '0.875rem 2rem', borderRadius: '100px', textDecoration: 'none', fontSize: '0.9375rem', transition: 'all 0.3s' }}
+            style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', color: 'var(--accent-dark)', fontWeight: 800, background: 'rgba(37,99,235,0.08)', padding: '0.875rem 2rem', borderRadius: '100px', textDecoration: 'none', fontSize: '0.9375rem', transition: 'all 0.3s' }}
             onMouseEnter={e => { e.currentTarget.style.background = '#2563EB'; e.currentTarget.style.color = '#fff'; }}
-            onMouseLeave={e => { e.currentTarget.style.background = 'rgba(37,99,235,0.08)'; e.currentTarget.style.color = '#2563EB'; }}
+            onMouseLeave={e => { e.currentTarget.style.background = 'rgba(37,99,235,0.08)'; e.currentTarget.style.color = 'var(--accent-dark)'; }}
           >
             View All Samples <ArrowRight size={18} />
           </Link>
@@ -290,10 +290,10 @@ export const BeforeAfterSection = ({ gallery = [] }) => {
 
 /* ─── AI FEATURES SECTION ────────────────────────────────── */
 const AI_FEATS = [
-  { badge: 'AI Background', title: 'Replace Backgrounds Instantly', desc: 'Professional studios cost $$$. Our AI generates realistic backgrounds in seconds — no fancy gear needed.', img: '/ai_bg_replace.png', color: '#2563EB', colorDark: 'var(--accent-dark)', textColor: '#ffffff', bg: 'linear-gradient(135deg,#eff6ff,#dbeafe)' },
-  { badge: 'AI Enhance', title: 'Fix Blurry & Dull Photos', desc: 'Blurry selfies? Dull colors? One click fixes it all. 90% of users say their photos look professionally edited.', img: '/ai_photo_enhance.png', color: '#8B5CF6', colorDark: 'var(--purple-dark)', textColor: '#ffffff', bg: 'linear-gradient(135deg,#f5f3ff,#ede9fe)' },
-  { badge: 'AI Shadow', title: 'Realistic Product Shadows', desc: 'Natural-looking shadows make products POP. Boost your Shopify conversions with pro-quality visuals in seconds.', img: '/ai_product_shadow.png', color: '#06B6D4', colorDark: 'var(--cyan-dark)', textColor: '#111827', bg: 'linear-gradient(135deg,#ecfeff,#cffafe)' },
-  { badge: 'HD Download', title: 'Crystal-Clear HD Output', desc: 'Download pixel-perfect transparent PNGs at full resolution. No compression, no watermarks, ready for anything.', img: '/ai_hd_output.png', color: '#10B981', colorDark: 'var(--success-dark)', textColor: '#111827', bg: 'linear-gradient(135deg,#ecfdf5,#d1fae5)' },
+  { badge: 'AI Background', title: 'Replace Backgrounds Instantly', desc: 'Professional studios cost $$$. Our AI generates realistic backgrounds in seconds — no fancy gear needed.', img: '/ai_bg_replace.jpg', color: '#2563EB', colorDark: 'var(--accent-dark)', textColor: '#ffffff', bg: 'linear-gradient(135deg,#eff6ff,#dbeafe)' },
+  { badge: 'AI Enhance', title: 'Fix Blurry & Dull Photos', desc: 'Blurry selfies? Dull colors? One click fixes it all. 90% of users say their photos look professionally edited.', img: '/ai_photo_enhance.jpg', color: '#8B5CF6', colorDark: 'var(--purple-dark)', textColor: '#ffffff', bg: 'linear-gradient(135deg,#f5f3ff,#ede9fe)' },
+  { badge: 'AI Shadow', title: 'Realistic Product Shadows', desc: 'Natural-looking shadows make products POP. Boost your Shopify conversions with pro-quality visuals in seconds.', img: '/ai_product_shadow.jpg', color: '#06B6D4', colorDark: 'var(--cyan-dark)', textColor: '#111827', bg: 'linear-gradient(135deg,#ecfeff,#cffafe)' },
+  { badge: 'HD Download', title: 'Crystal-Clear HD Output', desc: 'Download pixel-perfect transparent PNGs at full resolution. No compression, no watermarks, ready for anything.', img: '/ai_hd_output.jpg', color: '#10B981', colorDark: 'var(--success-dark)', textColor: '#111827', bg: 'linear-gradient(135deg,#ecfdf5,#d1fae5)' },
 ];
 
 export const AIFeaturesSection = () => (

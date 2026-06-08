@@ -70,7 +70,7 @@ const HistoryPanel = () => {
     <div style={{ marginTop: '4rem', padding: '2rem', background: 'var(--bg-secondary)', borderRadius: 'var(--radius-xl)', border: '1px solid var(--border-color)' }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
         <div>
-          <h3 style={{ fontSize: '1.25rem', fontWeight: 700 }}>Recent Processed Images</h3>
+          <h2 style={{ fontSize: '1.25rem', fontWeight: 700 }}>Recent Processed Images</h2>
           <p style={{ fontSize: '0.8125rem', color: 'var(--text-muted)' }}>Saved locally in your browser</p>
         </div>
         <div style={{ display: 'flex', gap: '0.75rem' }}>
@@ -140,6 +140,7 @@ const HistoryPanel = () => {
               onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.1)'}
               onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
               title="Remove from history"
+              aria-label="Remove from history"
             >
               <Trash2 size={14} />
             </button>
@@ -177,6 +178,7 @@ const HistoryPanel = () => {
                 onClick={() => handleDownload(item.processed)}
                 style={{ background: 'none', border: 'none', color: 'var(--accent)', cursor: 'pointer', display: 'flex', alignItems: 'center' }}
                 title="Download"
+                aria-label="Download image"
               >
                 <Download size={16} />
               </button>

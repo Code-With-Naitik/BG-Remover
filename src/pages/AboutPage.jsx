@@ -65,7 +65,7 @@ const AboutPage = () => (
               <div className="metric-icon-wrapper">
                 <Icon size={24} className="metric-icon" />
               </div>
-              <h3 className="metric-value">{value}</h3>
+              <div className="metric-value">{value}</div>
               <p className="metric-label">{label}</p>
             </div>
           ))}

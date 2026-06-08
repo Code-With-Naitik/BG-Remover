@@ -127,7 +127,7 @@ const BlogPostPage = () => {
 
               {/* Ready Action */}
               <div style={{ marginTop: '5rem', padding: '3rem', background: 'var(--bg-secondary)', borderRadius: '32px', textAlign: 'center' }}>
-                <h3 style={{ fontSize: '1.75rem', fontWeight: 900, marginBottom: '1rem' }}>Ready to remove backgrounds?</h3>
+                <h2 style={{ fontSize: '1.75rem', fontWeight: 900, marginBottom: '1rem' }}>Ready to remove backgrounds?</h2>
                 <p style={{ color: 'var(--text-secondary)', marginBottom: '2.5rem', fontSize: '1.125rem' }}>Experience the fastest AI background remover today.</p>
                 <Link to="/tool" className="btn btn-primary btn-xl">Try Snaplix AI Now</Link>
               </div>
@@ -138,7 +138,7 @@ const BlogPostPage = () => {
             <aside>
               <div style={{ position: 'sticky', top: '2rem' }}>
                 <div className="card" style={{ padding: '2rem', borderRadius: '24px', marginBottom: '2rem' }}>
-                  <h4 style={{ fontSize: '1.125rem', fontWeight: 800, marginBottom: '1.5rem' }}>Share this post</h4>
+                  <h2 style={{ fontSize: '1.125rem', fontWeight: 800, marginBottom: '1.5rem' }}>Share this post</h2>
                   <div style={{ display: 'flex', gap: '1rem' }}>
                     <button aria-label="Copy post link" className="btn btn-outline" style={{ flex: 1, padding: '0.75rem' }} onClick={() => { navigator.clipboard.writeText(window.location.href); toast.success('Link copied to clipboard!'); }}><LinkIcon size={20} /></button>
                     <button aria-label="Share on Twitter" className="btn btn-outline" style={{ flex: 1, padding: '0.75rem' }} onClick={() => window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(post.title)}`, '_blank')}><Send size={20} /></button>
@@ -147,7 +147,7 @@ const BlogPostPage = () => {
                 </div>
 
                 <div className="card" style={{ padding: '2rem', borderRadius: '24px', background: 'var(--accent-gradient)', color: '#fff' }}>
-                  <h4 style={{ fontSize: '1.5rem', fontWeight: 900, marginBottom: '1rem' }}>Unlock HD Results</h4>
+                  <h2 style={{ fontSize: '1.5rem', fontWeight: 900, marginBottom: '1rem' }}>Unlock HD Results</h2>
                   <p style={{ marginBottom: '2rem', opacity: 0.9, lineHeight: 1.6 }}>Get 100% precision and high-resolution exports with Snaplix Pro.</p>
                   <Link to="/pricing" className="btn btn-primary" style={{ background: '#fff', color: 'var(--accent)', width: '100%' }}>View Plans</Link>
                 </div>

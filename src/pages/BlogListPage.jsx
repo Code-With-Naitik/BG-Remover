@@ -220,7 +220,7 @@ const BlogListPage = () => {
               <div style={{ width: '64px', height: '64px', borderRadius: '50%', background: 'var(--bg-card)', border: '1px solid var(--border-color)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.5rem', color: 'var(--text-muted)' }}>
                 <Search size={28} />
               </div>
-              <h3 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '0.5rem' }}>No articles found</h3>
+              <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '0.5rem' }}>No articles found</h2>
               <p style={{ color: 'var(--text-secondary)' }}>We couldn't find any articles matching your search or filter criteria.</p>
               <button onClick={() => { setSearchQuery(''); setActiveCategory('All'); }} className="btn btn-primary" style={{ marginTop: '1.5rem', borderRadius: '12px' }}>
                 Clear Filters

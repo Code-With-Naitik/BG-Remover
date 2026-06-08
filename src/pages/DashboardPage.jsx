@@ -283,7 +283,7 @@ const DashboardPage = () => {
                   <div className="upsell-icon">
                     <Sparkles size={28} className="text-white" />
                   </div>
-                  <h3>Go Unlimited</h3>
+                  <h2>Go Unlimited</h2>
                   <p>Unlock HD quality, batch processing and priority AI rendering.</p>
                   <Link to="/pricing" className="btn btn-white-glass w-full">
                     Upgrade Now
@@ -291,7 +291,7 @@ const DashboardPage = () => {
                 </div>
 
                 <div className="quick-actions glass-card">
-                  <h4>Quick Links</h4>
+                  <h3>Quick Links</h3>
                   <div className="action-list">
                     <Link to="/blog" className="action-item">
                       <span>Help Center</span>
@@ -875,7 +875,7 @@ const DashboardPage = () => {
           margin: 0 auto 1.5rem;
         }
 
-        .premium-upsell h3 { font-size: 1.25rem; font-weight: 900; margin-bottom: 0.75rem; }
+        .premium-upsell h2 { font-size: 1.25rem; font-weight: 900; margin-bottom: 0.75rem; }
         .premium-upsell p { font-size: 0.875rem; opacity: 0.9; line-height: 1.6; margin-bottom: 1.5rem; }
 
         .btn-white-glass {
@@ -891,7 +891,7 @@ const DashboardPage = () => {
 
         .btn-white-glass:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
 
-        .quick-actions h4 {
+        .quick-actions h3 {
           font-size: 0.75rem;
           font-weight: 800;
           text-transform: uppercase;

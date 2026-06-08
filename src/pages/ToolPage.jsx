@@ -96,7 +96,7 @@ const ToolPage = () => {
                   />
                 ) : (
                   <div style={{ padding: '4rem', textAlign: 'center', background: 'var(--bg-card)', borderRadius: '32px', border: '1px solid var(--border-color)' }}>
-                    <h3 style={{ color: 'var(--text-primary)', marginBottom: '1rem', fontSize: '1.5rem', fontWeight: 'bold' }}>Processing Failed</h3>
+                    <h2 style={{ color: 'var(--text-primary)', marginBottom: '1rem', fontSize: '1.5rem', fontWeight: 'bold' }}>Processing Failed</h2>
                     <p style={{ color: 'var(--text-secondary)', marginBottom: '2rem' }}>{typeof error === 'string' ? error : error ? String(error) : 'An error occurred during processing.'}</p>
                     <button onClick={reset} className="btn btn-gradient" style={{ padding: '0.75rem 2rem', borderRadius: '12px', fontWeight: 'bold' }}>Try Again</button>
                   </div>
@@ -141,7 +141,7 @@ const ToolPage = () => {
                   <Icon size={24} color="#fff" strokeWidth={2} />
                 </div>
                 <div>
-                  <h4 style={{ fontWeight: 800, fontSize: '1rem', color: 'var(--text-primary)', marginBottom: '0.25rem' }}>{title}</h4>
+                  <h2 style={{ fontWeight: 800, fontSize: '1rem', color: 'var(--text-primary)', marginBottom: '0.25rem' }}>{title}</h2>
                   <p style={{ margin: 0, fontSize: '0.875rem', color: 'var(--text-secondary)', lineHeight: 1.6 }}>{desc}</p>
                 </div>
               </div>

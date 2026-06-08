@@ -130,7 +130,7 @@ const PricingPage = () => {
 
               <div className="plan-main">
                 <div className="plan-info">
-                  <h3>{plan.name}</h3>
+                  <h2>{plan.name}</h2>
                   <div className="plan-price">
                     <span className="currency">{plan.price.charAt(0)}</span>
                     <span className="amount">{plan.price.slice(1)}</span>
@@ -178,7 +178,7 @@ const PricingPage = () => {
                 <div className="infra-card-icon">
                   <Activity size={24} color="var(--emerald)" />
                 </div>
-                <h4>99.99% Uptime</h4>
+                <h3>99.99% Uptime</h3>
                 <p>Reliable processing whenever you need it, backed by redundant server architecture.</p>
               </div>
               
@@ -186,7 +186,7 @@ const PricingPage = () => {
                 <div className="infra-card-icon">
                   <Lock size={24} color="var(--accent)" />
                 </div>
-                <h4>SSL Secure</h4>
+                <h3>SSL Secure</h3>
                 <p>Military-grade 256-bit encryption. Your images and data are fully protected.</p>
               </div>
               
@@ -194,7 +194,7 @@ const PricingPage = () => {
                 <div className="infra-card-icon">
                   <Globe size={24} color="#a855f7" />
                 </div>
-                <h4>Global CDN</h4>
+                <h3>Global CDN</h3>
                 <p>Lightning-fast API responses from our globally distributed edge network.</p>
               </div>
             </div>
@@ -216,7 +216,7 @@ const PricingPage = () => {
                 onClick={() => setOpenFaq(openFaq === i ? -1 : i)}
               >
                 <div className="faq-question">
-                  <h4>{item.q}</h4>
+                  <h3>{item.q}</h3>
                   <div className="faq-icon-wrapper">
                     <ChevronDown size={20} className="faq-icon" />
                   </div>
@@ -357,7 +357,7 @@ const PricingPage = () => {
           white-space: nowrap;
         }
 
-        .plan-info h3 {
+        .plan-info h2 {
           font-size: 1.25rem;
           font-weight: 800;
           color: var(--text-primary);
@@ -540,7 +540,7 @@ const PricingPage = () => {
           margin-bottom: 1.5rem;
         }
 
-        .infra-card h4 {
+        .infra-card h3 {
           font-size: 1.25rem;
           font-weight: 800;
           margin-bottom: 0.75rem;
@@ -624,7 +624,7 @@ const PricingPage = () => {
           padding: 1.5rem 2rem;
         }
 
-        .faq-question h4 {
+        .faq-question h3 {
           font-size: 1.125rem;
           font-weight: 700;
           margin: 0;
