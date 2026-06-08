@@ -320,7 +320,7 @@ const SeoLandingPage = ({ title, keyword }) => {
           />
 
           {/* Internal links */}
-          <div style={{ marginTop: '4rem', padding: '2rem', background: 'white', borderRadius: '24px', border: '1px solid var(--border-color)' }}>
+          <div style={{ marginTop: '4rem', padding: '2rem', background: 'var(--bg-card)', borderRadius: '24px', border: '1px solid var(--border-color)' }}>
             <h4 style={{ fontSize: '1.25rem', fontWeight: 800, marginBottom: '1.5rem' }}>Related Resources</h4>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>

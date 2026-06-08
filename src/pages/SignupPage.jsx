@@ -87,6 +87,7 @@ const SignupPage = () => {
                     onChange={handleChange}
                     className="auth-input"
                     placeholder="Full Name"
+                    aria-label="Full Name"
                   />
                 </div>
                 <div className="input-wrapper middle">
@@ -101,6 +102,7 @@ const SignupPage = () => {
                     onChange={handleChange}
                     className="auth-input"
                     placeholder="Email Address"
+                    aria-label="Email Address"
                   />
                 </div>
                 <div className="input-wrapper bottom">
@@ -115,6 +117,7 @@ const SignupPage = () => {
                     onChange={handleChange}
                     className="auth-input"
                     placeholder="Create Password"
+                    aria-label="Password"
                   />
                 </div>
               </div>

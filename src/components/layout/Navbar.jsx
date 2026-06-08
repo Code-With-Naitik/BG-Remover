@@ -182,6 +182,7 @@ const Navbar = () => {
             {/* Theme Toggle */}
             <button
               onClick={toggleTheme}
+              aria-label="Toggle dark mode"
               style={{
                 width: '36px',
                 height: '36px',
@@ -297,6 +298,7 @@ const Navbar = () => {
             {/* Mobile Toggle */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
+              aria-label="Toggle mobile menu"
               style={{
                 display: 'none',
                 width: '36px',

@@ -17,7 +17,7 @@ const ProcessingOverlay = () => {
         position: 'absolute', inset: 0,
         display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
         zIndex: 20, borderRadius: '16px',
-        background: 'rgba(255, 255, 255, 0.85)',
+        background: 'var(--glass-bg)',
         backdropFilter: 'blur(12px)',
         gap: '1.5rem',
       }}

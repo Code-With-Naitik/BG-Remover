@@ -92,21 +92,21 @@ const ContactPage = () => {
             <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
                 <div>
-                  <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: 700, marginBottom: '0.5rem', color: 'var(--text-primary)' }}>Full Name *</label>
-                  <input className="input" name="name" placeholder="John Doe" value={form.name} onChange={handleChange} required style={{ padding: '0.875rem 1rem' }} />
+                  <label htmlFor="contact-name" style={{ display: 'block', fontSize: '0.875rem', fontWeight: 700, marginBottom: '0.5rem', color: 'var(--text-primary)' }}>Full Name *</label>
+                  <input id="contact-name" className="input" name="name" placeholder="John Doe" value={form.name} onChange={handleChange} required style={{ padding: '0.875rem 1rem' }} />
                 </div>
                 <div>
-                  <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: 700, marginBottom: '0.5rem', color: 'var(--text-primary)' }}>Email Address *</label>
-                  <input className="input" name="email" type="email" placeholder="john@example.com" value={form.email} onChange={handleChange} required style={{ padding: '0.875rem 1rem' }} />
+                  <label htmlFor="contact-email" style={{ display: 'block', fontSize: '0.875rem', fontWeight: 700, marginBottom: '0.5rem', color: 'var(--text-primary)' }}>Email Address *</label>
+                  <input id="contact-email" className="input" name="email" type="email" placeholder="john@example.com" value={form.email} onChange={handleChange} required style={{ padding: '0.875rem 1rem' }} />
                 </div>
               </div>
               <div>
-                <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: 700, marginBottom: '0.5rem', color: 'var(--text-primary)' }}>Subject</label>
-                <input className="input" name="subject" placeholder="How can we help you today?" value={form.subject} onChange={handleChange} style={{ padding: '0.875rem 1rem' }} />
+                <label htmlFor="contact-subject" style={{ display: 'block', fontSize: '0.875rem', fontWeight: 700, marginBottom: '0.5rem', color: 'var(--text-primary)' }}>Subject</label>
+                <input id="contact-subject" className="input" name="subject" placeholder="How can we help you today?" value={form.subject} onChange={handleChange} style={{ padding: '0.875rem 1rem' }} />
               </div>
               <div>
-                <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: 700, marginBottom: '0.5rem', color: 'var(--text-primary)' }}>Message *</label>
-                <textarea className="input" name="message" placeholder="Tell us more about your inquiry..." rows={6} value={form.message} onChange={handleChange} required style={{ padding: '1rem' }} />
+                <label htmlFor="contact-message" style={{ display: 'block', fontSize: '0.875rem', fontWeight: 700, marginBottom: '0.5rem', color: 'var(--text-primary)' }}>Message *</label>
+                <textarea id="contact-message" className="input" name="message" placeholder="Tell us more about your inquiry..." rows={6} value={form.message} onChange={handleChange} required style={{ padding: '1rem' }} />
               </div>
               <button type="submit" className="btn btn-gradient-vibrant btn-xl" disabled={loading} style={{ width: '100%', marginTop: '0.5rem', fontWeight: 700 }}>
                 {loading ? 'Sending Message...' : 'Send Message'}

@@ -140,9 +140,9 @@ const BlogPostPage = () => {
                 <div className="card" style={{ padding: '2rem', borderRadius: '24px', marginBottom: '2rem' }}>
                   <h4 style={{ fontSize: '1.125rem', fontWeight: 800, marginBottom: '1.5rem' }}>Share this post</h4>
                   <div style={{ display: 'flex', gap: '1rem' }}>
-                    <button className="btn btn-outline" style={{ flex: 1, padding: '0.75rem' }} onClick={() => { navigator.clipboard.writeText(window.location.href); toast.success('Link copied to clipboard!'); }}><LinkIcon size={20} /></button>
-                    <button className="btn btn-outline" style={{ flex: 1, padding: '0.75rem' }} onClick={() => window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(post.title)}`, '_blank')}><Send size={20} /></button>
-                    <button className="btn btn-outline" style={{ flex: 1, padding: '0.75rem' }} onClick={() => window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(post.title + ' ' + window.location.href)}`, '_blank')}><MessageCircle size={20} /></button>
+                    <button aria-label="Copy post link" className="btn btn-outline" style={{ flex: 1, padding: '0.75rem' }} onClick={() => { navigator.clipboard.writeText(window.location.href); toast.success('Link copied to clipboard!'); }}><LinkIcon size={20} /></button>
+                    <button aria-label="Share on Twitter" className="btn btn-outline" style={{ flex: 1, padding: '0.75rem' }} onClick={() => window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(post.title)}`, '_blank')}><Send size={20} /></button>
+                    <button aria-label="Share on WhatsApp" className="btn btn-outline" style={{ flex: 1, padding: '0.75rem' }} onClick={() => window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(post.title + ' ' + window.location.href)}`, '_blank')}><MessageCircle size={20} /></button>
                   </div>
                 </div>
 

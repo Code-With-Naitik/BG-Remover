@@ -83,6 +83,7 @@ const LoginPage = () => {
                     onChange={(e) => setEmail(e.target.value)}
                     className="auth-input"
                     placeholder="Email Address"
+                    aria-label="Email Address"
                   />
                 </div>
                 <div className="input-wrapper bottom">
@@ -96,11 +97,13 @@ const LoginPage = () => {
                     onChange={(e) => setPassword(e.target.value)}
                     className="auth-input"
                     placeholder="Password"
+                    aria-label="Password"
                   />
                   <button 
                     type="button" 
                     className="password-toggle-btn"
                     onClick={() => setShowPassword(!showPassword)}
+                    aria-label={showPassword ? "Hide password" : "Show password"}
                   >
                     {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                   </button>
@@ -109,11 +112,11 @@ const LoginPage = () => {
 
               <div className="auth-options">
                 <label className="checkbox-container">
-                  <input type="checkbox" />
+                  <input type="checkbox" aria-label="Stay signed in" />
                   <span className="checkmark"></span>
                   <span className="checkbox-label">Stay signed in</span>
                 </label>
-                <Link to="/forgot-password" class="forgot-link">
+                <Link to="/forgot-password" className="forgot-link">
                   Forgot Password?
                 </Link>
               </div>
